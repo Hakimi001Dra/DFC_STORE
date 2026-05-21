@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>DF COLLECTION | Atelier of Elegance</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+  <!-- ── HEADER ── -->
+  <header class="luxe-header">
+    <div class="container header-container">
+      <div class="brand-area">
+        <div class="logo-text">DFC</div>
+        <span class="logo-tagline">Atelier</span>
+      </div>
+      <div class="header-utilities">
+        <a href="#" id="bookAppointmentBtn" class="utility-link">BOOK APPOINTMENT</a>
+        <a href="#" id="findStoreBtn" class="utility-link">FIND A STORE</a>
+        <a href="#" id="signupBtn" class="utility-link signup-link">SIGN IN</a>
+        <a href="admin.html" class="utility-link" style="color:#555;font-size:0.65rem;letter-spacing:1.5px;">ADMIN</a>
+      </div>
+    </div>
+    <div class="signup-teaser container">
+      <p>✨ Get exclusive updates on the collection's launch, personalized communication and the House's latest news. ✨</p>
+    </div>
+    <div class="mobile-nav-bar">
+      <div class="container nav-actions">
+        <div class="search-area">
+          <i class="fas fa-search" id="searchToggleIcon"></i>
+          <input type="text" id="searchInput" placeholder="Search products...">
+        </div>
+        <div class="hamburger" id="hamburgerMenu">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+      <nav class="main-nav" id="mainNav">
+        <div class="container nav-links">
+          <a href="#home">Home</a>
+          <a href="#collection">Collection</a>
+          <a href="#reviews">Reviews</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── HERO ── -->
+    <section class="hero" id="home">
+      <div class="container hero-content">
+        <h1>Where Heritage Meets Modernity</h1>
+        <p>Discover the finest Kaftans, Agbadas, leather shoes, watches & caps — each piece tells a story.</p>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
+          <a href="#collection" class="btn-primary">Explore Collection →</a>
+          <div class="hero-social">
+            <a href="https://www.facebook.com/dfcollection" target="_blank" class="hero-social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/dfcollection" target="_blank" class="hero-social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.snapchat.com/add/dfcollection" target="_blank" class="hero-social-link" aria-label="Snapchat"><i class="fab fa-snapchat-ghost"></i></a>
+            <a href="https://www.tiktok.com/@dfcollection" target="_blank" class="hero-social-link" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── COLLECTION ── -->
+    <section id="collection">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">Curated for you</span>
+          <h2 class="section-title">Signature Pieces</h2>
+        </div>
+        <div id="productsGrid" class="products-grid"></div>
+      </div>
+    </section>
+
+    <!-- ── REVIEWS ── -->
+    <section id="reviews">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">Testimonials</span>
+          <h2 class="section-title">What Our Patrons Say</h2>
+        </div>
+        <div id="commentsList" class="reviews-cards-grid"></div>
+        <div class="add-review-card">
+          <h4>Share your experience</h4>
+          <div class="comment-form-area">
+            <input type="text" id="commentName" placeholder="Your name">
+            <input type="text" id="commentMsg" placeholder="Write your feedback...">
+            <button id="submitCommentBtn" class="btn-secondary">Post comment</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ABOUT ── -->
+    <section id="about">
+      <div class="container about-wrapper">
+        <div class="about-text">
+          <span class="section-subtitle">Our story</span>
+          <h2>Luxury Woven<br>Across Continents</h2>
+          <p>DF COLLECTION celebrates timeless elegance — from luxurious Kaftans, majestic Kube (Agbada), handcrafted leather shoes, premium wristwatches to refined caps. Every piece supports local artisans. Browse, fall in love, and negotiate directly with the owner via WhatsApp. Authenticity meets modern ease.</p>
+          <div class="about-badges">
+            <span><i class="fas fa-check-circle"></i> 100% Original</span>
+            <span><i class="fas fa-check-circle"></i> Worldwide Shipping</span>
+            <span><i class="fas fa-check-circle"></i> Secure WhatsApp Deal</span>
+          </div>
+          <!-- SOCIAL FOLLOW STRIP -->
+          <div class="social-follow-strip">
+            <span class="social-follow-label">Follow Us</span>
+            <a href="https://www.facebook.com/dfcollection" target="_blank" class="social-pill facebook" aria-label="Facebook">
+              <i class="fab fa-facebook-f"></i> Facebook
+            </a>
+            <a href="https://www.instagram.com/dfcollection" target="_blank" class="social-pill instagram" aria-label="Instagram">
+              <i class="fab fa-instagram"></i> Instagram
+            </a>
+            <a href="https://www.snapchat.com/add/dfcollection" target="_blank" class="social-pill snapchat" aria-label="Snapchat">
+              <i class="fab fa-snapchat-ghost"></i> Snapchat
+            </a>
+            <a href="https://www.tiktok.com/@dfcollection" target="_blank" class="social-pill tiktok" aria-label="TikTok">
+              <i class="fab fa-tiktok"></i> TikTok
+            </a>
+          </div>
+        </div>
+        <div class="about-stats">
+          <i class="fas fa-tshirt"></i>
+          <h3>Handpicked Collection</h3>
+          <p>Trusted by designers across Africa</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CONTACT ── -->
+    <section id="contact">
+      <div class="container">
+        <div class="contact-card">
+          <div class="contact-info">
+            <h3><i class="fab fa-whatsapp"></i> Negotiate on WhatsApp</h3>
+            <p><strong>Owner:</strong> <span id="whatsappNumberDisplay">+234 804 626 5442</span></p>
+            <p><i class="fas fa-envelope"></i> support@dfcollection.com</p>
+            <p><i class="fas fa-map-marker-alt"></i> Lagos, Nigeria | Global Delivery</p>
+            <a id="directWhatsappLink" href="#" target="_blank" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Message Owner Directly</a>
+            <p class="hint">💡 Click any product → "Chat on WhatsApp" to negotiate price or custom orders.</p>
+            <!-- SOCIAL ROW IN CONTACT -->
+            <div class="contact-social-row">
+              <a href="https://www.facebook.com/dfcollection" target="_blank" class="contact-social-btn" style="background:#1877F2;" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+              <a href="https://www.instagram.com/dfcollection" target="_blank" class="contact-social-btn ig-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.snapchat.com/add/dfcollection" target="_blank" class="contact-social-btn" style="background:#FFFC00;color:#000;" aria-label="Snapchat"><i class="fab fa-snapchat-ghost"></i></a>
+              <a href="https://www.tiktok.com/@dfcollection" target="_blank" class="contact-social-btn" style="background:#010101;" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">DFC</div>
+        <p class="footer-tagline">Atelier of Elegance</p>
+        <p class="footer-desc">Luxury African fashion crafted for the modern connoisseur. Based in Lagos, delivering worldwide.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/dfcollection" target="_blank" class="footer-social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/dfcollection" target="_blank" class="footer-social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.snapchat.com/add/dfcollection" target="_blank" class="footer-social-icon" aria-label="Snapchat"><i class="fab fa-snapchat-ghost"></i></a>
+          <a href="https://www.tiktok.com/@dfcollection" target="_blank" class="footer-social-icon" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          <a href="https://wa.me/2348046265442" target="_blank" class="footer-social-icon" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-links-col">
+        <h5>Quick Links</h5>
+        <a href="#home">Home</a>
+        <a href="#collection">Collection</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-links-col">
+        <h5>Collections</h5>
+        <a href="#collection">Kaftans</a>
+        <a href="#collection">Agbada / Kube</a>
+        <a href="#collection">Leather Shoes</a>
+        <a href="#collection">Wristwatches</a>
+        <a href="#collection">Caps & Accessories</a>
+      </div>
+      <div class="footer-links-col">
+        <h5>Contact</h5>
+        <a href="https://wa.me/2348046265442" target="_blank"><i class="fab fa-whatsapp"></i> +234 804 626 5442</a>
+        <a href="mailto:support@dfcollection.com"><i class="fas fa-envelope"></i> support@dfcollection.com</a>
+        <a href="#contact"><i class="fas fa-map-marker-alt"></i> Lagos, Nigeria</a>
+        <a href="#" id="footerSignupBtn"><i class="fas fa-bell"></i> Get Updates</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p>© 2025 DF COLLECTION — Atelier of Elegance. All rights reserved.</p>
+        <p>Built with ❤️ in Lagos, Nigeria</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── FLOATING WHATSAPP BUTTON ── -->
+  <a href="https://wa.me/2348046265442?text=Hello!%20I'm%20interested%20in%20your%20fashion%20collection." target="_blank" class="fab-whatsapp" aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- ── BACK TO TOP ── -->
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- ── PRODUCT MODAL ── -->
+  <div id="productModal" class="modal">
+    <div class="modal-card">
+      <span class="modal-close">&times;</span>
+      <img id="modalImage" class="modal-img" alt="product">
+      <h2 id="modalName"></h2>
+      <p id="modalPrice" class="modal-price"></p>
+      <p id="modalDetails" class="modal-details"></p>
+      <button id="whatsappModalBtn" class="btn-whatsapp full-width"><i class="fab fa-whatsapp"></i> Negotiate on WhatsApp</button>
+    </div>
+  </div>
+
+  <!-- ── SIGNUP MODAL ── -->
+  <div id="signupModal" class="modal">
+    <div class="modal-card" style="max-width:450px;">
+      <span class="modal-close" id="closeSignupModal">&times;</span>
+      <h3 style="font-family:'Playfair Display';color:#d4af37;">Join the House</h3>
+      <p style="margin:16px 0;color:#bcb09b;">Get exclusive updates, early access and the latest news.</p>
+      <input type="email" id="signupEmail" placeholder="Your email address" style="width:100%;padding:14px;border-radius:40px;background:#1c1c1c;border:1px solid #2a2a2a;color:white;margin-bottom:16px;font-family:inherit;outline:none;">
+      <button id="confirmSignupBtn" class="btn-primary" style="width:100%;">Subscribe ✨</button>
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid #2a2a2a;text-align:center;">
+        <p style="font-size:12px;color:#555;margin-bottom:12px;">Or follow us on social media</p>
+        <div style="display:flex;justify-content:center;gap:12px;">
+          <a href="https://www.facebook.com/dfcollection" target="_blank" class="contact-social-btn" style="background:#1877F2;width:36px;height:36px;font-size:14px;" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/dfcollection" target="_blank" class="contact-social-btn ig-btn" style="width:36px;height:36px;font-size:14px;" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.snapchat.com/add/dfcollection" target="_blank" class="contact-social-btn" style="background:#FFFC00;color:#000;width:36px;height:36px;font-size:14px;" aria-label="Snapchat"><i class="fab fa-snapchat-ghost"></i></a>
+          <a href="https://www.tiktok.com/@dfcollection" target="_blank" class="contact-social-btn" style="background:#010101;width:36px;height:36px;font-size:14px;" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js" type="module"></script>
+  <script>
+    // Back to top
+    const btt = document.getElementById('backToTop')
+    window.addEventListener('scroll', () => { btt.classList.toggle('visible', window.scrollY > 400) })
+    btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }))
+    // Footer signup button
+    const footerSignup = document.getElementById('footerSignupBtn')
+    if (footerSignup) footerSignup.addEventListener('click', e => { e.preventDefault(); document.getElementById('signupModal').style.display = 'flex' })
+  </script>
+</body>
+</html>

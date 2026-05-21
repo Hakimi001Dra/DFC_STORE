@@ -1,0 +1,12 @@
+{
+  "name": "dfc-store",
+  "version": "1.0.0",
+  "description": "DF Collection — Supabase-powered fashion storefront",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "devDependencies": {
+    "serve": "^14.2.0"
+  },
+  "note": "Supabase JS is loaded via CDN (esm.sh) in the HTML/JS files. No npm install needed to run the site."
+}

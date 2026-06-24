@@ -203,12 +203,37 @@ function setupSearch() {
 // ========== MOBILE MENU ==========
 function setupMobileMenu() {
   const hamburger = document.getElementById('hamburgerMenu')
-  const mainNav   = document.getElementById('mainNav')
-  if (!hamburger || !mainNav) return
-  hamburger.addEventListener('click', () => mainNav.classList.toggle('show'))
-  mainNav.querySelectorAll('a').forEach(a =>
-    a.addEventListener('click', () => mainNav.classList.remove('show'))
+  const mobileNav = document.getElementById('mobileNav')
+  if (!hamburger || !mobileNav) return
+  hamburger.addEventListener('click', () => {
+    mobileNav.classList.toggle('open')
+    hamburger.querySelector('i').className = mobileNav.classList.contains('open')
+      ? 'fas fa-times' : 'fas fa-bars'
+  })
+  mobileNav.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => {
+      mobileNav.classList.remove('open')
+      hamburger.querySelector('i').className = 'fas fa-bars'
+    })
   )
+}
+
+// ========== LOGO FROM SUPABASE ==========
+async function loadLogo() {
+  if (!supabase) return
+  try {
+    const { data } = await supabase
+      .from('settings')
+      .select('value')
+      .eq('key', 'logo_url')
+      .single()
+    if (data && data.value) {
+      const img = document.getElementById('brandLogoImg')
+      const txt = document.getElementById('brandLogoText')
+      if (img) { img.src = data.value; img.style.display = 'block' }
+      if (txt) txt.style.display = 'none'
+    }
+  } catch(e) {}
 }
 
 // ========== UTILITY ==========
@@ -239,9 +264,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupMobileMenu()
 
   // Header buttons
-  on('bookAppointmentBtn', 'click', e => { e.preventDefault(); bookAppointment() })
-  on('findStoreBtn',       'click', e => { e.preventDefault(); findStore() })
-  on('signupBtn',          'click', e => { e.preventDefault(); openSignupModal() })
+  on('signupBtn',       'click', e => { e.preventDefault(); openSignupModal() })
+  on('mobileSignupBtn', 'click', e => { e.preventDefault(); openSignupModal() })
+  on('mobileBookBtn',   'click', e => { e.preventDefault(); bookAppointment() })
 
   // Product modal
   on('whatsappModalBtn', 'click', sendWhatsApp)
@@ -268,6 +293,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   })
 
   // Load data from Supabase
+  await loadLogo()
   await loadProducts()
   await loadComments()
 })

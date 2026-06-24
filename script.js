@@ -7,7 +7,7 @@ const SUPABASE_URL      = 'https://bbbxgvmlfcdumykiquqt.supabase.co'
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJiYnhndm1sZmNkdW15a2lxdXF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyNzIzNzEsImV4cCI6MjA5NDg0ODM3MX0.BKQdvUK4j_zjclMUspN1KuxcpWWTQv0dOdgrLvbPqyg'
 // ============================================================
 
-const OWNER_WHATSAPP = '2348046265442'
+const OWNER_WHATSAPP = '2348068510863'
 
 // Safe Supabase init — if credentials are missing, UI still works
 let supabase = null
@@ -186,7 +186,7 @@ function bookAppointment() {
 }
 
 function findStore() {
-  alert('Our flagship showroom is in Lagos, Nigeria. Contact us via WhatsApp for directions.')
+  window.open('https://wa.me/2348068510863?text=Hello!%20Please%20share%20your%20store%20location.', '_blank')
 }
 
 // ========== SEARCH ==========
@@ -230,9 +230,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Set contact info immediately (no Supabase needed)
   const numEl = getById('whatsappNumberDisplay')
-  if (numEl) numEl.innerText = '+234 804 626 5442'
+  if (numEl) numEl.innerText = '+234 806 851 0863'
   const linkEl = getById('directWhatsappLink')
-  if (linkEl) linkEl.href = `https://wa.me/${OWNER_WHATSAPP}?text=Hello!%20I'm%20interested%20in%20your%20fashion%20collection.`
+  if (linkEl) linkEl.href = `https://wa.me/${OWNER_WHATSAPP}?text=Hello!%20I'm%20interested%20in%20your%20fashion%20collection%20at%20DFC!`
 
   // Nav & search (no Supabase needed)
   setupSearch()

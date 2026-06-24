@@ -169,6 +169,7 @@
       <button class="tab active" onclick="switchTab('products')"><i class="fas fa-tshirt"></i> Products</button>
       <button class="tab" onclick="switchTab('add')"><i class="fas fa-plus"></i> Add New</button>
       <button class="tab" onclick="switchTab('reviews')"><i class="fas fa-star"></i> Reviews</button>
+      <button class="tab" onclick="switchTab('settings')"><i class="fas fa-cog"></i> Settings</button>
     </div>
 
     <!-- TAB: PRODUCTS LIST -->
@@ -202,6 +203,24 @@
         <div id="reviewsWrap">
           <div class="empty"><i class="fas fa-spinner fa-spin"></i> Loading reviews...</div>
         </div>
+      </div>
+    </div>
+
+  <!-- TAB: SETTINGS -->
+    <div id="tab-settings" style="display:none;">
+      <div class="section-card">
+        <h3><i class="fas fa-image"></i> Brand Logo</h3>
+        <p style="font-size:13px;color:#888;margin-bottom:16px;">Upload your brand logo. It replaces the DFC text in the header of the website.</p>
+        <div id="currentLogoWrap" style="margin-bottom:16px;display:none;">
+          <p style="font-size:12px;color:#888;margin-bottom:8px;">Current logo:</p>
+          <img id="currentLogoPreview" src="" alt="Current Logo" style="max-height:80px;border-radius:8px;border:1px solid #2a2a2a;">
+        </div>
+        <input type="file" id="logoFile" accept="image/*" style="margin-bottom:12px;">
+        <div style="display:none;margin-bottom:12px;" id="logoPreviewWrap">
+          <img id="logoPreviewImg" alt="Logo preview" style="max-height:80px;border-radius:8px;">
+        </div>
+        <button class="btn btn-gold" id="uploadLogoBtn"><i class="fas fa-upload"></i> Upload Logo</button>
+        <div id="logoMsg" class="msg" style="margin-top:12px;display:none;"></div>
       </div>
     </div>
 
@@ -290,15 +309,16 @@
     document.getElementById('topbarRight').style.display = 'flex'
     document.getElementById('topbarEmail').innerText = currentUser.email
     loadAll()
+    loadCurrentLogo()
   }
 
   // ── TABS ──
   function switchTab(name) {
-    ;['products','add','reviews'].forEach(t => {
+    ;['products','add','reviews','settings'].forEach(t => {
       document.getElementById('tab-' + t).style.display = t === name ? 'block' : 'none'
     })
     document.querySelectorAll('.tab').forEach((btn, i) => {
-      btn.classList.toggle('active', ['products','add','reviews'][i] === name)
+      btn.classList.toggle('active', ['products','add','reviews','settings'][i] === name)
     })
   }
 
@@ -502,26 +522,79 @@
       wrap.innerHTML = `<div class="empty"><i class="fas fa-comment-slash"></i>No reviews yet.</div>`
       return
     }
-    wrap.innerHTML = data.map(c => `
-      <div class="comment-row">
-        <div class="comment-meta">
-          <span class="comment-author"><i class="fas fa-user-circle" style="color:#d4af37;margin-right:6px;"></i>${esc(c.name)}</span>
-          <div style="display:flex;align-items:center;gap:10px;">
-            <span class="comment-date-sm">${c.date || ''}</span>
-            <button class="btn btn-danger btn-sm" onclick="deleteReview('${c.id}')"><i class="fas fa-trash"></i></button>
-          </div>
-        </div>
-        <div class="comment-body">${esc(c.text)}</div>
-      </div>
-    `).join('')
-
-    window.deleteReview = async (id) => {
-      if (!confirm('Delete this review?')) return
-      const { error } = await supabase.from('comments').delete().eq('id', id)
-      if (error) alert('Error: ' + error.message)
-      else { await loadReviews(); await loadStats() }
-    }
+    var rows = ''
+    data.forEach(function(c) {
+      var safeName = (c.name || '').replace(/'/g, '').replace(/"/g, '')
+      rows += '<div class="comment-row">'
+        + '<div class="comment-meta">'
+        + '<span class="comment-author"><i class="fas fa-user-circle" style="color:#d4af37;margin-right:6px;"></i>' + esc(c.name) + '</span>'
+        + '<div style="display:flex;align-items:center;gap:10px;">'
+        + '<span class="comment-date-sm">' + (c.date || '') + '</span>'
+        + '<button class="btn btn-danger btn-sm" data-id="' + c.id + '" data-name="' + safeName + '" onclick="handleDeleteReview(this)"><i class="fas fa-trash"></i> Delete</button>'
+        + '</div></div>'
+        + '<div class="comment-body">' + esc(c.text) + '</div>'
+        + '</div>'
+    })
+    wrap.innerHTML = rows
   }
+
+  window.handleDeleteReview = async function(btn) {
+    const id   = btn.getAttribute('data-id')
+    const name = btn.getAttribute('data-name')
+    if (!confirm('Delete review by ' + name + '? This cannot be undone.')) return
+    btn.disabled = true
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'
+    const { error } = await supabase.from('comments').delete().eq('id', id)
+    if (error) { alert('Error: ' + error.message); btn.disabled = false; return }
+    await loadReviews()
+    await loadStats()
+  }
+
+  // ── LOGO UPLOAD ──
+  async function loadCurrentLogo() {
+    try {
+      const { data } = await supabase.from('settings').select('value').eq('key', 'logo_url').single()
+      if (data && data.value) {
+        document.getElementById('currentLogoPreview').src = data.value
+        document.getElementById('currentLogoWrap').style.display = 'block'
+      }
+    } catch(e) {}
+  }
+
+  document.getElementById('logoFile').addEventListener('change', function(e) {
+    const file = e.target.files[0]
+    const wrap = document.getElementById('logoPreviewWrap')
+    const img  = document.getElementById('logoPreviewImg')
+    if (file) {
+      const r = new FileReader()
+      r.onload = ev => { img.src = ev.target.result; wrap.style.display = 'block' }
+      r.readAsDataURL(file)
+    } else { wrap.style.display = 'none' }
+  })
+
+  document.getElementById('uploadLogoBtn').addEventListener('click', async function() {
+    const file = document.getElementById('logoFile').files[0]
+    const btn  = document.getElementById('uploadLogoBtn')
+    if (!file) { showMsg('logoMsg', 'Please select an image file.', 'error'); return }
+    btn.disabled = true
+    showMsg('logoMsg', 'Uploading logo...', 'info')
+    try {
+      const ext  = file.name.split('.').pop().toLowerCase()
+      const path = 'logo-' + Date.now() + '.' + ext
+      const { error: upErr } = await supabase.storage.from('product-images').upload(path, file, { cacheControl:'3600', upsert:false })
+      if (upErr) throw new Error(upErr.message)
+      const { data: urlData } = supabase.storage.from('product-images').getPublicUrl(path)
+      const { error: saveErr } = await supabase.from('settings').upsert([{ key: 'logo_url', value: urlData.publicUrl }], { onConflict: 'key' })
+      if (saveErr) throw new Error(saveErr.message)
+      showMsg('logoMsg', '✅ Logo uploaded successfully! Refresh your website to see it.', 'success')
+      document.getElementById('currentLogoPreview').src = urlData.publicUrl
+      document.getElementById('currentLogoWrap').style.display = 'block'
+      document.getElementById('logoFile').value = ''
+      document.getElementById('logoPreviewWrap').style.display = 'none'
+    } catch(e) {
+      showMsg('logoMsg', '❌ ' + e.message, 'error')
+    } finally { btn.disabled = false }
+  })
 
   // ── HELPERS ──
   function showMsg(id, text, type) {

@@ -12,35 +12,42 @@
 
   <!-- ── HEADER ── -->
   <header class="luxe-header">
-    <div class="container header-container">
-      <div class="brand-area">
-        <div class="logo-text" id="brandLogo">DFC</div>
+    <div class="container header-main">
+      <!-- LOGO -->
+      <a href="#home" class="brand-area">
+        <img id="brandLogoImg" src="" alt="DFC" style="display:none;height:44px;object-fit:contain;border-radius:4px;">
+        <div id="brandLogoText" class="logo-text">DFC</div>
         <span class="logo-tagline">Danfulani Collections</span>
-      </div>
-     <div class="mobile-nav-bar">
-      <div class="container nav-actions">
-        <div class="search-area">
-          <i class="fas fa-search" id="searchToggleIcon"></i>
-          <input type="text" id="searchInput" placeholder="Search products...">
-        </div>
-        <div class="hamburger" id="hamburgerMenu">
-          <i class="fas fa-bars"></i>
-        </div>
-      </div>
+      </a>
+      <!-- DESKTOP NAV -->
       <nav class="main-nav" id="mainNav">
-        <div class="container nav-links">
-          <a href="#home">Home</a>
-          <a href="#collection">Collection</a>
-          <a href="#reviews">Reviews</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
-        </div>
+        <a href="#home">Home</a>
+        <a href="#collection">Collection</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
       </nav>
+      <!-- RIGHT ACTIONS -->
+      <div class="header-actions">
+        <div class="search-area">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchInput" placeholder="Search...">
+        </div>
+        <a href="#" id="signupBtn" class="btn-subscribe">Subscribe</a>
+        <a href="admin.html" class="admin-link" title="Admin"><i class="fas fa-lock"></i></a>
+        <button class="hamburger" id="hamburgerMenu" aria-label="Menu"><i class="fas fa-bars"></i></button>
+      </div>
     </div>
-    </div>
-    <div class="signup-teaser container">
-      <p>✨ Empowering Talents, Delivering Excellence — Fashion, Tailoring, Shoes, Branding & More. ✨</p>
-    </div>
+    <!-- MOBILE NAV DRAWER -->
+    <nav class="mobile-nav" id="mobileNav">
+      <a href="#home"><i class="fas fa-home"></i> Home</a>
+      <a href="#collection"><i class="fas fa-tshirt"></i> Collection</a>
+      <a href="#reviews"><i class="fas fa-star"></i> Reviews</a>
+      <a href="#about"><i class="fas fa-info-circle"></i> About</a>
+      <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+      <a href="#" id="mobileSignupBtn"><i class="fas fa-bell"></i> Subscribe</a>
+      <a href="#" id="mobileBookBtn"><i class="fas fa-calendar"></i> Book Appointment</a>
+    </nav>
   </header>
 
   <main>

@@ -1,22 +1,21 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 // ============================================================
-//  PASTE YOUR SUPABASE CREDENTIALS HERE
+//  SUPABASE CREDENTIALS
 // ============================================================
-const SUPABASE_URL      = 'https://bbbxgvmlfcdumykiquqt.supabase.co'
+const SUPABASE_URL = 'https://bbbxgvmlfcdumykiquqt.supabase.co'
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJiYnhndm1sZmNkdW15a2lxdXF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyNzIzNzEsImV4cCI6MjA5NDg0ODM3MX0.BKQdvUK4j_zjclMUspN1KuxcpWWTQv0dOdgrLvbPqyg'
 // ============================================================
 
 const OWNER_WHATSAPP = '2348068510863'
 
-// Safe Supabase init — if credentials are missing, UI still works
 let supabase = null
 try {
   if (SUPABASE_URL && !SUPABASE_URL.includes('YOUR_PROJECT_REF') &&
-      SUPABASE_ANON_KEY && !SUPABASE_ANON_KEY.includes('YOUR_ANON_KEY')) {
+    SUPABASE_ANON_KEY && !SUPABASE_ANON_KEY.includes('YOUR_ANON_KEY')) {
     supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
   } else {
-    console.warn('DFC: Supabase credentials not set. Update SUPABASE_URL and SUPABASE_ANON_KEY in script.js')
+    console.warn('DFC: Supabase credentials not set.')
   }
 } catch (e) {
   console.error('DFC: Supabase init failed:', e)
@@ -30,7 +29,8 @@ let currentSearchTerm = ''
 async function loadProducts() {
   const grid = document.getElementById('productsGrid')
   if (!supabase) {
-    if (grid) grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px;color:#d4af37;">⚙️ Connect Supabase to display products.<br><small style="color:#888;font-size:12px">Add your credentials to script.js</small></div>`
+    if (grid) grid.innerHTML =
+      `<div style="grid-column:1/-1;text-align:center;padding:60px;color:#d4af37;">⚙️ Connect Supabase to display products.<br><small style="color:#888;font-size:12px">Add your credentials to script.js</small></div>`
     return
   }
   try {
@@ -43,7 +43,8 @@ async function loadProducts() {
     renderProducts()
   } catch (err) {
     console.error('Error loading products:', err)
-    if (grid) grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px;">⚠️ Unable to load products. Check Supabase connection.</div>`
+    if (grid) grid.innerHTML =
+      `<div style="grid-column:1/-1;text-align:center;padding:60px;">⚠️ Unable to load products. Check Supabase connection.</div>`
   }
 }
 
@@ -77,15 +78,24 @@ function renderProducts() {
     )
   }
   if (!filtered.length) {
-    container.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px;">✨ No products found. ✨</div>`
+    container.innerHTML =
+      `<div style="grid-column:1/-1;text-align:center;padding:60px;color:#6a5c48;">✨ No products found. ✨</div>`
     return
   }
   container.innerHTML = filtered.map(prod => `
-    <div class="product-card" data-id="${prod.id}" style="cursor:pointer;">
-      <img class="product-img"
-        src="${escapeHtml(prod.image_url || prod.imageUrl || '')}"
-        alt="${escapeHtml(prod.name)}"
-        onerror="this.src='https://placehold.co/400x300/111111/d4af37?text=LUXE'">
+    <div class="product-card" data-id="${prod.id}">
+      <div class="product-image-wrapper">
+        <img class="product-img"
+          src="${escapeHtml(prod.image_url || prod.imageUrl || '')}"
+          alt="${escapeHtml(prod.name)}"
+          onerror="this.src='https://placehold.co/400x500/111111/d4af37?text=LUXE'">
+        <div class="product-overlay">
+          <button class="quick-view-btn" onclick="event.stopPropagation();openProductModalById('${prod.id}')">
+            <i class="fas fa-eye"></i> Quick View
+          </button>
+        </div>
+        <div class="product-badge">New</div>
+      </div>
       <div class="product-info">
         <div class="product-name">${escapeHtml(prod.name)}</div>
         <div class="product-price">${escapeHtml(prod.price)}</div>
@@ -107,16 +117,32 @@ function renderComments() {
   const container = document.getElementById('commentsList')
   if (!container) return
   if (!comments.length) {
-    container.innerHTML = `<p style="text-align:center;padding:20px;">No reviews yet. Be the first to share!</p>`
+    container.innerHTML =
+      `<div style="grid-column:1/-1;text-align:center;padding:40px;color:#6a5c48;">No reviews yet. Be the first to share!</div>`
     return
   }
-  container.innerHTML = comments.map(c => `
-    <div class="comment-card">
-      <div class="comment-name"><i class="fas fa-user-circle"></i> ${escapeHtml(c.name)}</div>
+  container.innerHTML = comments.map((c, index) => {
+    const isFeatured = index === 0
+    return `
+    <div class="comment-card ${isFeatured ? 'featured' : ''}">
+      ${isFeatured ? '<div class="review-quote">❝</div>' : ''}
+      ${isFeatured ? `<div class="rating-stars" style="margin-bottom:8px;">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+      </div>` : ''}
       <div class="comment-text">${escapeHtml(c.text)}</div>
-      <div class="comment-date">📅 ${c.date || 'recent'}</div>
+      <div class="comment-author">
+        <div class="comment-initials">${escapeHtml((c.name || 'U')[0].toUpperCase())}</div>
+        <div>
+          <div class="comment-name">${escapeHtml(c.name || 'Anonymous')}</div>
+          <div class="comment-date">${c.date || 'recent'}</div>
+        </div>
+      </div>
     </div>
-  `).join('')
+  `}).join('')
 }
 
 // ========== ADD COMMENT ==========
@@ -129,8 +155,7 @@ async function addComment(name, text) {
     date: new Date().toLocaleDateString(),
     created_at: new Date().toISOString()
   }])
-  if (error) { console.error(error); alert('Could not post comment.') }
-  else {
+  if (error) { console.error(error); alert('Could not post comment.') } else {
     await loadComments()
     document.getElementById('commentName').value = ''
     document.getElementById('commentMsg').value = ''
@@ -164,6 +189,13 @@ function openProductModal(product) {
   modal.style.display = 'flex'
 }
 
+function openProductModalById(id) {
+  const product = products.find(p => String(p.id) === String(id))
+  if (product) openProductModal(product)
+}
+
+window.openProductModalById = openProductModalById
+
 function openSignupModal() {
   const modal = document.getElementById('signupModal')
   if (modal) modal.style.display = 'flex'
@@ -177,16 +209,13 @@ function closeModal(id) {
 // ========== WHATSAPP ==========
 function sendWhatsApp() {
   if (!currentProduct) return
-  const msg = `Hi! I'm interested in *${currentProduct.name}* (Price: ${currentProduct.price}). Details: ${(currentProduct.details || '').substring(0, 120)}. Let's negotiate! ✨`
+  const msg =
+    `Hi! I'm interested in *${currentProduct.name}* (Price: ${currentProduct.price}). Details: ${(currentProduct.details || '').substring(0, 120)}. Let's negotiate! ✨`
   window.open(`https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank')
 }
 
 function bookAppointment() {
   window.open(`https://wa.me/${OWNER_WHATSAPP}?text=Hello!%20I'd%20like%20to%20book%20an%20appointment.`, '_blank')
-}
-
-function findStore() {
-  window.open('https://wa.me/2348068510863?text=Hello!%20Please%20share%20your%20store%20location.', '_blank')
 }
 
 // ========== SEARCH ==========
@@ -207,8 +236,8 @@ function setupMobileMenu() {
   if (!hamburger || !mobileNav) return
   hamburger.addEventListener('click', () => {
     mobileNav.classList.toggle('open')
-    hamburger.querySelector('i').className = mobileNav.classList.contains('open')
-      ? 'fas fa-times' : 'fas fa-bars'
+    hamburger.querySelector('i').className = mobileNav.classList.contains('open') ?
+      'fas fa-times' : 'fas fa-bars'
   })
   mobileNav.querySelectorAll('a').forEach(a =>
     a.addEventListener('click', () => {
@@ -230,45 +259,48 @@ async function loadLogo() {
     if (data && data.value) {
       const img = document.getElementById('brandLogoImg')
       const txt = document.getElementById('brandLogoText')
-      if (img) { img.src = data.value; img.style.display = 'block' }
+      if (img) { img.src = data.value;
+        img.style.display = 'block' }
       if (txt) txt.style.display = 'none'
     }
-  } catch(e) {}
+  } catch (e) {}
 }
 
 // ========== UTILITY ==========
 function escapeHtml(str) {
   if (str == null) return ''
   return String(str).replace(/[&<>"']/g, m =>
-    ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[m]
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]
   )
 }
 
 function getById(id) { return document.getElementById(id) }
+
 function on(id, event, fn) {
   const el = getById(id)
   if (el) el.addEventListener(event, fn)
 }
 
-// ========== INIT — wires up ALL buttons ==========
+// ========== INIT ==========
 document.addEventListener('DOMContentLoaded', async () => {
 
-  // Set contact info immediately (no Supabase needed)
+  // Set contact info
   const numEl = getById('whatsappNumberDisplay')
   if (numEl) numEl.innerText = '+234 806 851 0863'
   const linkEl = getById('directWhatsappLink')
-  if (linkEl) linkEl.href = `https://wa.me/${OWNER_WHATSAPP}?text=Hello!%20I'm%20interested%20in%20your%20fashion%20collection%20at%20DFC!`
+  if (linkEl) linkEl.href =
+    `https://wa.me/${OWNER_WHATSAPP}?text=Hello!%20I'm%20interested%20in%20your%20fashion%20collection%20at%20DFC!`
 
-  // Nav & search (no Supabase needed)
   setupSearch()
   setupMobileMenu()
 
-  // Header buttons
-  on('signupBtn',       'click', e => { e.preventDefault(); openSignupModal() })
-  on('mobileSignupBtn', 'click', e => { e.preventDefault(); openSignupModal() })
-  on('mobileBookBtn',   'click', e => { e.preventDefault(); bookAppointment() })
+  on('signupBtn', 'click', e => { e.preventDefault();
+    openSignupModal() })
+  on('mobileSignupBtn', 'click', e => { e.preventDefault();
+    openSignupModal() })
+  on('mobileBookBtn', 'click', e => { e.preventDefault();
+    bookAppointment() })
 
-  // Product modal
   on('whatsappModalBtn', 'click', sendWhatsApp)
   const productModal = getById('productModal')
   if (productModal) {
@@ -277,7 +309,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.addEventListener('click', e => { if (e.target === productModal) closeModal('productModal') })
   }
 
-  // Signup modal
   on('closeSignupModal', 'click', () => closeModal('signupModal'))
   on('confirmSignupBtn', 'click', confirmSignup)
   const signupModal = getById('signupModal')
@@ -285,14 +316,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.addEventListener('click', e => { if (e.target === signupModal) closeModal('signupModal') })
   }
 
-  // Comments
   on('submitCommentBtn', 'click', () => {
     const name = (getById('commentName') || {}).value || ''
-    const msg  = (getById('commentMsg')  || {}).value || ''
+    const msg = (getById('commentMsg') || {}).value || ''
     addComment(name, msg)
   })
 
-  // Load data from Supabase
   await loadLogo()
   await loadProducts()
   await loadComments()

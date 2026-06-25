@@ -871,3 +871,35 @@ footer {
   color: #000;
   border-color: #d4af37;
 }
+
+/* ── ABOUT SERVICES GRID ── */
+.about-services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.about-service-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: rgba(212,175,55,0.06);
+  border: 1px solid rgba(212,175,55,0.15);
+  border-radius: 12px;
+  font-size: 12px;
+  color: #ece6df;
+  transition: 0.2s;
+}
+
+.about-service-item:hover {
+  background: rgba(212,175,55,0.12);
+  border-color: rgba(212,175,55,0.35);
+}
+
+.about-service-item i {
+  color: #d4af37;
+  font-size: 14px;
+  flex-shrink: 0;
+}

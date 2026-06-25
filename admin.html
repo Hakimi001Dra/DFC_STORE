@@ -543,11 +543,22 @@
     const name = btn.getAttribute('data-name')
     if (!confirm('Delete review by ' + name + '? This cannot be undone.')) return
     btn.disabled = true
+    const originalHTML = btn.innerHTML
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'
-    const { error } = await supabase.from('comments').delete().eq('id', id)
-    if (error) { alert('Error: ' + error.message); btn.disabled = false; return }
-    await loadReviews()
-    await loadStats()
+    try {
+      // Get current session to ensure authenticated
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session) { alert('You must be logged in to delete reviews.'); btn.disabled = false; btn.innerHTML = originalHTML; return }
+      const { error } = await supabase.from('comments').delete().eq('id', id)
+      if (error) throw error
+      await loadReviews()
+      await loadStats()
+    } catch(e) {
+      console.error('Delete error:', e)
+      alert('Delete failed: ' + (e.message || e))
+      btn.disabled = false
+      btn.innerHTML = originalHTML
+    }
   }
 
   // ── LOGO UPLOAD ──

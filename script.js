@@ -2,7 +2,6 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 // ============================================================
 //  SUPABASE CREDENTIALS
-//  NOTE: These are public keys. Always use RLS policies!
 // ============================================================
 const SUPABASE_URL = 'https://bbbxgvmlfcdumykiquqt.supabase.co'
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJiYnhndm1sZmNkdW15a2lxdXF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyNzIzNzEsImV4cCI6MjA5NDg0ODM3MX0.BKQdvUK4j_zjclMUspN1KuxcpWWTQv0dOdgrLvbPqyg'
@@ -10,106 +9,11 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 const OWNER_WHATSAPP = '2348068510863'
 
-// ============================================================
-//  SECURITY: Rate Limiting Configuration
-// ============================================================
-const RATE_LIMITS = {
-  comments: { max: 10, window: 60000 },   // 10 per minute
-  signup: { max: 5, window: 60000 },      // 5 per minute
-  search: { max: 30, window: 60000 },     // 30 per minute
-  contact: { max: 5, window: 60000 },     // 5 per minute
-}
-
-// Rate limit store
-const rateLimitStore = new Map()
-
-function checkRateLimit(type) {
-  const config = RATE_LIMITS[type]
-  if (!config) return true
-  
-  const key = `${type}_${Date.now()}`
-  const now = Date.now()
-  
-  // Clean up old entries
-  for (const [k, data] of rateLimitStore) {
-    if (now - data.timestamp > config.window) {
-      rateLimitStore.delete(k)
-    }
-  }
-  
-  // Count recent requests
-  const recent = Array.from(rateLimitStore.values())
-    .filter(data => data.type === type && now - data.timestamp < config.window)
-  
-  if (recent.length >= config.max) {
-    return false
-  }
-  
-  // Store this request
-  rateLimitStore.set(key, { type, timestamp: now })
-  return true
-}
-
-// ============================================================
-//  SECURITY: Input Sanitization
-// ============================================================
-function sanitizeInput(input) {
-  if (!input) return ''
-  const map = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#x27;',
-    '/': '&#x2F;',
-  }
-  return String(input).replace(/[&<>"'/]/g, function(s) {
-    return map[s]
-  })
-}
-
-// ============================================================
-//  SECURITY: Email Validation
-// ============================================================
-function isValidEmail(email) {
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  return regex.test(email)
-}
-
-// ============================================================
-//  SECURITY: Content Security Policy Helper
-// ============================================================
-function validateCSP() {
-  // Check if CSP meta tag is present
-  const cspMeta = document.querySelector('meta[http-equiv="Content-Security-Policy"]')
-  if (!cspMeta) {
-    console.warn('⚠️ CSP meta tag missing. Please add for security.')
-  }
-}
-
-// ============================================================
-//  SUPABASE CLIENT with Security Headers
-// ============================================================
 let supabase = null
 try {
   if (SUPABASE_URL && !SUPABASE_URL.includes('YOUR_PROJECT_REF') &&
-      SUPABASE_ANON_KEY && !SUPABASE_ANON_KEY.includes('YOUR_ANON_KEY')) {
-    supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-      auth: {
-        autoRefreshToken: true,
-        persistSession: true,
-        detectSessionInUrl: true,
-      },
-      global: {
-        headers: {
-          'X-Client-Info': 'dfc-web-app',
-          'X-Source': 'web',
-        },
-      },
-    })
-    
-    // Enable RLS confirmation
-    console.log('🔒 DFC: Supabase connected with RLS enabled')
+    SUPABASE_ANON_KEY && !SUPABASE_ANON_KEY.includes('YOUR_ANON_KEY')) {
+    supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
   } else {
     console.warn('DFC: Supabase credentials not set.')
   }
@@ -122,7 +26,7 @@ let comments = []
 let currentSearchTerm = ''
 
 // ============================================================
-//  LOAD PRODUCTS with Security Checks
+//  LOAD PRODUCTS
 // ============================================================
 async function loadProducts() {
   const grid = document.getElementById('productsGrid')
@@ -131,68 +35,34 @@ async function loadProducts() {
       `<div style="grid-column:1/-1;text-align:center;padding:60px;color:#d4af37;">⚙️ Connect Supabase to display products.<br><small style="color:#888;font-size:12px">Add your credentials to script.js</small></div>`
     return
   }
-  
-  // Rate limit check
-  if (!checkRateLimit('search')) {
-    console.warn('⚠️ Rate limit exceeded for product loading')
-    if (grid) grid.innerHTML =
-      `<div style="grid-column:1/-1;text-align:center;padding:60px;color:#ff8888;">⏳ Too many requests. Please wait a moment.</div>`
-    return
-  }
-  
   try {
     const { data, error } = await supabase
       .from('products')
       .select('*')
       .order('created_at', { ascending: false })
-      .limit(50) // Limit results for performance
-    
     if (error) throw error
-    
-    // Sanitize product data
-    products = (data || []).map(p => ({
-      ...p,
-      name: sanitizeInput(p.name),
-      details: sanitizeInput(p.details),
-      price: sanitizeInput(p.price),
-    }))
-    
+    products = data || []
     renderProducts()
   } catch (err) {
     console.error('Error loading products:', err)
     if (grid) grid.innerHTML =
-      `<div style="grid-column:1/-1;text-align:center;padding:60px;color:#ff8888;">⚠️ Unable to load products. Please try again later.</div>`
+      `<div style="grid-column:1/-1;text-align:center;padding:60px;">⚠️ Unable to load products. Check Supabase connection.</div>`
   }
 }
 
 // ============================================================
-//  LOAD COMMENTS with Security Checks
+//  LOAD COMMENTS
 // ============================================================
 async function loadComments() {
   if (!supabase) return
-  
-  // Rate limit check
-  if (!checkRateLimit('comments')) {
-    console.warn('⚠️ Rate limit exceeded for comments')
-    return
-  }
-  
   try {
     const { data, error } = await supabase
       .from('comments')
       .select('*')
       .order('created_at', { ascending: false })
       .limit(20)
-    
     if (error) throw error
-    
-    // Sanitize comment data
-    comments = (data || []).map(c => ({
-      ...c,
-      name: sanitizeInput(c.name),
-      text: sanitizeInput(c.text),
-    }))
-    
+    comments = data || []
     renderComments()
   } catch (err) {
     console.error('Error loading comments:', err)
@@ -200,46 +70,42 @@ async function loadComments() {
 }
 
 // ============================================================
-//  RENDER PRODUCTS with XSS Protection
+//  RENDER PRODUCTS
 // ============================================================
 function renderProducts() {
   const container = document.getElementById('productsGrid')
   if (!container) return
-  
   let filtered = products
   if (currentSearchTerm.trim()) {
-    const term = currentSearchTerm.toLowerCase().trim()
+    const term = currentSearchTerm.toLowerCase()
     filtered = products.filter(p =>
       (p.name || '').toLowerCase().includes(term) ||
       (p.details || '').toLowerCase().includes(term)
     )
   }
-  
   if (!filtered.length) {
     container.innerHTML =
       `<div style="grid-column:1/-1;text-align:center;padding:60px;color:#6a5c48;">✨ No products found. ✨</div>`
     return
   }
-  
   container.innerHTML = filtered.map(prod => `
-    <div class="product-card" data-id="${sanitizeInput(prod.id)}">
+    <div class="product-card" data-id="${prod.id}">
       <div class="product-image-wrapper">
         <img class="product-img"
-          src="${sanitizeInput(prod.image_url || prod.imageUrl || '')}"
-          alt="${sanitizeInput(prod.name)}"
-          loading="lazy"
+          src="${escapeHtml(prod.image_url || prod.imageUrl || '')}"
+          alt="${escapeHtml(prod.name)}"
           onerror="this.src='https://placehold.co/400x500/111111/d4af37?text=LUXE'">
         <div class="product-overlay">
-          <button class="quick-view-btn" onclick="event.stopPropagation();openProductModalById('${sanitizeInput(prod.id)}')">
+          <button class="quick-view-btn" onclick="event.stopPropagation();openProductModalById('${prod.id}')">
             <i class="fas fa-eye"></i> Quick View
           </button>
         </div>
         <div class="product-badge">New</div>
       </div>
       <div class="product-info">
-        <div class="product-name">${sanitizeInput(prod.name)}</div>
-        <div class="product-price">${sanitizeInput(prod.price)}</div>
-        <div class="product-desc-short">${sanitizeInput((prod.details || '').substring(0, 70))}${(prod.details || '').length > 70 ? '...' : ''}</div>
+        <div class="product-name">${escapeHtml(prod.name)}</div>
+        <div class="product-price">${escapeHtml(prod.price)}</div>
+        <div class="product-desc-short">${escapeHtml((prod.details || '').substring(0, 70))}${(prod.details || '').length > 70 ? '...' : ''}</div>
       </div>
     </div>
   `).join('')
@@ -253,36 +119,34 @@ function renderProducts() {
 }
 
 // ============================================================
-//  RENDER COMMENTS with XSS Protection
+//  RENDER COMMENTS
 // ============================================================
 function renderComments() {
   const container = document.getElementById('commentsList')
   if (!container) return
-  
   if (!comments.length) {
     container.innerHTML =
       `<div style="grid-column:1/-1;text-align:center;padding:40px;color:#6a5c48;">No reviews yet. Be the first to share!</div>`
     return
   }
-  
   container.innerHTML = comments.map((c, index) => {
     const isFeatured = index === 0
     return `
     <div class="comment-card ${isFeatured ? 'featured' : ''}">
       ${isFeatured ? '<div class="review-quote">❝</div>' : ''}
-      ${isFeatured ? `<div class="rating-stars" style="margin-bottom:8px;">
+      ${isFeatured ? `<div class="rating-stars" style="margin-bottom:8px;color:#d4af37;font-size:0.9rem;">
         <i class="fas fa-star"></i>
         <i class="fas fa-star"></i>
         <i class="fas fa-star"></i>
         <i class="fas fa-star"></i>
         <i class="fas fa-star"></i>
       </div>` : ''}
-      <div class="comment-text">${sanitizeInput(c.text)}</div>
+      <div class="comment-text">${escapeHtml(c.text)}</div>
       <div class="comment-author">
-        <div class="comment-initials">${sanitizeInput((c.name || 'U')[0].toUpperCase())}</div>
+        <div class="comment-initials">${escapeHtml((c.name || 'U')[0].toUpperCase())}</div>
         <div>
-          <div class="comment-name">${sanitizeInput(c.name || 'Anonymous')}</div>
-          <div class="comment-date">${sanitizeInput(c.date || 'recent')}</div>
+          <div class="comment-name">${escapeHtml(c.name || 'Anonymous')}</div>
+          <div class="comment-date">${c.date || 'recent'}</div>
         </div>
       </div>
     </div>
@@ -290,168 +154,200 @@ function renderComments() {
 }
 
 // ============================================================
-//  ADD COMMENT with Security Validation
+//  ADD COMMENT
 // ============================================================
 async function addComment(name, text) {
-  // Input validation
-  const cleanName = sanitizeInput(name.trim())
-  const cleanText = sanitizeInput(text.trim())
-  
-  if (!cleanName || !cleanText) {
-    alert('Please enter your name and comment.')
-    return
-  }
-  
-  // Length validation
-  if (cleanName.length > 50) {
-    alert('Name must be 50 characters or less.')
-    return
-  }
-  if (cleanText.length > 500) {
-    alert('Comment must be 500 characters or less.')
-    return
-  }
-  
-  // Rate limit check
-  if (!checkRateLimit('comments')) {
-    alert('Too many comments. Please wait a moment before posting again.')
-    return
-  }
-  
-  if (!supabase) {
-    alert('Supabase not connected.')
-    return
-  }
-  
-  try {
-    const { error } = await supabase.from('comments').insert([{
-      name: cleanName,
-      text: cleanText,
-      date: new Date().toLocaleDateString(),
-      created_at: new Date().toISOString()
-    }])
-    
-    if (error) throw error
-    
+  if (!name.trim() || !text.trim()) { alert('Please enter your name and comment.'); return }
+  if (!supabase) { alert('Supabase not connected.'); return }
+  const { error } = await supabase.from('comments').insert([{
+    name: name.trim(),
+    text: text.trim(),
+    date: new Date().toLocaleDateString(),
+    created_at: new Date().toISOString()
+  }])
+  if (error) { console.error(error); alert('Could not post comment.') } else {
     await loadComments()
     document.getElementById('commentName').value = ''
     document.getElementById('commentMsg').value = ''
-    
-  } catch (error) {
-    console.error('Error adding comment:', error)
-    alert('Could not post comment. Please try again later.')
   }
 }
 
 // ============================================================
-//  SUBSCRIBE with Security Validation
+//  SUBSCRIBE
 // ============================================================
 async function confirmSignup() {
   const emailInput = document.getElementById('signupEmail')
   const email = emailInput ? emailInput.value.trim() : ''
-  
-  if (!email || !isValidEmail(email)) {
-    alert('Please enter a valid email address.')
-    return
-  }
-  
-  // Rate limit check
-  if (!checkRateLimit('signup')) {
-    alert('Too many signup attempts. Please wait a moment.')
-    return
-  }
-  
-  if (!supabase) {
-    alert('Supabase not connected.')
-    return
-  }
-  
-  const cleanEmail = sanitizeInput(email)
-  
-  try {
-    const { error } = await supabase
-      .from('subscribers')
-      .insert([{ 
-        email: cleanEmail, 
-        created_at: new Date().toISOString() 
-      }])
-    
-    if (error) {
-      if (error.code === '23505') {
-        alert('You are already subscribed! ✨')
-      } else {
-        throw error
-      }
-    } else {
-      alert('Thank you for subscribing! ✨')
-    }
-    
-    closeModal('signupModal')
-    if (emailInput) emailInput.value = ''
-    
-  } catch (error) {
-    console.error('Error subscribing:', error)
-    alert('Subscription failed. Please try again later.')
-  }
+  if (!email || !email.includes('@')) { alert('Please enter a valid email.'); return }
+  if (!supabase) { alert('Supabase not connected.'); return }
+  const { error } = await supabase.from('subscribers').insert([{ email, created_at: new Date().toISOString() }])
+  if (error && error.code !== '23505') alert('Subscription failed: ' + error.message)
+  else alert('Thank you for subscribing! ✨')
+  closeModal('signupModal')
+  if (emailInput) emailInput.value = ''
 }
 
 // ============================================================
-//  WHATSAPP with Secure Messaging
+//  MODALS
+// ============================================================
+let currentProduct = null
+
+function openProductModal(product) {
+  currentProduct = product
+  const modal = document.getElementById('productModal')
+  if (!modal) return
+  document.getElementById('modalImage').src = product.image_url || product.imageUrl || ''
+  document.getElementById('modalName').innerText = product.name || ''
+  document.getElementById('modalPrice').innerText = product.price || ''
+  document.getElementById('modalDetails').innerText = product.details || ''
+  modal.style.display = 'flex'
+}
+
+function openProductModalById(id) {
+  const product = products.find(p => String(p.id) === String(id))
+  if (product) openProductModal(product)
+}
+
+window.openProductModalById = openProductModalById
+
+function openSignupModal() {
+  const modal = document.getElementById('signupModal')
+  if (modal) modal.style.display = 'flex'
+}
+
+function closeModal(id) {
+  const el = document.getElementById(id)
+  if (el) el.style.display = 'none'
+}
+
+// ============================================================
+//  WHATSAPP
 // ============================================================
 function sendWhatsApp() {
   if (!currentProduct) return
-  
-  const productName = sanitizeInput(currentProduct.name || '')
-  const productPrice = sanitizeInput(currentProduct.price || '')
-  const productDetails = sanitizeInput((currentProduct.details || '').substring(0, 120))
-  
-  const msg = `Hi! I'm interested in *${productName}* (Price: ${productPrice}). Details: ${productDetails}. Let's negotiate! ✨`
+  const msg =
+    `Hi! I'm interested in *${currentProduct.name}* (Price: ${currentProduct.price}). Details: ${(currentProduct.details || '').substring(0, 120)}. Let's negotiate! ✨`
   window.open(`https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank')
 }
 
-// ============================================================
-//  EXPOSE SECURE FUNCTIONS GLOBALLY
-// ============================================================
-window.openProductModalById = openProductModalById
-window.sanitizeInput = sanitizeInput
-window.checkRateLimit = checkRateLimit
-window.isValidEmail = isValidEmail
+function bookAppointment() {
+  window.open(`https://wa.me/${OWNER_WHATSAPP}?text=Hello!%20I'd%20like%20to%20book%20an%20appointment.`, '_blank')
+}
 
 // ============================================================
-//  INIT with Security Checks
+//  SEARCH
+// ============================================================
+function setupSearch() {
+  const input = document.getElementById('searchInput')
+  if (input) {
+    input.addEventListener('input', e => {
+      currentSearchTerm = e.target.value
+      renderProducts()
+    })
+  }
+}
+
+// ============================================================
+//  MOBILE MENU
+// ============================================================
+function setupMobileMenu() {
+  const hamburger = document.getElementById('hamburgerMenu')
+  const mobileNav = document.getElementById('mobileNav')
+  if (!hamburger || !mobileNav) return
+  hamburger.addEventListener('click', () => {
+    mobileNav.classList.toggle('open')
+    hamburger.querySelector('i').className = mobileNav.classList.contains('open') ?
+      'fas fa-times' : 'fas fa-bars'
+  })
+  mobileNav.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => {
+      mobileNav.classList.remove('open')
+      hamburger.querySelector('i').className = 'fas fa-bars'
+    })
+  )
+}
+
+// ============================================================
+//  LOGO FROM SUPABASE
+// ============================================================
+async function loadLogo() {
+  if (!supabase) return
+  try {
+    const { data } = await supabase
+      .from('settings')
+      .select('value')
+      .eq('key', 'logo_url')
+      .single()
+    if (data && data.value) {
+      const img = document.getElementById('brandLogoImg')
+      const txt = document.getElementById('brandLogoText')
+      if (img) { img.src = data.value;
+        img.style.display = 'block' }
+      if (txt) txt.style.display = 'none'
+    }
+  } catch (e) {}
+}
+
+// ============================================================
+//  UTILITY
+// ============================================================
+function escapeHtml(str) {
+  if (str == null) return ''
+  return String(str).replace(/[&<>"']/g, m =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]
+  )
+}
+
+function getById(id) { return document.getElementById(id) }
+
+function on(id, event, fn) {
+  const el = getById(id)
+  if (el) el.addEventListener(event, fn)
+}
+
+// ============================================================
+//  INIT
 // ============================================================
 document.addEventListener('DOMContentLoaded', async () => {
-  
-  // Validate CSP
-  validateCSP()
-  
+
   // Set contact info
-  const numEl = document.getElementById('whatsappNumberDisplay')
+  const numEl = getById('whatsappNumberDisplay')
   if (numEl) numEl.innerText = '+234 806 851 0863'
-  
-  const linkEl = document.getElementById('directWhatsappLink')
-  if (linkEl) {
-    linkEl.href = `https://wa.me/${OWNER_WHATSAPP}?text=Hello!%20I'm%20interested%20in%20your%20fashion%20collection%20at%20DFC!`
-  }
+  const linkEl = getById('directWhatsappLink')
+  if (linkEl) linkEl.href =
+    `https://wa.me/${OWNER_WHATSAPP}?text=Hello!%20I'm%20interested%20in%20your%20fashion%20collection%20at%20DFC!`
 
   setupSearch()
   setupMobileMenu()
 
-  // Event listeners with security checks
-  const signupBtn = document.getElementById('signupBtn')
-  if (signupBtn) {
-    signupBtn.addEventListener('click', (e) => {
-      e.preventDefault()
-      if (checkRateLimit('signup')) {
-        openSignupModal()
-      } else {
-        alert('Too many attempts. Please wait a moment.')
-      }
-    })
+  on('signupBtn', 'click', e => { e.preventDefault();
+    openSignupModal() })
+  on('mobileSignupBtn', 'click', e => { e.preventDefault();
+    openSignupModal() })
+  on('mobileBookBtn', 'click', e => { e.preventDefault();
+    bookAppointment() })
+
+  on('whatsappModalBtn', 'click', sendWhatsApp)
+  const productModal = getById('productModal')
+  if (productModal) {
+    const closeBtn = productModal.querySelector('.modal-close')
+    if (closeBtn) closeBtn.addEventListener('click', () => closeModal('productModal'))
+    window.addEventListener('click', e => { if (e.target === productModal) closeModal('productModal') })
   }
-  
-  // ... rest of event listeners with rate limiting ...
-  
+
+  on('closeSignupModal', 'click', () => closeModal('signupModal'))
+  on('confirmSignupBtn', 'click', confirmSignup)
+  const signupModal = getById('signupModal')
+  if (signupModal) {
+    window.addEventListener('click', e => { if (e.target === signupModal) closeModal('signupModal') })
+  }
+
+  on('submitCommentBtn', 'click', () => {
+    const name = (getById('commentName') || {}).value || ''
+    const msg = (getById('commentMsg') || {}).value || ''
+    addComment(name, msg)
+  })
+
   await loadLogo()
   await loadProducts()
   await loadComments()

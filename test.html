@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DFC - Database Test</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #ece6df;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: #111;
+            border: 1px solid #2a2a2a;
+            border-radius: 24px;
+            padding: 40px;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: #d4af37;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .status {
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+        .status.success {
+            background: #003300;
+            color: #88ff88;
+            border: 1px solid #006600;
+        }
+        .status.error {
+            background: #330000;
+            color: #ff8888;
+            border: 1px solid #660000;
+        }
+        .status.info {
+            background: #001133;
+            color: #88aaff;
+            border: 1px solid #002266;
+        }
+        .status.loading {
+            background: #1a1a1a;
+            color: #d4af37;
+            border: 1px solid #2a2a2a;
+        }
+        .data-preview {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-size: 13px;
+            color: #bcb09b;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .button {
+            background: #d4af37;
+            color: #0a0a0a;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+            transition: 0.3s;
+            margin-top: 16px;
+        }
+        .button:hover {
+            background: #c9a227;
+            transform: translateY(-2px);
+        }
+        .button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .log {
+            margin-top: 16px;
+            padding: 12px;
+            background: #0a0a0a;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #555;
+            max-height: 150px;
+            overflow-y: auto;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 DFC Database Test</h1>
+        
+        <div id="status" class="status loading">⏳ Testing database connection...</div>
+        
+        <div id="details" style="margin-top:16px;">
+            <p style="color:#888;font-size:13px;">Supabase URL: <span id="urlDisplay" style="color:#ece6df;">Loading...</span></p>
+            <p style="color:#888;font-size:13px;">Status: <span id="connectionStatus" style="color:#d4af37;">Connecting...</span></p>
+        </div>
+        
+        <div id="dataDisplay" class="data-preview" style="display:none;">
+            <p style="color:#d4af37;margin-bottom:8px;">📦 Products in Database:</p>
+            <div id="productList">Loading...</div>
+        </div>
+        
+        <button class="button" id="testBtn">🔄 Test Connection Again</button>
+        
+        <div class="log" id="log">
+            📋 Log will appear here...
+        </div>
+    </div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2"
+        }
+    }
+    </script>
+
+    <script type="module">
+        import { createClient } from '@supabase/supabase-js'
+
+        // ============================================================
+        //  YOUR SUPABASE CREDENTIALS - PASTE HERE
+        // ============================================================
+        const SUPABASE_URL = 'https://bbbxgvmlfcdumykiquqt.supabase.co'
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJiYnhndm1sZmNkdW15a2lxdXF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyNzIzNzEsImV4cCI6MjA5NDg0ODM3MX0.BKQdvUK4j_zjclMUspN1KuxcpWWTQv0dOdgrLvbPqyg'
+        // ============================================================
+
+        const logElement = document.getElementById('log')
+        const statusElement = document.getElementById('status')
+        const urlDisplay = document.getElementById('urlDisplay')
+        const connectionStatus = document.getElementById('connectionStatus')
+        const dataDisplay = document.getElementById('dataDisplay')
+        const productList = document.getElementById('productList')
+
+        function addLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString()
+            const icons = {
+                info: 'ℹ️',
+                success: '✅',
+                error: '❌',
+                warning: '⚠️'
+            }
+            logElement.innerHTML += `\n[${timestamp}] ${icons[type] || '📋'} ${message}`
+            logElement.scrollTop = logElement.scrollHeight
+            console.log(message)
+        }
+
+        function setStatus(type, message) {
+            statusElement.className = `status ${type}`
+            statusElement.textContent = message
+            connectionStatus.textContent = type === 'success' ? '✅ Connected' : 
+                                          type === 'error' ? '❌ Failed' : 
+                                          type === 'loading' ? '⏳ Testing...' : '🔄 Checking'
+        }
+
+        async function testConnection() {
+            setStatus('loading', '⏳ Testing database connection...')
+            addLog('Starting database connection test...', 'info')
+            
+            urlDisplay.textContent = SUPABASE_URL
+
+            try {
+                // Initialize Supabase
+                addLog('Initializing Supabase client...', 'info')
+                const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+                addLog('Supabase client created successfully', 'success')
+
+                // Test connection by fetching products
+                addLog('Fetching products from database...', 'info')
+                const { data: products, error: productsError } = await supabase
+                    .from('products')
+                    .select('*')
+                    .limit(5)
+
+                if (productsError) {
+                    addLog(`Products error: ${productsError.message}`, 'error')
+                    throw productsError
+                }
+
+                addLog(`Found ${products?.length || 0} products`, 'success')
+
+                // Test comments
+                addLog('Fetching comments from database...', 'info')
+                const { data: comments, error: commentsError } = await supabase
+                    .from('comments')
+                    .select('*')
+                    .limit(5)
+
+                if (commentsError) {
+                    addLog(`Comments error: ${commentsError.message}`, 'warning')
+                } else {
+                    addLog(`Found ${comments?.length || 0} comments`, 'success')
+                }
+
+                // Display results
+                setStatus('success', `✅ Connected! Found ${products?.length || 0} products and ${comments?.length || 0} comments.`)
+                
+                dataDisplay.style.display = 'block'
+                if (products && products.length > 0) {
+                    productList.innerHTML = products.map(p => `
+                        <div style="padding:8px 0;border-bottom:1px solid #1a1a1a;">
+                            <strong style="color:#d4af37;">${p.name || 'Unnamed'}</strong>
+                            <span style="color:#888;margin-left:12px;">${p.price || 'No price'}</span>
+                            <span style="color:#555;font-size:11px;margin-left:8px;">ID: ${p.id?.substring(0,8) || 'N/A'}</span>
+                        </div>
+                    `).join('')
+                } else {
+                    productList.innerHTML = `
+                        <p style="color:#6a5c48;">📭 No products found in database.</p>
+                        <p style="color:#555;font-size:12px;margin-top:4px;">Go to admin.html to add your first product.</p>
+                    `
+                }
+
+                addLog('✅ Database test completed successfully!', 'success')
+                return true
+
+            } catch (error) {
+                setStatus('error', `❌ Connection failed: ${error.message}`)
+                addLog(`❌ Error: ${error.message}`, 'error')
+                
+                dataDisplay.style.display = 'block'
+                productList.innerHTML = `
+                    <p style="color:#ff8888;">❌ Error connecting to database</p>
+                    <p style="color:#888;font-size:12px;margin-top:8px;">
+                        ${error.message}
+                    </p>
+                    <p style="color:#555;font-size:12px;margin-top:8px;">
+                        Possible causes:
+                        <br>• Incorrect SUPABASE_URL or SUPABASE_ANON_KEY
+                        <br>• Database tables not created
+                        <br>• RLS policies blocking access
+                        <br>• Network connectivity issues
+                    </p>
+                `
+                return false
+            }
+        }
+
+        // Run test on load
+        document.getElementById('testBtn').addEventListener('click', testConnection)
+        testConnection()
+    </script>
+</body>
+</html>

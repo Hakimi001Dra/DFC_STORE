@@ -28,6 +28,41 @@ let comments = []
 let currentSearchTerm = ''
 
 // ============================================================
+//  LOAD LOGO
+// ============================================================
+async function loadLogo() {
+  if (!supabase || !isSupabaseConnected) return
+
+  try {
+    const { data, error } = await supabase
+      .from('settings')
+      .select('value')
+      .eq('key', 'logo_url')
+      .single()
+
+    if (error) {
+      console.log('ℹ️ No logo found')
+      return
+    }
+
+    if (data && data.value) {
+      const img = document.getElementById('brandLogoImg')
+      const txt = document.getElementById('brandLogoText')
+      if (img) {
+        img.src = data.value
+        img.style.display = 'block'
+        img.style.height = '40px'
+        img.style.objectFit = 'contain'
+      }
+      if (txt) txt.style.display = 'none'
+      console.log('✅ Logo loaded')
+    }
+  } catch (err) {
+    console.log('ℹ️ Logo not configured')
+  }
+}
+
+// ============================================================
 //  LOAD PRODUCTS
 // ============================================================
 async function loadProducts() {
@@ -361,7 +396,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     addComment(name, msg)
   })
 
-  // Load data
+  // Load logo FIRST
+  await loadLogo()
+  
+  // Then load data
   await loadProducts()
   await loadComments()
 

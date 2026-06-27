@@ -407,7 +407,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   })
 
  // ============================================================
-//  LOAD LOGO - NO BORDER, CLEAN
+//  LOAD LOGO - CIRCULAR
 // ============================================================
 async function loadLogo() {
   if (!supabase || !isSupabaseConnected) return
@@ -420,7 +420,7 @@ async function loadLogo() {
       .single()
 
     if (error) {
-      console.log('ℹ️ No logo found in settings - using text logo')
+      console.log('ℹ️ No logo found - using text logo')
       return
     }
 
@@ -431,13 +431,12 @@ async function loadLogo() {
       if (img) {
         img.src = data.value
         img.style.display = 'block'
-        img.style.width = '44px'
-        img.style.height = '44px'
-        img.style.borderRadius = '50%'
+        img.style.width = '100%'
+        img.style.height = '100%'
         img.style.objectFit = 'cover'
+        img.style.borderRadius = '50%'
         img.style.border = 'none'
         img.style.outline = 'none'
-        img.style.boxShadow = 'none'
         img.style.background = 'transparent'
         img.classList.add('visible')
       }
@@ -445,7 +444,7 @@ async function loadLogo() {
       // Hide text logo when image is available
       if (txt) txt.style.display = 'none'
       
-      console.log('✅ Logo loaded successfully (no border)')
+      console.log('✅ Circular logo loaded')
     }
   } catch (err) {
     console.log('ℹ️ Logo not configured')

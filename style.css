@@ -63,38 +63,83 @@ body {
   flex-shrink: 0;
 }
 
-/* ── LOGO - CIRCLE ── */
+/* ============================================================
+   HEADER - LOGO STYLES
+   ============================================================ */
+
+.brand-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+/* ── LOGO IMAGE - CLEAN, NO BORDER ── */
 #brandLogoImg {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #d4af37;
-  background: #111;
+  object-fit: contain;
+  background: transparent;
   display: none;
   transition: all 0.3s ease;
 }
 
 #brandLogoImg:hover {
   transform: scale(1.05);
-  border-color: #f5d97e;
 }
 
 .logo-text {
   font-family: 'Playfair Display', serif;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: 800;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   color: #ffffff;
   line-height: 1;
 }
 
+.logo-text .gold {
+  color: #d4af37;
+}
+
 .logo-tagline {
-  font-size: 0.45rem;
-  letter-spacing: 1px;
+  font-size: 0.5rem;
+  letter-spacing: 1.5px;
   color: #d4af37;
   text-transform: uppercase;
-  display: none;
+  display: block;
+  margin-top: 1px;
+}
+
+/* ── RESPONSIVE LOGO ── */
+@media (max-width: 600px) {
+  #brandLogoImg {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .logo-text {
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+  }
+  
+  .logo-tagline {
+    font-size: 0.4rem;
+    letter-spacing: 1px;
+  }
+}
+
+@media (min-width: 769px) {
+  #brandLogoImg {
+    width: 56px;
+    height: 56px;
+  }
+  
+  .logo-text {
+    font-size: 1.6rem;
+    letter-spacing: 3px;
+  }
 }
 
 .main-nav {
@@ -1245,19 +1290,7 @@ textarea.form-input {
     padding: 0 24px;
   }
 
-  .logo-text {
-    font-size: 1.4rem;
-  }
 
-  .logo-tagline {
-    display: block;
-    font-size: 0.5rem;
-  }
-
-  #brandLogoImg {
-    width: 48px;
-    height: 48px;
-  }
 
   .search-area {
     width: 140px;

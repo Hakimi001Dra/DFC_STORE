@@ -38,7 +38,10 @@
   <header class="luxe-header" id="mainHeader">
     <div class="container header-main">
       <a href="#home" class="brand-area">
-        <div class="logo-text">DFC</div>
+        <!-- LOGO IMAGE (loaded from Supabase) -->
+        <img id="brandLogoImg" src="" alt="DFC Logo" style="display:none;height:40px;object-fit:contain;" />
+        <!-- FALLBACK TEXT LOGO -->
+        <div id="brandLogoText" class="logo-text">DFC</div>
         <span class="logo-tagline">Danfulani Collections</span>
       </a>
 
@@ -392,7 +395,25 @@
 
   <script src="script.js" type="module"></script>
   <script>
-    // Back to top
+    // ── LOGO LOADER ──
+    (async function loadLogo() {
+      try {
+        const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
+        const supabase = createClient(
+          'https://bbbxgvmlfcdumykiquqt.supabase.co',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJiYnhndm1sZmNkdW15a2lxdXF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyNzIzNzEsImV4cCI6MjA5NDg0ODM3MX0.BKQdvUK4j_zjclMUspN1KuxcpWWTQv0dOdgrLvbPqyg'
+        );
+        const { data } = await supabase.from('settings').select('value').eq('key', 'logo_url').single();
+        if (data && data.value) {
+          const img = document.getElementById('brandLogoImg');
+          const txt = document.getElementById('brandLogoText');
+          if (img) { img.src = data.value; img.style.display = 'block'; }
+          if (txt) txt.style.display = 'none';
+        }
+      } catch (e) { console.log('Logo not configured'); }
+    })();
+
+    // ── BACK TO TOP ──
     const btt = document.getElementById('backToTop');
     if (btt) {
       window.addEventListener('scroll', () => {
@@ -403,13 +424,7 @@
       });
     }
 
-    // Footer signup
-    document.getElementById('footerSignupBtn')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      document.getElementById('signupModal').style.display = 'flex';
-    });
-
-    // Header scroll effect
+    // ── HEADER SCROLL EFFECT ──
     const header = document.getElementById('mainHeader');
     if (header) {
       window.addEventListener('scroll', () => {
@@ -417,7 +432,7 @@
       });
     }
 
-    // Contact form
+    // ── CONTACT FORM ──
     document.getElementById('contactForm')?.addEventListener('submit', function(e) {
       e.preventDefault();
       const name = document.getElementById('contactName').value.trim();
@@ -434,7 +449,7 @@
       }
     });
 
-    // Close modals
+    // ── CLOSE MODALS ──
     document.querySelectorAll('.modal-close').forEach(btn => {
       btn.addEventListener('click', () => {
         const modal = btn.closest('.modal');
@@ -448,7 +463,7 @@
       });
     });
 
-    // Mobile menu
+    // ── MOBILE MENU ──
     const hamburger = document.getElementById('hamburgerMenu');
     const mobileNav = document.getElementById('mobileNav');
     if (hamburger && mobileNav) {
@@ -457,6 +472,17 @@
         hamburger.querySelector('i').className = mobileNav.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
       });
     }
+
+    // ── SIGNUP MODAL ──
+    document.getElementById('signupBtn')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('signupModal').style.display = 'flex';
+    });
+
+    document.getElementById('mobileSignupBtn')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('signupModal').style.display = 'flex';
+    });
   </script>
 </body>
 </html>

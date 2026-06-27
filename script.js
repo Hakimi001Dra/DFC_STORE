@@ -10,18 +10,9 @@ let supabase = null
 let isSupabaseConnected = false
 
 try {
-  if (SUPABASE_URL && !SUPABASE_URL.includes('YOUR_PROJECT_REF') &&
-      SUPABASE_ANON_KEY && !SUPABASE_ANON_KEY.includes('YOUR_ANON_KEY')) {
-    supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-      auth: {
-        autoRefreshToken: true,
-        persistSession: true,
-        detectSessionInUrl: true
-      }
-    })
-    isSupabaseConnected = true
-    console.log('✅ Supabase connected')
-  }
+  supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  isSupabaseConnected = true
+  console.log('✅ Supabase connected')
 } catch (e) {
   console.error('❌ Supabase init failed:', e)
 }
@@ -55,7 +46,6 @@ async function loadLogo() {
       if (img) {
         img.src = data.value
         img.style.display = 'block'
-        img.classList.add('visible')
       }
       
       if (txt) txt.style.display = 'none'

@@ -406,8 +406,49 @@ document.addEventListener('DOMContentLoaded', async () => {
     addComment(name, msg)
   })
 
-  // Load logo FIRST
-  await loadLogo()
+  // ============================================================
+//  LOAD LOGO - CLEAN, NO BORDER
+// ============================================================
+async function loadLogo() {
+  if (!supabase || !isSupabaseConnected) return
+
+  try {
+    const { data, error } = await supabase
+      .from('settings')
+      .select('value')
+      .eq('key', 'logo_url')
+      .single()
+
+    if (error) {
+      console.log('ℹ️ No logo found in settings')
+      return
+    }
+
+    if (data && data.value) {
+      const img = document.getElementById('brandLogoImg')
+      const txt = document.getElementById('brandLogoText')
+      
+      if (img) {
+        img.src = data.value
+        img.style.display = 'block'
+        img.style.width = '48px'
+        img.style.height = '48px'
+        img.style.borderRadius = '50%'
+        img.style.objectFit = 'contain'
+        img.style.background = 'transparent'
+        img.style.border = 'none'
+        img.style.boxShadow = 'none'
+      }
+      
+      // Hide text logo when image is available
+      if (txt) txt.style.display = 'none'
+      
+      console.log('✅ Logo loaded successfully')
+    }
+  } catch (err) {
+    console.log('ℹ️ Logo not configured')
+  }
+}
   
   // Then load data
   await loadProducts()

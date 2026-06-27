@@ -406,8 +406,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     addComment(name, msg)
   })
 
-  // ============================================================
-//  LOAD LOGO - CLEAN, NO BORDER
+ // ============================================================
+//  LOAD LOGO - NO BORDER, CLEAN
 // ============================================================
 async function loadLogo() {
   if (!supabase || !isSupabaseConnected) return
@@ -420,7 +420,7 @@ async function loadLogo() {
       .single()
 
     if (error) {
-      console.log('ℹ️ No logo found in settings')
+      console.log('ℹ️ No logo found in settings - using text logo')
       return
     }
 
@@ -431,19 +431,21 @@ async function loadLogo() {
       if (img) {
         img.src = data.value
         img.style.display = 'block'
-        img.style.width = '48px'
-        img.style.height = '48px'
+        img.style.width = '44px'
+        img.style.height = '44px'
         img.style.borderRadius = '50%'
-        img.style.objectFit = 'contain'
-        img.style.background = 'transparent'
+        img.style.objectFit = 'cover'
         img.style.border = 'none'
+        img.style.outline = 'none'
         img.style.boxShadow = 'none'
+        img.style.background = 'transparent'
+        img.classList.add('visible')
       }
       
       // Hide text logo when image is available
       if (txt) txt.style.display = 'none'
       
-      console.log('✅ Logo loaded successfully')
+      console.log('✅ Logo loaded successfully (no border)')
     }
   } catch (err) {
     console.log('ℹ️ Logo not configured')

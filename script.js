@@ -15,21 +15,9 @@ let isSupabaseConnected = false
 try {
   if (SUPABASE_URL && !SUPABASE_URL.includes('YOUR_PROJECT_REF') &&
       SUPABASE_ANON_KEY && !SUPABASE_ANON_KEY.includes('YOUR_ANON_KEY')) {
-    supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-      auth: {
-        autoRefreshToken: true,
-        persistSession: true,
-      },
-      global: {
-        headers: {
-          'X-Client-Info': 'dfc-web-app',
-        },
-      },
-    })
+    supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
     isSupabaseConnected = true
-    console.log('✅ Supabase connected successfully')
-  } else {
-    console.warn('⚠️ Supabase credentials not set.')
+    console.log('✅ Supabase connected')
   }
 } catch (e) {
   console.error('❌ Supabase init failed:', e)
@@ -56,7 +44,7 @@ async function loadProducts() {
   if (!supabase || !isSupabaseConnected) {
     grid.innerHTML = `
       <div style="grid-column:1/-1;text-align:center;padding:40px;color:#ff8888;">
-        <p>⚠️ Database not connected. Please check credentials.</p>
+        <p>⚠️ Database not connected.</p>
       </div>
     `
     return
@@ -77,7 +65,6 @@ async function loadProducts() {
       grid.innerHTML = `
         <div style="grid-column:1/-1;text-align:center;padding:40px;color:#6a5c48;">
           <p>No products available yet.</p>
-          <p style="font-size:0.85rem;">Add products through the admin panel.</p>
         </div>
       `
       return
@@ -89,7 +76,6 @@ async function loadProducts() {
     grid.innerHTML = `
       <div style="grid-column:1/-1;text-align:center;padding:40px;color:#ff8888;">
         <p>⚠️ Failed to load products.</p>
-        <p style="font-size:0.85rem;color:#888;">${err.message}</p>
       </div>
     `
   }
@@ -174,7 +160,7 @@ function renderProducts() {
           onerror="this.src='https://placehold.co/400x500/111111/d4af37?text=DFC'">
         <div class="product-overlay">
           <button class="quick-view-btn" onclick="event.stopPropagation();openProductModalById('${prod.id}')">
-            <i class="fas fa-eye"></i> Quick View
+            <i class="fas fa-eye"></i> View
           </button>
         </div>
         <div class="product-badge">New</div>
@@ -182,7 +168,7 @@ function renderProducts() {
       <div class="product-info">
         <div class="product-name">${prod.name || 'Unnamed'}</div>
         <div class="product-price">${prod.price || '₦0'}</div>
-        <div class="product-desc-short">${(prod.details || '').substring(0, 70)}${(prod.details || '').length > 70 ? '...' : ''}</div>
+        <div class="product-desc-short">${(prod.details || '').substring(0, 70)}</div>
       </div>
     </div>
   `).join('')
@@ -205,7 +191,7 @@ function renderComments() {
   if (!comments.length) {
     container.innerHTML = `
       <div style="grid-column:1/-1;text-align:center;padding:20px;color:#6a5c48;">
-        <p>No reviews yet. Be the first to share!</p>
+        <p>No reviews yet. Be the first!</p>
       </div>
     `
     return
@@ -235,7 +221,7 @@ async function addComment(name, text) {
   }
 
   if (!supabase || !isSupabaseConnected) {
-    alert('Database not connected. Please try again later.')
+    alert('Database not connected.')
     return
   }
 
@@ -254,7 +240,7 @@ async function addComment(name, text) {
     document.getElementById('commentMsg').value = ''
   } catch (err) {
     console.error('Error adding comment:', err)
-    alert('Could not post comment. Please try again later.')
+    alert('Could not post comment.')
   }
 }
 
@@ -266,12 +252,12 @@ async function confirmSignup() {
   const email = emailInput ? emailInput.value.trim() : ''
 
   if (!email || !email.includes('@')) {
-    alert('Please enter a valid email address.')
+    alert('Please enter a valid email.')
     return
   }
 
   if (!supabase || !isSupabaseConnected) {
-    alert('Database not connected. Please try again later.')
+    alert('Database not connected.')
     return
   }
 
@@ -285,7 +271,7 @@ async function confirmSignup() {
 
     if (error) {
       if (error.code === '23505') {
-        alert('You are already subscribed! ✨')
+        alert('Already subscribed! ✨')
       } else {
         throw error
       }
@@ -293,11 +279,11 @@ async function confirmSignup() {
       alert('Thank you for subscribing! ✨')
     }
 
-    closeModal('signupModal')
+    document.getElementById('signupModal').style.display = 'none'
     if (emailInput) emailInput.value = ''
   } catch (err) {
     console.error('Error subscribing:', err)
-    alert('Subscription failed. Please try again later.')
+    alert('Subscription failed.')
   }
 }
 
@@ -325,27 +311,10 @@ function openProductModalById(id) {
 
 window.openProductModalById = openProductModalById
 
-function openSignupModal() {
-  const modal = document.getElementById('signupModal')
-  if (modal) modal.style.display = 'flex'
-}
-
-function closeModal(id) {
-  const el = document.getElementById(id)
-  if (el) el.style.display = 'none'
-}
-
-// ============================================================
-//  WHATSAPP
-// ============================================================
 function sendWhatsApp() {
   if (!currentProduct) return
-  const msg = `Hi! I'm interested in *${currentProduct.name}* (Price: ${currentProduct.price}). Let's negotiate! ✨`
+  const msg = `Hi! I'm interested in *${currentProduct.name}* (${currentProduct.price}). Let's negotiate! ✨`
   window.open(`https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank')
-}
-
-function bookAppointment() {
-  window.open(`https://wa.me/${OWNER_WHATSAPP}?text=Hello!%20I'd%20like%20to%20book%20an%20appointment.`, '_blank')
 }
 
 // ============================================================
@@ -362,87 +331,28 @@ function setupSearch() {
 }
 
 // ============================================================
-//  MOBILE MENU
-// ============================================================
-function setupMobileMenu() {
-  const hamburger = document.getElementById('hamburgerMenu')
-  const mobileNav = document.getElementById('mobileNav')
-  if (!hamburger || !mobileNav) return
-
-  hamburger.addEventListener('click', () => {
-    mobileNav.classList.toggle('open')
-    hamburger.querySelector('i').className = mobileNav.classList.contains('open') ?
-      'fas fa-times' : 'fas fa-bars'
-  })
-
-  mobileNav.querySelectorAll('a').forEach(a =>
-    a.addEventListener('click', () => {
-      mobileNav.classList.remove('open')
-      hamburger.querySelector('i').className = 'fas fa-bars'
-    })
-  )
-}
-
-// ============================================================
-//  LOGO FROM SUPABASE
-// ============================================================
-async function loadLogo() {
-  if (!supabase || !isSupabaseConnected) return
-
-  try {
-    const { data } = await supabase
-      .from('settings')
-      .select('value')
-      .eq('key', 'logo_url')
-      .single()
-
-    if (data && data.value) {
-      const img = document.getElementById('brandLogoImg')
-      const txt = document.getElementById('brandLogoText')
-      if (img) { 
-        img.src = data.value
-        img.style.display = 'block'
-      }
-      if (txt) txt.style.display = 'none'
-    }
-  } catch (err) {
-    console.log('Logo not configured yet')
-  }
-}
-
-// ============================================================
 //  INIT
 // ============================================================
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('🚀 DFC Website Initializing...')
 
-  // Set contact info
-  const numEl = document.getElementById('whatsappNumberDisplay')
-  if (numEl) numEl.innerText = '+234 806 851 0863'
-
-  const linkEl = document.getElementById('directWhatsappLink')
-  if (linkEl) {
-    linkEl.href = `https://wa.me/${OWNER_WHATSAPP}?text=Hello!%20I'm%20interested%20in%20your%20fashion%20collection%20at%20DFC!`
-  }
-
   setupSearch()
-  setupMobileMenu()
 
-  // Event listeners
-  document.getElementById('signupBtn')?.addEventListener('click', e => { e.preventDefault(); openSignupModal() })
-  document.getElementById('mobileSignupBtn')?.addEventListener('click', e => { e.preventDefault(); openSignupModal() })
-  document.getElementById('mobileBookBtn')?.addEventListener('click', e => { e.preventDefault(); bookAppointment() })
-  document.getElementById('whatsappModalBtn')?.addEventListener('click', sendWhatsApp)
+  // Signup
+  document.getElementById('signupBtn')?.addEventListener('click', e => {
+    e.preventDefault()
+    document.getElementById('signupModal').style.display = 'flex'
+  })
 
-  // Product modal close
-  const productModal = document.getElementById('productModal')
-  if (productModal) {
-    productModal.querySelector('.modal-close')?.addEventListener('click', () => closeModal('productModal'))
-  }
+  document.getElementById('mobileSignupBtn')?.addEventListener('click', e => {
+    e.preventDefault()
+    document.getElementById('signupModal').style.display = 'flex'
+  })
 
-  // Signup modal
-  document.getElementById('closeSignupModal')?.addEventListener('click', () => closeModal('signupModal'))
   document.getElementById('confirmSignupBtn')?.addEventListener('click', confirmSignup)
+
+  // WhatsApp
+  document.getElementById('whatsappModalBtn')?.addEventListener('click', sendWhatsApp)
 
   // Submit comment
   document.getElementById('submitCommentBtn')?.addEventListener('click', () => {
@@ -452,7 +362,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   })
 
   // Load data
-  await loadLogo()
   await loadProducts()
   await loadComments()
 

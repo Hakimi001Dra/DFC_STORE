@@ -4,25 +4,38 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
   
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- SECURITY HEADERS - FIXED CSP                                -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- CSP: Allow Supabase connections -->
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'self';
     script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://esm.sh https://*.supabase.co;
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
     img-src 'self' data: https: https://*.supabase.co https://placehold.co;
     font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
-    connect-src 'self' https://*.supabase.co wss://*.supabase.co;
+    connect-src 'self' https://bbbxgvmlfcdumykiquqt.supabase.co https://*.supabase.co wss://*.supabase.co;
     frame-src 'none';
     object-src 'none';
     base-uri 'self';
     form-action 'self';
   ">
+  
+  <!-- X-Content-Type-Options: Prevent MIME sniffing -->
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="X-Frame-Options" content="DENY">
+  
+  <!-- Referrer Policy -->
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- DEPRECATED META FIXED - Use mobile-web-app-capable instead -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   
   <meta name="description" content="Danfulani Collections Limited (DFC) - Empowering Talents, Delivering Excellence. Premium fashion design, tailoring, shoe making, branding, and interior decoration services in Nigeria." />
   <meta name="theme-color" content="#0a0a0a">
-  <meta name="apple-mobile-web-app-capable" content="yes">
   
   <title>DANFULANI COLLECTIONS LIMITED | Empowering Talents, Delivering Excellence</title>
   <link rel="stylesheet" href="style.css" />
@@ -57,7 +70,7 @@
           <input type="text" id="searchInput" placeholder="Search..." maxlength="100" aria-label="Search products" />
         </div>
         <a href="#" id="signupBtn" class="btn-subscribe">Subscribe</a>
-       
+        <a href="admin.html" class="admin-link" title="Admin" aria-label="Admin Panel"><i class="fas fa-lock"></i></a>
         <button class="hamburger" id="hamburgerMenu" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
       </div>
     </div>
@@ -101,7 +114,7 @@
         </div>
         <div class="hero-stats">
           <div class="stat">
-            <span class="stat-number">5+</span>
+            <span class="stat-number">10+</span>
             <span class="stat-label">Years Experience</span>
           </div>
           <div class="stat">
@@ -266,7 +279,7 @@
               </div>
               <div class="image-small">
                 <div class="image-placeholder">
-                  <span>✦ 5+ Years</span>
+                  <span>✦ 10+ Years</span>
                   <span style="font-size:0.7rem;color:#6a5c48;display:block;margin-top:4px;">of Excellence</span>
                 </div>
               </div>
@@ -395,7 +408,7 @@
     <div class="footer-bottom">
       <div class="container footer-bottom-inner">
         <p>© 2026 DFC. All rights reserved.</p>
-        <p>Built with ❤️ by Mudas Systems Ltd. in Abuja, Nigeria</p>
+        <p>Built with ❤️ in Abuja</p>
         <span class="secure-badge"><i class="fas fa-shield-alt"></i> Secure</span>
       </div>
     </div>

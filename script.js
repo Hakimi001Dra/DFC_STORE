@@ -51,8 +51,11 @@ async function loadLogo() {
       if (img) {
         img.src = data.value
         img.style.display = 'block'
-        img.style.height = '40px'
-        img.style.objectFit = 'contain'
+        img.style.width = '44px'
+        img.style.height = '44px'
+        img.style.borderRadius = '50%'
+        img.style.objectFit = 'cover'
+        img.style.border = '2px solid #d4af37'
       }
       if (txt) txt.style.display = 'none'
       console.log('✅ Logo loaded')
@@ -323,7 +326,7 @@ async function confirmSignup() {
 }
 
 // ============================================================
-//  MODALS
+//  MODALS - FIXED: Full Image
 // ============================================================
 let currentProduct = null
 
@@ -332,7 +335,14 @@ function openProductModal(product) {
   const modal = document.getElementById('productModal')
   if (!modal) return
   
-  document.getElementById('modalImage').src = product.image_url || product.imageUrl || 'https://placehold.co/400x500/111111/d4af37?text=DFC'
+  // ── FULL IMAGE - object-fit: contain ──
+  const img = document.getElementById('modalImage')
+  img.src = product.image_url || product.imageUrl || 'https://placehold.co/400x500/111111/d4af37?text=DFC'
+  img.style.objectFit = 'contain'
+  img.style.width = '100%'
+  img.style.height = 'auto'
+  img.style.maxHeight = '55vh'
+  
   document.getElementById('modalName').innerText = product.name || ''
   document.getElementById('modalPrice').innerText = product.price || ''
   document.getElementById('modalDetails').innerText = product.details || ''

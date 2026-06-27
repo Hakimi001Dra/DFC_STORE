@@ -1,7 +1,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 // ============================================================
-//  SUPABASE CREDENTIALS - VERIFY THESE ARE CORRECT
+//  SUPABASE CREDENTIALS
 // ============================================================
 const SUPABASE_URL = 'https://bbbxgvmlfcdumykiquqt.supabase.co'
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJiYnhndm1sZmNkdW15a2lxdXF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyNzIzNzEsImV4cCI6MjA5NDg0ODM3MX0.BKQdvUK4j_zjclMUspN1KuxcpWWTQv0dOdgrLvbPqyg'
@@ -9,9 +9,6 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 const OWNER_WHATSAPP = '2348068510863'
 
-// ============================================================
-//  INITIALIZE SUPABASE CLIENT
-// ============================================================
 let supabase = null
 let isSupabaseConnected = false
 
@@ -32,7 +29,7 @@ try {
     isSupabaseConnected = true
     console.log('✅ Supabase connected successfully')
   } else {
-    console.warn('⚠️ Supabase credentials not set. Please update SUPABASE_URL and SUPABASE_ANON_KEY')
+    console.warn('⚠️ Supabase credentials not set.')
   }
 } catch (e) {
   console.error('❌ Supabase init failed:', e)
@@ -43,53 +40,44 @@ let comments = []
 let currentSearchTerm = ''
 
 // ============================================================
-//  LOAD PRODUCTS FROM SUPABASE
+//  LOAD PRODUCTS
 // ============================================================
 async function loadProducts() {
   const grid = document.getElementById('productsGrid')
   if (!grid) return
 
-  // Show loading state
   grid.innerHTML = `
-    <div style="grid-column:1/-1;text-align:center;padding:60px;color:#d4af37;">
-      <i class="fas fa-spinner fa-spin" style="font-size:2rem;"></i>
-      <p style="margin-top:12px;">Loading products...</p>
+    <div style="grid-column:1/-1;text-align:center;padding:40px;color:#d4af37;">
+      <i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i>
+      <p style="margin-top:8px;">Loading products...</p>
     </div>
   `
 
   if (!supabase || !isSupabaseConnected) {
     grid.innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:60px;color:#ff8888;">
-        <i class="fas fa-database" style="font-size:2rem;"></i>
-        <p style="margin-top:12px;">⚠️ Database not connected.</p>
-        <p style="color:#888;font-size:0.85rem;margin-top:8px;">Please check your Supabase credentials in script.js</p>
+      <div style="grid-column:1/-1;text-align:center;padding:40px;color:#ff8888;">
+        <p>⚠️ Database not connected. Please check credentials.</p>
       </div>
     `
     return
   }
 
   try {
-    console.log('🔄 Fetching products from Supabase...')
     const { data, error } = await supabase
       .from('products')
       .select('*')
       .order('created_at', { ascending: false })
 
-    if (error) {
-      console.error('❌ Supabase error:', error)
-      throw error
-    }
+    if (error) throw error
 
-    console.log(`✅ Loaded ${data?.length || 0} products`)
     products = data || []
+    console.log(`✅ Loaded ${products.length} products`)
     
-    // If no products, show message
     if (products.length === 0) {
       grid.innerHTML = `
-        <div style="grid-column:1/-1;text-align:center;padding:60px;color:#6a5c48;">
-          <i class="fas fa-box-open" style="font-size:2.5rem;display:block;margin-bottom:12px;"></i>
+        <div style="grid-column:1/-1;text-align:center;padding:40px;color:#6a5c48;">
           <p>No products available yet.</p>
-          <p style="font-size:0.85rem;margin-top:4px;">Add products through the admin panel.</p>
+          <p style="font-size:0.85rem;">Add products through the admin panel.</p>
         </div>
       `
       return
@@ -99,61 +87,53 @@ async function loadProducts() {
   } catch (err) {
     console.error('❌ Error loading products:', err)
     grid.innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:60px;color:#ff8888;">
-        <i class="fas fa-exclamation-triangle" style="font-size:2rem;"></i>
-        <p style="margin-top:12px;">⚠️ Failed to load products.</p>
-        <p style="color:#888;font-size:0.85rem;margin-top:8px;">${err.message || 'Please check your database connection.'}</p>
+      <div style="grid-column:1/-1;text-align:center;padding:40px;color:#ff8888;">
+        <p>⚠️ Failed to load products.</p>
+        <p style="font-size:0.85rem;color:#888;">${err.message}</p>
       </div>
     `
   }
 }
 
 // ============================================================
-//  LOAD COMMENTS FROM SUPABASE
+//  LOAD COMMENTS
 // ============================================================
 async function loadComments() {
   const container = document.getElementById('commentsList')
   if (!container) return
 
-  // Show loading state
   container.innerHTML = `
-    <div style="grid-column:1/-1;text-align:center;padding:40px;color:#d4af37;">
-      <i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i>
-      <p style="margin-top:8px;">Loading reviews...</p>
+    <div style="grid-column:1/-1;text-align:center;padding:20px;color:#d4af37;">
+      <i class="fas fa-spinner fa-spin"></i> Loading reviews...
     </div>
   `
 
   if (!supabase || !isSupabaseConnected) {
     container.innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:40px;color:#888;">
-        <p>⚠️ Database not connected. Please check your credentials.</p>
+      <div style="grid-column:1/-1;text-align:center;padding:20px;color:#888;">
+        <p>⚠️ Database not connected.</p>
       </div>
     `
     return
   }
 
   try {
-    console.log('🔄 Fetching comments from Supabase...')
     const { data, error } = await supabase
       .from('comments')
       .select('*')
       .order('created_at', { ascending: false })
       .limit(20)
 
-    if (error) {
-      console.error('❌ Supabase error:', error)
-      throw error
-    }
+    if (error) throw error
 
-    console.log(`✅ Loaded ${data?.length || 0} comments`)
     comments = data || []
+    console.log(`✅ Loaded ${comments.length} comments`)
     renderComments()
   } catch (err) {
     console.error('❌ Error loading comments:', err)
     container.innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:40px;color:#ff8888;">
+      <div style="grid-column:1/-1;text-align:center;padding:20px;color:#ff8888;">
         <p>⚠️ Failed to load reviews.</p>
-        <p style="color:#888;font-size:0.85rem;">${err.message || 'Please check your database connection.'}</p>
       </div>
     `
   }
@@ -177,9 +157,8 @@ function renderProducts() {
 
   if (!filtered.length) {
     container.innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:60px;color:#6a5c48;">
-        <i class="fas fa-search" style="font-size:2rem;display:block;margin-bottom:12px;"></i>
-        <p>No products found matching your search.</p>
+      <div style="grid-column:1/-1;text-align:center;padding:40px;color:#6a5c48;">
+        <p>No products found.</p>
       </div>
     `
     return
@@ -189,8 +168,8 @@ function renderProducts() {
     <div class="product-card" data-id="${prod.id}">
       <div class="product-image-wrapper">
         <img class="product-img"
-          src="${escapeHtml(prod.image_url || prod.imageUrl || '')}"
-          alt="${escapeHtml(prod.name)}"
+          src="${prod.image_url || prod.imageUrl || 'https://placehold.co/400x500/111111/d4af37?text=DFC'}"
+          alt="${prod.name || 'Product'}"
           loading="lazy"
           onerror="this.src='https://placehold.co/400x500/111111/d4af37?text=DFC'">
         <div class="product-overlay">
@@ -201,14 +180,13 @@ function renderProducts() {
         <div class="product-badge">New</div>
       </div>
       <div class="product-info">
-        <div class="product-name">${escapeHtml(prod.name)}</div>
-        <div class="product-price">${escapeHtml(prod.price)}</div>
-        <div class="product-desc-short">${escapeHtml((prod.details || '').substring(0, 70))}${(prod.details || '').length > 70 ? '...' : ''}</div>
+        <div class="product-name">${prod.name || 'Unnamed'}</div>
+        <div class="product-price">${prod.price || '₦0'}</div>
+        <div class="product-desc-short">${(prod.details || '').substring(0, 70)}${(prod.details || '').length > 70 ? '...' : ''}</div>
       </div>
     </div>
   `).join('')
 
-  // Add click listeners
   container.querySelectorAll('.product-card').forEach(card => {
     card.addEventListener('click', () => {
       const product = products.find(p => String(p.id) === String(card.dataset.id))
@@ -226,21 +204,20 @@ function renderComments() {
 
   if (!comments.length) {
     container.innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:40px;color:#6a5c48;">
-        <i class="fas fa-comment-slash" style="font-size:2rem;display:block;margin-bottom:12px;"></i>
-        <p>No reviews yet. Be the first to share your experience!</p>
+      <div style="grid-column:1/-1;text-align:center;padding:20px;color:#6a5c48;">
+        <p>No reviews yet. Be the first to share!</p>
       </div>
     `
     return
   }
 
-  container.innerHTML = comments.map((c) => `
+  container.innerHTML = comments.map(c => `
     <div class="comment-card">
-      <div class="comment-text">${escapeHtml(c.text)}</div>
+      <div class="comment-text">${c.text || ''}</div>
       <div class="comment-author">
-        <div class="comment-initials">${escapeHtml((c.name || 'U')[0].toUpperCase())}</div>
+        <div class="comment-initials">${(c.name || 'U')[0].toUpperCase()}</div>
         <div>
-          <div class="comment-name">${escapeHtml(c.name || 'Anonymous')}</div>
+          <div class="comment-name">${c.name || 'Anonymous'}</div>
           <div class="comment-date">${c.date || 'recent'}</div>
         </div>
       </div>
@@ -270,19 +247,13 @@ async function addComment(name, text) {
       created_at: new Date().toISOString()
     }])
 
-    if (error) {
-      console.error('❌ Error adding comment:', error)
-      alert('Could not post comment. Please try again later.')
-      return
-    }
+    if (error) throw error
 
-    console.log('✅ Comment added successfully')
     await loadComments()
     document.getElementById('commentName').value = ''
     document.getElementById('commentMsg').value = ''
-
   } catch (err) {
-    console.error('❌ Error adding comment:', err)
+    console.error('Error adding comment:', err)
     alert('Could not post comment. Please try again later.')
   }
 }
@@ -324,9 +295,8 @@ async function confirmSignup() {
 
     closeModal('signupModal')
     if (emailInput) emailInput.value = ''
-
   } catch (err) {
-    console.error('❌ Error subscribing:', err)
+    console.error('Error subscribing:', err)
     alert('Subscription failed. Please try again later.')
   }
 }
@@ -370,7 +340,7 @@ function closeModal(id) {
 // ============================================================
 function sendWhatsApp() {
   if (!currentProduct) return
-  const msg = `Hi! I'm interested in *${currentProduct.name}* (Price: ${currentProduct.price}). Details: ${(currentProduct.details || '').substring(0, 120)}. Let's negotiate! ✨`
+  const msg = `Hi! I'm interested in *${currentProduct.name}* (Price: ${currentProduct.price}). Let's negotiate! ✨`
   window.open(`https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank')
 }
 
@@ -420,16 +390,11 @@ async function loadLogo() {
   if (!supabase || !isSupabaseConnected) return
 
   try {
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from('settings')
       .select('value')
       .eq('key', 'logo_url')
       .single()
-
-    if (error) {
-      console.log('ℹ️ No logo found in settings')
-      return
-    }
 
     if (data && data.value) {
       const img = document.getElementById('brandLogoImg')
@@ -439,59 +404,9 @@ async function loadLogo() {
         img.style.display = 'block'
       }
       if (txt) txt.style.display = 'none'
-      console.log('✅ Logo loaded successfully')
     }
   } catch (err) {
-    console.log('ℹ️ Logo not configured yet')
-  }
-}
-
-// ============================================================
-//  UTILITY
-// ============================================================
-function escapeHtml(str) {
-  if (str == null) return ''
-  return String(str).replace(/[&<>"']/g, m =>
-    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]
-  )
-}
-
-function getById(id) { return document.getElementById(id) }
-
-function on(id, event, fn) {
-  const el = getById(id)
-  if (el) el.addEventListener(event, fn)
-}
-
-// ============================================================
-//  CHECK DATABASE CONNECTION - TEST FUNCTION
-// ============================================================
-async function testDatabaseConnection() {
-  console.log('🔍 Testing database connection...')
-  
-  if (!supabase || !isSupabaseConnected) {
-    console.error('❌ Supabase not initialized')
-    return false
-  }
-
-  try {
-    // Try to fetch a single product to test connection
-    const { data, error } = await supabase
-      .from('products')
-      .select('id')
-      .limit(1)
-
-    if (error) {
-      console.error('❌ Database connection test failed:', error)
-      return false
-    }
-
-    console.log('✅ Database connection successful!')
-    console.log(`ℹ️ Found ${data?.length || 0} products in database`)
-    return true
-  } catch (err) {
-    console.error('❌ Database connection test failed:', err)
-    return false
+    console.log('Logo not configured yet')
   }
 }
 
@@ -502,72 +417,44 @@ document.addEventListener('DOMContentLoaded', async () => {
   console.log('🚀 DFC Website Initializing...')
 
   // Set contact info
-  const numEl = getById('whatsappNumberDisplay')
+  const numEl = document.getElementById('whatsappNumberDisplay')
   if (numEl) numEl.innerText = '+234 806 851 0863'
 
-  const linkEl = getById('directWhatsappLink')
+  const linkEl = document.getElementById('directWhatsappLink')
   if (linkEl) {
     linkEl.href = `https://wa.me/${OWNER_WHATSAPP}?text=Hello!%20I'm%20interested%20in%20your%20fashion%20collection%20at%20DFC!`
   }
 
-  // Setup UI
   setupSearch()
   setupMobileMenu()
 
   // Event listeners
-  on('signupBtn', 'click', e => { e.preventDefault(); openSignupModal() })
-  on('mobileSignupBtn', 'click', e => { e.preventDefault(); openSignupModal() })
-  on('mobileBookBtn', 'click', e => { e.preventDefault(); bookAppointment() })
-  on('whatsappModalBtn', 'click', sendWhatsApp)
+  document.getElementById('signupBtn')?.addEventListener('click', e => { e.preventDefault(); openSignupModal() })
+  document.getElementById('mobileSignupBtn')?.addEventListener('click', e => { e.preventDefault(); openSignupModal() })
+  document.getElementById('mobileBookBtn')?.addEventListener('click', e => { e.preventDefault(); bookAppointment() })
+  document.getElementById('whatsappModalBtn')?.addEventListener('click', sendWhatsApp)
 
   // Product modal close
-  const productModal = getById('productModal')
+  const productModal = document.getElementById('productModal')
   if (productModal) {
-    const closeBtn = productModal.querySelector('.modal-close')
-    if (closeBtn) closeBtn.addEventListener('click', () => closeModal('productModal'))
-    window.addEventListener('click', e => { if (e.target === productModal) closeModal('productModal') })
+    productModal.querySelector('.modal-close')?.addEventListener('click', () => closeModal('productModal'))
   }
 
-  // Signup modal close
-  on('closeSignupModal', 'click', () => closeModal('signupModal'))
-  on('confirmSignupBtn', 'click', confirmSignup)
-
-  const signupModal = getById('signupModal')
-  if (signupModal) {
-    window.addEventListener('click', e => { if (e.target === signupModal) closeModal('signupModal') })
-  }
+  // Signup modal
+  document.getElementById('closeSignupModal')?.addEventListener('click', () => closeModal('signupModal'))
+  document.getElementById('confirmSignupBtn')?.addEventListener('click', confirmSignup)
 
   // Submit comment
-  on('submitCommentBtn', 'click', () => {
-    const name = (getById('commentName') || {}).value || ''
-    const msg = (getById('commentMsg') || {}).value || ''
+  document.getElementById('submitCommentBtn')?.addEventListener('click', () => {
+    const name = document.getElementById('commentName')?.value || ''
+    const msg = document.getElementById('commentMsg')?.value || ''
     addComment(name, msg)
   })
 
-  // Test database connection first
-  const dbConnected = await testDatabaseConnection()
-  
-  if (dbConnected) {
-    // Load data from Supabase
-    await loadLogo()
-    await loadProducts()
-    await loadComments()
-  } else {
-    // Show error message in the UI
-    const grid = document.getElementById('productsGrid')
-    if (grid) {
-      grid.innerHTML = `
-        <div style="grid-column:1/-1;text-align:center;padding:60px;color:#ff8888;">
-          <i class="fas fa-database" style="font-size:2.5rem;display:block;margin-bottom:16px;"></i>
-          <h3 style="margin-bottom:8px;">Database Connection Error</h3>
-          <p>Unable to connect to Supabase.</p>
-          <p style="color:#888;font-size:0.85rem;margin-top:8px;">
-            Please verify your SUPABASE_URL and SUPABASE_ANON_KEY in script.js
-          </p>
-        </div>
-      `
-    }
-  }
+  // Load data
+  await loadLogo()
+  await loadProducts()
+  await loadComments()
 
-  console.log('✅ DFC Website Initialized')
+  console.log('✅ DFC Website Ready')
 })

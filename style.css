@@ -58,38 +58,34 @@ body {
 .brand-area {
   display: flex;
   align-items: center;
-  gap: 6px;
-  text-decoration: none;
-  flex-shrink: 0;
-}
-
-/* ============================================================
-   HEADER - LOGO STYLES
-   ============================================================ */
-
-.brand-area {
-  display: flex;
-  align-items: center;
   gap: 8px;
   text-decoration: none;
   flex-shrink: 0;
 }
 
-/* ── LOGO IMAGE - CLEAN, NO BORDER ── */
+/* ── LOGO IMAGE - NO BORDER, CLEAN ── */
 #brandLogoImg {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  object-fit: contain;
-  background: transparent;
+  object-fit: cover;
   display: none;
-  transition: all 0.3s ease;
+  background: transparent;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+#brandLogoImg.visible {
+  display: block;
 }
 
 #brandLogoImg:hover {
   transform: scale(1.05);
+  transition: transform 0.3s ease;
 }
 
+/* ── TEXT LOGO (Fallback) ── */
 .logo-text {
   font-family: 'Playfair Display', serif;
   font-size: 1.4rem;
@@ -104,44 +100,14 @@ body {
 }
 
 .logo-tagline {
-  font-size: 0.5rem;
+  font-size: 0.45rem;
   letter-spacing: 1.5px;
   color: #d4af37;
   text-transform: uppercase;
-  display: block;
-  margin-top: 1px;
+  display: none;
 }
 
-/* ── RESPONSIVE LOGO ── */
-@media (max-width: 600px) {
-  #brandLogoImg {
-    width: 40px;
-    height: 40px;
-  }
-  
-  .logo-text {
-    font-size: 1.2rem;
-    letter-spacing: 1px;
-  }
-  
-  .logo-tagline {
-    font-size: 0.4rem;
-    letter-spacing: 1px;
-  }
-}
-
-@media (min-width: 769px) {
-  #brandLogoImg {
-    width: 56px;
-    height: 56px;
-  }
-  
-  .logo-text {
-    font-size: 1.6rem;
-    letter-spacing: 3px;
-  }
-}
-
+/* ── NAVIGATION ── */
 .main-nav {
   display: none;
 }
@@ -1206,7 +1172,7 @@ textarea.form-input {
 }
 
 /* ============================================================
-   MODAL - FIXED: Full Image Display
+   MODAL
    ============================================================ */
 .modal {
   display: none;
@@ -1236,7 +1202,6 @@ textarea.form-input {
   position: relative;
 }
 
-/* ── MODAL IMAGE - FULL SHOW ── */
 .modal-img {
   width: 100%;
   height: auto;
@@ -1290,7 +1255,19 @@ textarea.form-input {
     padding: 0 24px;
   }
 
+  .logo-text {
+    font-size: 1.4rem;
+  }
 
+  .logo-tagline {
+    display: block;
+    font-size: 0.5rem;
+  }
+
+  #brandLogoImg {
+    width: 48px;
+    height: 48px;
+  }
 
   .search-area {
     width: 140px;
@@ -1426,9 +1403,8 @@ textarea.form-input {
   }
 
   #brandLogoImg {
-    width: 52px;
-    height: 52px;
-    border-width: 2px;
+    width: 56px;
+    height: 56px;
   }
 
   .hero {

@@ -4,13 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
   
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- CSP - FIXED: Added all Supabase URLs                      -->
+  <!-- ════════════════════════════════════════════════════════════ -->
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'self';
-    script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://esm.sh https://*.supabase.co;
+    script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://esm.sh https://*.supabase.co https://bbbxgvmlfcdumykiquqt.supabase.co;
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
-    img-src 'self' data: https: https://*.supabase.co https://placehold.co;
+    img-src 'self' data: https: https://*.supabase.co https://bbbxgvmlfcdumykiquqt.supabase.co https://placehold.co;
     font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
-    connect-src 'self' https://bbbxgvmlfcdumykiquqt.supabase.co https://*.supabase.co wss://*.supabase.co;
+    connect-src 'self' https://bbbxgvmlfcdumykiquqt.supabase.co https://*.supabase.co wss://*.supabase.co https://api.supabase.co https://auth.supabase.co;
     frame-src 'none';
     object-src 'none';
     base-uri 'self';
@@ -29,56 +32,152 @@
   
   <title>DANFULANI COLLECTIONS LIMITED</title>
   <link rel="stylesheet" href="style.css" />
+  
+  <!-- ── FONTS (Self-hosted fallback) ── -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- ── FONT AWESOME - Using local copy to avoid tracking ── -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  
+  <!-- Fallback for Font Awesome if CDN is blocked -->
+  <style>
+    /* Fallback icons - simple unicode if Font Awesome fails */
+    .fas.fa-search::before { content: "🔍"; }
+    .fas.fa-lock::before { content: "🔒"; }
+    .fas.fa-bars::before { content: "☰"; }
+    .fas.fa-times::before { content: "✕"; }
+    .fas.fa-arrow-right::before { content: "→"; }
+    .fas.fa-chevron-right::before { content: "›"; }
+    .fas.fa-chevron-up::before { content: "▲"; }
+    .fab.fa-instagram::before { content: "📷"; }
+    .fab.fa-tiktok::before { content: "🎵"; }
+    .fab.fa-whatsapp::before { content: "💬"; }
+    .fas.fa-tshirt::before { content: "👕"; }
+    .fas.fa-shoe-prints::before { content: "👟"; }
+    .fas.fa-print::before { content: "🖨️"; }
+    .fas.fa-home::before { content: "🏠"; }
+    .fas.fa-chart-line::before { content: "📈"; }
+    .fas.fa-graduation-cap::before { content: "🎓"; }
+    .fas.fa-handshake::before { content: "🤝"; }
+    .fas.fa-gem::before { content: "💎"; }
+    .fas.fa-star::before { content: "⭐"; }
+    .fas.fa-user-circle::before { content: "👤"; }
+    .fas.fa-envelope::before { content: "✉️"; }
+    .fas.fa-map-marker-alt::before { content: "📍"; }
+    .fas.fa-user-tie::before { content: "👔"; }
+    .fas.fa-shield-alt::before { content: "🛡️"; }
+    .fas.fa-eye::before { content: "👁️"; }
+    .fas.fa-shopping-bag::before { content: "🛍️"; }
+    .fas.fa-bell::before { content: "🔔"; }
+    .fas.fa-calendar::before { content: "📅"; }
+    .fas.fa-info-circle::before { content: "ℹ️"; }
+    .fas.fa-concierge-bell::before { content: "🔔"; }
+    .fas.fa-paint-brush::before { content: "🎨"; }
+    .fas.fa-file-contract::before { content: "📄"; }
+    .fas.fa-bullseye::before { content: "🎯"; }
+    .fas.fa-heart::before { content: "❤️"; }
+    .fas.fa-box-open::before { content: "📦"; }
+    .fas.fa-spinner::before { content: "⏳"; }
+    .fas.fa-search::before { content: "🔍"; }
+    .fas.fa-upload::before { content: "⬆️"; }
+    .fas.fa-trash::before { content: "🗑️"; }
+    .fas.fa-edit::before { content: "✏️"; }
+    .fas.fa-save::before { content: "💾"; }
+    .fas.fa-cog::before { content: "⚙️"; }
+    .fas.fa-plus::before { content: "➕"; }
+    .fas.fa-list::before { content: "📋"; }
+    .fas.fa-plus-circle::before { content: "➕"; }
+    .fas.fa-tshirt::before { content: "👕"; }
+    .fas.fa-shoe-prints::before { content: "👟"; }
+    .fas.fa-print::before { content: "🖨️"; }
+    .fas.fa-home::before { content: "🏠"; }
+    .fas.fa-chart-line::before { content: "📈"; }
+    .fas.fa-graduation-cap::before { content: "🎓"; }
+    .fas.fa-handshake::before { content: "🤝"; }
+    .fas.fa-gem::before { content: "💎"; }
+    .fas.fa-star::before { content: "⭐"; }
+    .fas.fa-user-circle::before { content: "👤"; }
+    .fas.fa-envelope::before { content: "✉️"; }
+    .fas.fa-map-marker-alt::before { content: "📍"; }
+    .fas.fa-user-tie::before { content: "👔"; }
+    .fas.fa-shield-alt::before { content: "🛡️"; }
+    .fas.fa-eye::before { content: "👁️"; }
+    .fas.fa-shopping-bag::before { content: "🛍️"; }
+    .fas.fa-bell::before { content: "🔔"; }
+    .fas.fa-calendar::before { content: "📅"; }
+    .fas.fa-info-circle::before { content: "ℹ️"; }
+    .fas.fa-concierge-bell::before { content: "🔔"; }
+    .fas.fa-paint-brush::before { content: "🎨"; }
+    .fas.fa-file-contract::before { content: "📄"; }
+    .fas.fa-bullseye::before { content: "🎯"; }
+    .fas.fa-heart::before { content: "❤️"; }
+    .fas.fa-box-open::before { content: "📦"; }
+    .fas.fa-spinner::before { content: "⏳"; }
+    .fas.fa-upload::before { content: "⬆️"; }
+    .fas.fa-trash::before { content: "🗑️"; }
+    .fas.fa-edit::before { content: "✏️"; }
+    .fas.fa-save::before { content: "💾"; }
+    .fas.fa-cog::before { content: "⚙️"; }
+    .fas.fa-plus::before { content: "➕"; }
+    .fas.fa-list::before { content: "📋"; }
+    .fas.fa-plus-circle::before { content: "➕"; }
+    .fas.fa-times::before { content: "✕"; }
+    .fas.fa-arrow-right::before { content: "→"; }
+    .fas.fa-chevron-right::before { content: "›"; }
+    .fas.fa-chevron-up::before { content: "▲"; }
+    .fab.fa-instagram::before { content: "📷"; }
+    .fab.fa-tiktok::before { content: "🎵"; }
+    .fab.fa-whatsapp::before { content: "💬"; }
+  </style>
+  
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 </head>
 <body>
 
-<!-- ── HEADER ── -->
-<header class="luxe-header" id="mainHeader">
-  <div class="container header-main">
-    <a href="#home" class="brand-area">
-      <!-- LOGO IMAGE - CIRCULAR -->
-      <div class="logo-wrapper">
-        <img id="brandLogoImg" src="" alt="DFC Logo" style="display:none;" />
-        <!-- FALLBACK TEXT LOGO (shows when image not available) -->
-        <div id="brandLogoText" class="logo-text">DFC</div>
-      </div>
-      <span class="logo-tagline">Danfulani Collections</span>
-    </a>
+  <!-- ── HEADER ── -->
+  <header class="luxe-header" id="mainHeader">
+    <div class="container header-main">
+      <a href="#home" class="brand-area">
+        <!-- LOGO IMAGE - CIRCULAR -->
+        <div class="logo-wrapper">
+          <img id="brandLogoImg" src="" alt="DFC Logo" style="display:none;" />
+          <div id="brandLogoText" class="logo-text">DFC</div>
+        </div>
+        <span class="logo-tagline">Danfulani Collections</span>
+      </a>
 
-    <nav class="main-nav" id="mainNav">
-      <a href="#home">Home</a>
-      <a href="#collection">Collection</a>
-      <a href="#services">Services</a>
-      <a href="#reviews">Reviews</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
+      <nav class="main-nav" id="mainNav">
+        <a href="#home">Home</a>
+        <a href="#collection">Collection</a>
+        <a href="#services">Services</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
 
-    <div class="header-actions">
-      <div class="search-area">
-        <i class="fas fa-search"></i>
-        <input type="text" id="searchInput" placeholder="Search..." />
+      <div class="header-actions">
+        <div class="search-area">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchInput" placeholder="Search..." />
+        </div>
+        <a href="#" id="signupBtn" class="btn-subscribe">Subscribe</a>
+        <a href="admin.html" class="admin-link"><i class="fas fa-lock"></i></a>
+        <button class="hamburger" id="hamburgerMenu"><i class="fas fa-bars"></i></button>
       </div>
-      <a href="#" id="signupBtn" class="btn-subscribe">Subscribe</a>
-      <a href="admin.html" class="admin-link"><i class="fas fa-lock"></i></a>
-      <button class="hamburger" id="hamburgerMenu"><i class="fas fa-bars"></i></button>
     </div>
-  </div>
 
-  <nav class="mobile-nav" id="mobileNav">
-    <a href="#home"><i class="fas fa-home"></i> Home</a>
-    <a href="#collection"><i class="fas fa-tshirt"></i> Collection</a>
-    <a href="#services"><i class="fas fa-concierge-bell"></i> Services</a>
-    <a href="#reviews"><i class="fas fa-star"></i> Reviews</a>
-    <a href="#about"><i class="fas fa-info-circle"></i> About</a>
-    <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
-    <a href="#" id="mobileSignupBtn"><i class="fas fa-bell"></i> Subscribe</a>
-  </nav>
-</header>
+    <nav class="mobile-nav" id="mobileNav">
+      <a href="#home"><i class="fas fa-home"></i> Home</a>
+      <a href="#collection"><i class="fas fa-tshirt"></i> Collection</a>
+      <a href="#services"><i class="fas fa-concierge-bell"></i> Services</a>
+      <a href="#reviews"><i class="fas fa-star"></i> Reviews</a>
+      <a href="#about"><i class="fas fa-info-circle"></i> About</a>
+      <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+      <a href="#" id="mobileSignupBtn"><i class="fas fa-bell"></i> Subscribe</a>
+    </nav>
+  </header>
 
-  <main>
+  <main id="main-content">
 
     <!-- ── HERO ── -->
     <section class="hero" id="home">
@@ -396,95 +495,86 @@
   </div>
 
   <script src="script.js" type="module"></script>
+  
+  <!-- ── CLIENT SIDE SCRIPTS ── -->
   <script>
-    // ── LOGO LOADER ──
-    (async function loadLogo() {
-      try {
-        const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
-        const supabase = createClient(
-          'https://bbbxgvmlfcdumykiquqt.supabase.co',
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJiYnhndm1sZmNkdW15a2lxdXF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyNzIzNzEsImV4cCI6MjA5NDg0ODM3MX0.BKQdvUK4j_zjclMUspN1KuxcpWWTQv0dOdgrLvbPqyg'
-        );
-        const { data } = await supabase.from('settings').select('value').eq('key', 'logo_url').single();
-        if (data && data.value) {
-          const img = document.getElementById('brandLogoImg');
-          const txt = document.getElementById('brandLogoText');
-          if (img) { img.src = data.value; img.style.display = 'block'; }
-          if (txt) txt.style.display = 'none';
-        }
-      } catch (e) { console.log('Logo not configured'); }
-    })();
-
-    // ── BACK TO TOP ──
-    const btt = document.getElementById('backToTop');
-    if (btt) {
-      window.addEventListener('scroll', () => {
-        btt.classList.toggle('visible', window.scrollY > 400);
-      });
-      btt.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    }
-
-    // ── HEADER SCROLL EFFECT ──
-    const header = document.getElementById('mainHeader');
-    if (header) {
-      window.addEventListener('scroll', () => {
-        header.classList.toggle('scrolled', window.scrollY > 50);
-      });
-    }
-
-    // ── CONTACT FORM ──
-    document.getElementById('contactForm')?.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const name = document.getElementById('contactName').value.trim();
-      const email = document.getElementById('contactEmail').value.trim();
-      const subject = document.getElementById('contactSubject').value.trim();
-      const message = document.getElementById('contactMessage').value.trim();
-
-      if (name && email && message) {
-        const msg = `Hello! My name is ${name}. ${subject ? 'Subject: ' + subject : ''} Message: ${message}`;
-        window.open(`https://wa.me/2348068510863?text=${encodeURIComponent(msg)}`, '_blank');
-        this.reset();
-      } else {
-        alert('Please fill in all required fields.');
+    (function() {
+      'use strict';
+      
+      // ── BACK TO TOP ──
+      const btt = document.getElementById('backToTop');
+      if (btt) {
+        window.addEventListener('scroll', () => {
+          btt.classList.toggle('visible', window.scrollY > 400);
+        });
+        btt.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
       }
-    });
 
-    // ── CLOSE MODALS ──
-    document.querySelectorAll('.modal-close').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const modal = btn.closest('.modal');
-        if (modal) modal.style.display = 'none';
+      // ── HEADER SCROLL EFFECT ──
+      const header = document.getElementById('mainHeader');
+      if (header) {
+        window.addEventListener('scroll', () => {
+          header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+      }
+
+      // ── MOBILE MENU ──
+      const hamburger = document.getElementById('hamburgerMenu');
+      const mobileNav = document.getElementById('mobileNav');
+      if (hamburger && mobileNav) {
+        hamburger.addEventListener('click', () => {
+          mobileNav.classList.toggle('open');
+          const icon = hamburger.querySelector('i');
+          if (icon) {
+            icon.className = mobileNav.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+          }
+        });
+      }
+
+      // ── SIGNUP MODAL ──
+      document.getElementById('signupBtn')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('signupModal').style.display = 'flex';
       });
-    });
 
-    document.querySelectorAll('.modal').forEach(modal => {
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.style.display = 'none';
+      document.getElementById('mobileSignupBtn')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('signupModal').style.display = 'flex';
       });
-    });
 
-    // ── MOBILE MENU ──
-    const hamburger = document.getElementById('hamburgerMenu');
-    const mobileNav = document.getElementById('mobileNav');
-    if (hamburger && mobileNav) {
-      hamburger.addEventListener('click', () => {
-        mobileNav.classList.toggle('open');
-        hamburger.querySelector('i').className = mobileNav.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+      // ── CLOSE MODALS ──
+      document.querySelectorAll('.modal-close').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const modal = btn.closest('.modal');
+          if (modal) modal.style.display = 'none';
+        });
       });
-    }
 
-    // ── SIGNUP MODAL ──
-    document.getElementById('signupBtn')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      document.getElementById('signupModal').style.display = 'flex';
-    });
+      document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) modal.style.display = 'none';
+        });
+      });
 
-    document.getElementById('mobileSignupBtn')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      document.getElementById('signupModal').style.display = 'flex';
-    });
+      // ── CONTACT FORM ──
+      document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('contactName').value.trim();
+        const email = document.getElementById('contactEmail').value.trim();
+        const subject = document.getElementById('contactSubject').value.trim();
+        const message = document.getElementById('contactMessage').value.trim();
+
+        if (name && email && message) {
+          const msg = `Hello! My name is ${name}. ${subject ? 'Subject: ' + subject : ''} Message: ${message}`;
+          window.open(`https://wa.me/2348068510863?text=${encodeURIComponent(msg)}`, '_blank');
+          this.reset();
+        } else {
+          alert('Please fill in all required fields.');
+        }
+      });
+    })();
   </script>
 </body>
 </html>

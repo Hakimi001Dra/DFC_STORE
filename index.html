@@ -34,12 +34,12 @@
 </head>
 <body>
 
- <!-- ── HEADER ── -->
+<!-- ── HEADER ── -->
 <header class="luxe-header" id="mainHeader">
   <div class="container header-main">
     <a href="#home" class="brand-area">
-      <!-- LOGO IMAGE (loaded from Supabase) -->
-      <img id="brandLogoImg" src="" alt="DFC Logo" style="display:none;width:48px;height:48px;border-radius:50%;object-fit:contain;" />
+      <!-- LOGO IMAGE - NO BORDER -->
+      <img id="brandLogoImg" src="" alt="DFC Logo" style="display:none;width:44px;height:44px;border-radius:50%;object-fit:cover;border:none;outline:none;box-shadow:none;" />
       <!-- FALLBACK TEXT LOGO -->
       <div id="brandLogoText" class="logo-text">
         <span class="gold">D</span>FC
@@ -62,7 +62,7 @@
         <input type="text" id="searchInput" placeholder="Search..." />
       </div>
       <a href="#" id="signupBtn" class="btn-subscribe">Subscribe</a>
-      
+      <a href="admin.html" class="admin-link"><i class="fas fa-lock"></i></a>
       <button class="hamburger" id="hamburgerMenu"><i class="fas fa-bars"></i></button>
     </div>
   </div>

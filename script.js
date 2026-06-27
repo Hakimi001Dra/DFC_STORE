@@ -15,7 +15,13 @@ let isSupabaseConnected = false
 try {
   if (SUPABASE_URL && !SUPABASE_URL.includes('YOUR_PROJECT_REF') &&
       SUPABASE_ANON_KEY && !SUPABASE_ANON_KEY.includes('YOUR_ANON_KEY')) {
-    supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+    supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: {
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: true
+      }
+    })
     isSupabaseConnected = true
     console.log('✅ Supabase connected')
   }
@@ -28,7 +34,7 @@ let comments = []
 let currentSearchTerm = ''
 
 // ============================================================
-//  LOAD LOGO
+//  LOAD LOGO - CIRCULAR
 // ============================================================
 async function loadLogo() {
   if (!supabase || !isSupabaseConnected) return
@@ -41,24 +47,30 @@ async function loadLogo() {
       .single()
 
     if (error) {
-      console.log('ℹ️ No logo found')
+      console.log('ℹ️ No logo found - using text logo')
       return
     }
 
     if (data && data.value) {
       const img = document.getElementById('brandLogoImg')
       const txt = document.getElementById('brandLogoText')
+      
       if (img) {
         img.src = data.value
         img.style.display = 'block'
-        img.style.width = '44px'
-        img.style.height = '44px'
-        img.style.borderRadius = '50%'
+        img.style.width = '100%'
+        img.style.height = '100%'
         img.style.objectFit = 'cover'
-        img.style.border = '2px solid #d4af37'
+        img.style.borderRadius = '50%'
+        img.style.border = 'none'
+        img.style.outline = 'none'
+        img.style.background = 'transparent'
+        img.classList.add('visible')
       }
+      
       if (txt) txt.style.display = 'none'
-      console.log('✅ Logo loaded')
+      
+      console.log('✅ Circular logo loaded')
     }
   } catch (err) {
     console.log('ℹ️ Logo not configured')
@@ -326,7 +338,7 @@ async function confirmSignup() {
 }
 
 // ============================================================
-//  MODALS - FIXED: Full Image
+//  MODALS
 // ============================================================
 let currentProduct = null
 
@@ -335,7 +347,6 @@ function openProductModal(product) {
   const modal = document.getElementById('productModal')
   if (!modal) return
   
-  // ── FULL IMAGE - object-fit: contain ──
   const img = document.getElementById('modalImage')
   img.src = product.image_url || product.imageUrl || 'https://placehold.co/400x500/111111/d4af37?text=DFC'
   img.style.objectFit = 'contain'
@@ -406,50 +417,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     addComment(name, msg)
   })
 
- // ============================================================
-//  LOAD LOGO - CIRCULAR
-// ============================================================
-async function loadLogo() {
-  if (!supabase || !isSupabaseConnected) return
-
-  try {
-    const { data, error } = await supabase
-      .from('settings')
-      .select('value')
-      .eq('key', 'logo_url')
-      .single()
-
-    if (error) {
-      console.log('ℹ️ No logo found - using text logo')
-      return
-    }
-
-    if (data && data.value) {
-      const img = document.getElementById('brandLogoImg')
-      const txt = document.getElementById('brandLogoText')
-      
-      if (img) {
-        img.src = data.value
-        img.style.display = 'block'
-        img.style.width = '100%'
-        img.style.height = '100%'
-        img.style.objectFit = 'cover'
-        img.style.borderRadius = '50%'
-        img.style.border = 'none'
-        img.style.outline = 'none'
-        img.style.background = 'transparent'
-        img.classList.add('visible')
-      }
-      
-      // Hide text logo when image is available
-      if (txt) txt.style.display = 'none'
-      
-      console.log('✅ Circular logo loaded')
-    }
-  } catch (err) {
-    console.log('ℹ️ Logo not configured')
-  }
-}
+  // Load logo FIRST
+  await loadLogo()
   
   // Then load data
   await loadProducts()

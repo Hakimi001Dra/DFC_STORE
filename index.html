@@ -2,134 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- CSP - FIXED: Added all Supabase URLs                      -->
+  <!-- SECURITY HEADERS - CSP, HSTS, XSS Protection              -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'self';
-    script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://esm.sh https://*.supabase.co https://bbbxgvmlfcdumykiquqt.supabase.co;
+    script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://esm.sh https://*.supabase.co;
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
-    img-src 'self' data: https: https://*.supabase.co https://bbbxgvmlfcdumykiquqt.supabase.co https://placehold.co;
+    img-src 'self' data: https: https://*.supabase.co https://placehold.co;
     font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
-    connect-src 'self' https://bbbxgvmlfcdumykiquqt.supabase.co https://*.supabase.co wss://*.supabase.co https://api.supabase.co https://auth.supabase.co;
+    connect-src 'self' https://*.supabase.co wss://*.supabase.co;
     frame-src 'none';
     object-src 'none';
     base-uri 'self';
     form-action 'self';
   ">
-  
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta name="csrf-token" content="" id="csrfToken">
+  <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload">
   
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  
-  <meta name="description" content="Danfulani Collections Limited (DFC) - Empowering Talents, Delivering Excellence." />
-  <meta name="theme-color" content="#0a0a0a">
-  
-  <title>DANFULANI COLLECTIONS LIMITED</title>
+  <meta name="description" content="Danfulani Collections Limited (DFC) - Empowering Talents, Delivering Excellence. Premium fashion design, tailoring, shoe making, branding, and interior decoration services in Nigeria." />
+  <title>DANFULANI COLLECTIONS LIMITED | Empowering Talents, Delivering Excellence</title>
   <link rel="stylesheet" href="style.css" />
-  
-  <!-- ── FONTS (Self-hosted fallback) ── -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  
-  <!-- ── FONT AWESOME - Using local copy to avoid tracking ── -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   
-  <!-- Fallback for Font Awesome if CDN is blocked -->
-  <style>
-    /* Fallback icons - simple unicode if Font Awesome fails */
-    .fas.fa-search::before { content: "🔍"; }
-    .fas.fa-lock::before { content: "🔒"; }
-    .fas.fa-bars::before { content: "☰"; }
-    .fas.fa-times::before { content: "✕"; }
-    .fas.fa-arrow-right::before { content: "→"; }
-    .fas.fa-chevron-right::before { content: "›"; }
-    .fas.fa-chevron-up::before { content: "▲"; }
-    .fab.fa-instagram::before { content: "📷"; }
-    .fab.fa-tiktok::before { content: "🎵"; }
-    .fab.fa-whatsapp::before { content: "💬"; }
-    .fas.fa-tshirt::before { content: "👕"; }
-    .fas.fa-shoe-prints::before { content: "👟"; }
-    .fas.fa-print::before { content: "🖨️"; }
-    .fas.fa-home::before { content: "🏠"; }
-    .fas.fa-chart-line::before { content: "📈"; }
-    .fas.fa-graduation-cap::before { content: "🎓"; }
-    .fas.fa-handshake::before { content: "🤝"; }
-    .fas.fa-gem::before { content: "💎"; }
-    .fas.fa-star::before { content: "⭐"; }
-    .fas.fa-user-circle::before { content: "👤"; }
-    .fas.fa-envelope::before { content: "✉️"; }
-    .fas.fa-map-marker-alt::before { content: "📍"; }
-    .fas.fa-user-tie::before { content: "👔"; }
-    .fas.fa-shield-alt::before { content: "🛡️"; }
-    .fas.fa-eye::before { content: "👁️"; }
-    .fas.fa-shopping-bag::before { content: "🛍️"; }
-    .fas.fa-bell::before { content: "🔔"; }
-    .fas.fa-calendar::before { content: "📅"; }
-    .fas.fa-info-circle::before { content: "ℹ️"; }
-    .fas.fa-concierge-bell::before { content: "🔔"; }
-    .fas.fa-paint-brush::before { content: "🎨"; }
-    .fas.fa-file-contract::before { content: "📄"; }
-    .fas.fa-bullseye::before { content: "🎯"; }
-    .fas.fa-heart::before { content: "❤️"; }
-    .fas.fa-box-open::before { content: "📦"; }
-    .fas.fa-spinner::before { content: "⏳"; }
-    .fas.fa-search::before { content: "🔍"; }
-    .fas.fa-upload::before { content: "⬆️"; }
-    .fas.fa-trash::before { content: "🗑️"; }
-    .fas.fa-edit::before { content: "✏️"; }
-    .fas.fa-save::before { content: "💾"; }
-    .fas.fa-cog::before { content: "⚙️"; }
-    .fas.fa-plus::before { content: "➕"; }
-    .fas.fa-list::before { content: "📋"; }
-    .fas.fa-plus-circle::before { content: "➕"; }
-    .fas.fa-tshirt::before { content: "👕"; }
-    .fas.fa-shoe-prints::before { content: "👟"; }
-    .fas.fa-print::before { content: "🖨️"; }
-    .fas.fa-home::before { content: "🏠"; }
-    .fas.fa-chart-line::before { content: "📈"; }
-    .fas.fa-graduation-cap::before { content: "🎓"; }
-    .fas.fa-handshake::before { content: "🤝"; }
-    .fas.fa-gem::before { content: "💎"; }
-    .fas.fa-star::before { content: "⭐"; }
-    .fas.fa-user-circle::before { content: "👤"; }
-    .fas.fa-envelope::before { content: "✉️"; }
-    .fas.fa-map-marker-alt::before { content: "📍"; }
-    .fas.fa-user-tie::before { content: "👔"; }
-    .fas.fa-shield-alt::before { content: "🛡️"; }
-    .fas.fa-eye::before { content: "👁️"; }
-    .fas.fa-shopping-bag::before { content: "🛍️"; }
-    .fas.fa-bell::before { content: "🔔"; }
-    .fas.fa-calendar::before { content: "📅"; }
-    .fas.fa-info-circle::before { content: "ℹ️"; }
-    .fas.fa-concierge-bell::before { content: "🔔"; }
-    .fas.fa-paint-brush::before { content: "🎨"; }
-    .fas.fa-file-contract::before { content: "📄"; }
-    .fas.fa-bullseye::before { content: "🎯"; }
-    .fas.fa-heart::before { content: "❤️"; }
-    .fas.fa-box-open::before { content: "📦"; }
-    .fas.fa-spinner::before { content: "⏳"; }
-    .fas.fa-upload::before { content: "⬆️"; }
-    .fas.fa-trash::before { content: "🗑️"; }
-    .fas.fa-edit::before { content: "✏️"; }
-    .fas.fa-save::before { content: "💾"; }
-    .fas.fa-cog::before { content: "⚙️"; }
-    .fas.fa-plus::before { content: "➕"; }
-    .fas.fa-list::before { content: "📋"; }
-    .fas.fa-plus-circle::before { content: "➕"; }
-    .fas.fa-times::before { content: "✕"; }
-    .fas.fa-arrow-right::before { content: "→"; }
-    .fas.fa-chevron-right::before { content: "›"; }
-    .fas.fa-chevron-up::before { content: "▲"; }
-    .fab.fa-instagram::before { content: "📷"; }
-    .fab.fa-tiktok::before { content: "🎵"; }
-    .fab.fa-whatsapp::before { content: "💬"; }
-  </style>
-  
+  <!-- Security: Skip link for keyboard users -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 </head>
 <body>
@@ -138,15 +40,12 @@
   <header class="luxe-header" id="mainHeader">
     <div class="container header-main">
       <a href="#home" class="brand-area">
-        <!-- LOGO IMAGE - CIRCULAR -->
-        <div class="logo-wrapper">
-          <img id="brandLogoImg" src="" alt="DFC Logo" style="display:none;" />
-          <div id="brandLogoText" class="logo-text">DFC</div>
-        </div>
+        <img id="brandLogoImg" src="" alt="DFC" style="display:none;height:44px;object-fit:contain;border-radius:4px;" />
+        <div id="brandLogoText" class="logo-text">DFC</div>
         <span class="logo-tagline">Danfulani Collections</span>
       </a>
 
-      <nav class="main-nav" id="mainNav">
+      <nav class="main-nav" id="mainNav" aria-label="Main Navigation">
         <a href="#home">Home</a>
         <a href="#collection">Collection</a>
         <a href="#services">Services</a>
@@ -156,17 +55,17 @@
       </nav>
 
       <div class="header-actions">
-        <div class="search-area">
+        <div class="search-area" role="search">
           <i class="fas fa-search"></i>
-          <input type="text" id="searchInput" placeholder="Search..." />
+          <input type="text" id="searchInput" placeholder="Search..." maxlength="100" aria-label="Search products" />
         </div>
         <a href="#" id="signupBtn" class="btn-subscribe">Subscribe</a>
-        <a href="admin.html" class="admin-link"><i class="fas fa-lock"></i></a>
-        <button class="hamburger" id="hamburgerMenu"><i class="fas fa-bars"></i></button>
+        <a href="admin.html" class="admin-link" title="Admin" aria-label="Admin Panel"><i class="fas fa-lock"></i></a>
+        <button class="hamburger" id="hamburgerMenu" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
       </div>
     </div>
 
-    <nav class="mobile-nav" id="mobileNav">
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile Navigation">
       <a href="#home"><i class="fas fa-home"></i> Home</a>
       <a href="#collection"><i class="fas fa-tshirt"></i> Collection</a>
       <a href="#services"><i class="fas fa-concierge-bell"></i> Services</a>
@@ -174,6 +73,7 @@
       <a href="#about"><i class="fas fa-info-circle"></i> About</a>
       <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
       <a href="#" id="mobileSignupBtn"><i class="fas fa-bell"></i> Subscribe</a>
+      <a href="#" id="mobileBookBtn"><i class="fas fa-calendar"></i> Book Appointment</a>
     </nav>
   </header>
 
@@ -181,6 +81,7 @@
 
     <!-- ── HERO ── -->
     <section class="hero" id="home">
+      <div class="hero-background"></div>
       <div class="container hero-content">
         <div class="hero-badge">✦ Empowering Talents, Delivering Excellence</div>
         <h1>
@@ -189,8 +90,17 @@
         </h1>
         <p>DFC is a trendsetting enterprise specializing in high-quality fashion, tailoring, shoe making, branding, interior decoration, and youth talent development.</p>
         <div class="hero-actions">
-          <a href="#collection" class="btn-primary">Explore Collection →</a>
-          <a href="#services" class="btn-secondary-outline">Our Services →</a>
+          <a href="#collection" class="btn-primary">
+            Explore Collection <i class="fas fa-arrow-right"></i>
+          </a>
+          <a href="#services" class="btn-secondary-outline">
+            Our Services <i class="fas fa-chevron-right"></i>
+          </a>
+        </div>
+        <div class="hero-social">
+          <a href="https://www.instagram.com/dee_f_collections_?igsh=MWxqcnV2c3h2cTFzdg%3D%3D&utm_source=qr" target="_blank" class="hero-social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@dee_f_collections_?_r=1&_t=ZS-97RTxhvKaJE" target="_blank" class="hero-social-link" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          <a href="https://wa.me/2348068510863" target="_blank" class="hero-social-link" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
         </div>
         <div class="hero-stats">
           <div class="stat">
@@ -234,43 +144,43 @@
         <div class="services-grid">
           <div class="service-card">
             <div class="service-icon"><i class="fas fa-tshirt"></i></div>
-            <h4>Fashion & Textile</h4>
-            <p>Shadda, Getzner, Textile Materials & Tangaran caps</p>
+            <h4>Fashion & Textile Services</h4>
+            <p>Sale of all kinds of Shadda, Getzner, Textile Materials and the best of Tangaran caps. Tailoring for both male and female, suit sewing.</p>
           </div>
           <div class="service-card">
             <div class="service-icon"><i class="fas fa-shoe-prints"></i></div>
             <h4>Footwear Production</h4>
-            <p>Premium shoe making with comfort & style</p>
+            <p>Premium shoe making services with attention to comfort, durability, and style. Custom designs available.</p>
           </div>
           <div class="service-card">
             <div class="service-icon"><i class="fas fa-print"></i></div>
-            <h4>Branding & Printing</h4>
-            <p>Printing, publishing & branding solutions</p>
+            <h4>Branding & Printing Services</h4>
+            <p>Printing, publishing, branding solutions, and general contracts for businesses and individuals.</p>
           </div>
           <div class="service-card">
             <div class="service-icon"><i class="fas fa-home"></i></div>
             <h4>Interior Decoration</h4>
-            <p>Professional interior decoration services</p>
+            <p>Transform your space with our professional interior decoration services tailored to your taste.</p>
           </div>
           <div class="service-card">
             <div class="service-icon"><i class="fas fa-chart-line"></i></div>
             <h4>Business Development</h4>
-            <p>Counseling and coaching for entrepreneurs</p>
+            <p>Business counseling and coaching to help entrepreneurs and aspiring business owners succeed.</p>
           </div>
           <div class="service-card">
             <div class="service-icon"><i class="fas fa-graduation-cap"></i></div>
             <h4>Fashion Academy</h4>
-            <p>Platform for aspiring fashion designers</p>
+            <p>DFC offers young aspiring fashion designers the platform to stand, explore creativity, develop passion, and utilize their talents.</p>
           </div>
           <div class="service-card">
             <div class="service-icon"><i class="fas fa-handshake"></i></div>
             <h4>General Contracts</h4>
-            <p>Reliable professional contracting services</p>
+            <p>Reliable and professional general contracting services for various projects.</p>
           </div>
           <div class="service-card">
             <div class="service-icon"><i class="fas fa-gem"></i></div>
             <h4>Premium Textiles</h4>
-            <p>Best quality Shadda, Getzner & more</p>
+            <p>Best quality Shadda, Getzner, and other premium textile materials sourced for excellence.</p>
           </div>
         </div>
       </div>
@@ -290,8 +200,8 @@
           <h4>Share Your Experience</h4>
           <p class="add-review-desc">We'd love to hear about your DFC experience.</p>
           <div class="comment-form-area">
-            <input type="text" id="commentName" placeholder="Your name" />
-            <input type="text" id="commentMsg" placeholder="Write your feedback..." />
+            <input type="text" id="commentName" placeholder="Your name" maxlength="50" aria-label="Your name" />
+            <input type="text" id="commentMsg" placeholder="Write your feedback..." maxlength="500" aria-label="Your feedback" />
             <button id="submitCommentBtn" class="btn-secondary">Post Comment</button>
           </div>
         </div>
@@ -306,10 +216,13 @@
             <span class="section-subtitle">About Us</span>
             <h2>Where <span class="highlight">Craftsmanship</span> Meets <span class="highlight">Heritage</span></h2>
             <p class="about-lead">Danfulani Collections Limited (DFC) is a dynamic and innovative fashion and lifestyle enterprise founded by Muhammad Umar Danfulani.</p>
-            <p>With over <strong>10 years of experience</strong> in the fashion industry, DFC has grown into a reputable brand dedicated to producing high-quality fashion products.</p>
+            <p>With over <strong>10 years of experience</strong> in the fashion industry, DFC has grown into a reputable brand dedicated to producing high-quality fashion products and providing exceptional services to clients across Nigeria and beyond.</p>
+            <p>Founded on the principles of <strong>excellence, creativity, integrity, and customer satisfaction</strong>, DFC specializes in fashion design, tailoring, shoe production, branding solutions, interior decoration, business consulting, and talent development.</p>
 
             <div class="about-quote">
-              <blockquote>"At DFC, we believe that fashion is more than clothing—it is identity, culture, confidence, and expression."</blockquote>
+              <blockquote>
+                "At DFC, we believe that fashion is more than clothing—it is identity, culture, confidence, and expression."
+              </blockquote>
               <cite>— Muhammad Umar Danfulani, Founder DFC</cite>
             </div>
 
@@ -322,7 +235,7 @@
               <div class="value-item">
                 <div class="value-icon"><i class="fas fa-eye"></i></div>
                 <h4>Our Vision</h4>
-                <p>To become a leading fashion and lifestyle brand recognized nationally and globally.</p>
+                <p>To become a leading fashion and lifestyle brand recognized nationally and globally for innovation and quality.</p>
               </div>
               <div class="value-item">
                 <div class="value-icon"><i class="fas fa-heart"></i></div>
@@ -330,20 +243,41 @@
                 <p>Delivering outstanding products, maintaining professionalism, and supporting youth empowerment.</p>
               </div>
             </div>
+
+            <div class="about-services-grid">
+              <div class="about-service-item"><i class="fas fa-tshirt"></i><span>Fashion &amp; Tailoring</span></div>
+              <div class="about-service-item"><i class="fas fa-shoe-prints"></i><span>Shoe Making</span></div>
+              <div class="about-service-item"><i class="fas fa-paint-brush"></i><span>Branding &amp; Printing</span></div>
+              <div class="about-service-item"><i class="fas fa-home"></i><span>Interior Decoration</span></div>
+              <div class="about-service-item"><i class="fas fa-graduation-cap"></i><span>Fashion Academy</span></div>
+              <div class="about-service-item"><i class="fas fa-chart-line"></i><span>Business Coaching</span></div>
+              <div class="about-service-item"><i class="fas fa-gem"></i><span>Shadda &amp; Textiles</span></div>
+              <div class="about-service-item"><i class="fas fa-file-contract"></i><span>General Contracts</span></div>
+            </div>
+
+            <div class="social-follow-strip">
+              <span class="social-follow-label">Follow Us</span>
+              <a href="https://www.instagram.com/dee_f_collections_?igsh=MWxqcnV2c3h2cTFzdg%3D%3D&utm_source=qr" target="_blank" class="social-pill instagram">
+                <i class="fab fa-instagram"></i> Instagram
+              </a>
+              <a href="https://www.tiktok.com/@dee_f_collections_?_r=1&_t=ZS-97RTxhvKaJE" target="_blank" class="social-pill tiktok">
+                <i class="fab fa-tiktok"></i> TikTok
+              </a>
+            </div>
           </div>
 
           <div class="about-visual">
             <div class="about-image-grid">
               <div class="image-main">
-                <img src="https://placehold.co/600x800/111111/d4af37?text=DFC" alt="DFC Showroom" />
+                <img src="https://placehold.co/600x800/111111/d4af37?text=DFC+Showroom" alt="DFC Showroom" loading="lazy" />
               </div>
               <div class="image-small">
-                <img src="https://placehold.co/300x300/1a1a1a/d4af37?text=10+Years" alt="10+ Years" />
+                <img src="https://placehold.co/300x300/1a1a1a/d4af37?text=Craftsmanship" alt="Craftsmanship" loading="lazy" />
               </div>
               <div class="image-small">
                 <div class="image-placeholder">
-                  <span>✦ Made in</span>
-                  <span style="font-size:1.2rem;color:#d4af37;">Nigeria</span>
+                  <span>✦ 10+ Years</span>
+                  <span style="font-size:0.7rem;color:#6a5c48;display:block;margin-top:4px;">of Excellence</span>
                 </div>
               </div>
             </div>
@@ -366,7 +300,7 @@
                 <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
                 <div>
                   <div class="contact-label">WhatsApp</div>
-                  <div class="contact-value">+234 806 851 0863</div>
+                  <div class="contact-value" id="whatsappNumberDisplay">+234 806 851 0863</div>
                 </div>
               </div>
               <div class="contact-item">
@@ -380,37 +314,48 @@
                 <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
                 <div>
                   <div class="contact-label">Location</div>
-                  <div class="contact-value">Nigeria | Nationwide</div>
+                  <div class="contact-value">Nigeria | Nationwide Delivery</div>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon"><i class="fas fa-user-tie"></i></div>
+                <div>
+                  <div class="contact-label">Founder</div>
+                  <div class="contact-value">Muhammad Umar Danfulani</div>
                 </div>
               </div>
             </div>
 
-            <a href="https://wa.me/2348068510863" target="_blank" class="btn-whatsapp">
-              <i class="fab fa-whatsapp"></i> Message Founder
+            <a id="directWhatsappLink" href="#" target="_blank" class="btn-whatsapp">
+              <i class="fab fa-whatsapp"></i> Message Founder Directly
             </a>
 
             <div class="contact-social">
-              <a href="https://www.instagram.com/dee_f_collections_" target="_blank" class="social-btn instagram"><i class="fab fa-instagram"></i></a>
-              <a href="https://www.tiktok.com/@dee_f_collections_" target="_blank" class="social-btn tiktok"><i class="fab fa-tiktok"></i></a>
+              <a href="https://www.instagram.com/dee_f_collections_?igsh=MWxqcnV2c3h2cTFzdg%3D%3D&utm_source=qr" target="_blank" class="social-btn instagram"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.tiktok.com/@dee_f_collections_?_r=1&_t=ZS-97RTxhvKaJE" target="_blank" class="social-btn tiktok"><i class="fab fa-tiktok"></i></a>
               <a href="https://wa.me/2348068510863" target="_blank" class="social-btn whatsapp"><i class="fab fa-whatsapp"></i></a>
             </div>
+
+            <p class="hint">💡 Click any product → "Chat on WhatsApp" to negotiate price or custom orders.</p>
           </div>
 
           <div class="contact-form-card">
-            <form class="contact-form" id="contactForm">
+            <form class="contact-form" id="contactForm" novalidate>
               <div class="form-group">
-                <input type="text" placeholder="Your Name" class="form-input" id="contactName" required />
+                <input type="text" placeholder="Your Name" class="form-input" id="contactName" required aria-required="true" />
               </div>
               <div class="form-group">
-                <input type="email" placeholder="Email Address" class="form-input" id="contactEmail" required />
+                <input type="email" placeholder="Email Address" class="form-input" id="contactEmail" required aria-required="true" />
               </div>
               <div class="form-group">
                 <input type="text" placeholder="Subject" class="form-input" id="contactSubject" />
               </div>
               <div class="form-group">
-                <textarea placeholder="Tell us what you're looking for..." rows="4" class="form-input" id="contactMessage" required></textarea>
+                <textarea placeholder="Tell us what you're looking for..." rows="4" class="form-input" id="contactMessage" required aria-required="true"></textarea>
               </div>
-              <button type="submit" class="btn-primary btn-full">Send Message →</button>
+              <button type="submit" class="btn-primary btn-full">
+                Send Message <i class="fas fa-arrow-right"></i>
+              </button>
             </form>
           </div>
         </div>
@@ -424,11 +369,11 @@
       <div class="footer-brand">
         <div class="footer-logo">DFC</div>
         <p class="footer-tagline">Empowering Talents, Delivering Excellence</p>
-        <p class="footer-desc">Danfulani Collections Limited (DFC) - Premium fashion design, tailoring, shoe making, branding, interior decoration, and talent development.</p>
+        <p class="footer-desc">Danfulani Collections Limited (DFC) is a dynamic and innovative fashion and lifestyle enterprise founded by Muhammad Umar Danfulani. We specialize in fashion design, tailoring, shoe production, branding solutions, interior decoration, business consulting, and talent development.</p>
         <div class="footer-social">
-          <a href="https://www.instagram.com/dee_f_collections_" target="_blank" class="footer-social-icon"><i class="fab fa-instagram"></i></a>
-          <a href="https://www.tiktok.com/@dee_f_collections_" target="_blank" class="footer-social-icon"><i class="fab fa-tiktok"></i></a>
-          <a href="https://wa.me/2348068510863" target="_blank" class="footer-social-icon"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://www.instagram.com/dee_f_collections_?igsh=MWxqcnV2c3h2cTFzdg%3D%3D&utm_source=qr" target="_blank" class="footer-social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@dee_f_collections_?_r=1&_t=ZS-97RTxhvKaJE" target="_blank" class="footer-social-icon" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          <a href="https://wa.me/2348068510863" target="_blank" class="footer-social-icon" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
         </div>
       </div>
       <div class="footer-links-col">
@@ -437,71 +382,157 @@
         <a href="#collection">Collection</a>
         <a href="#services">Services</a>
         <a href="#reviews">Reviews</a>
-        <a href="#about">About</a>
+        <a href="#about">About Us</a>
         <a href="#contact">Contact</a>
       </div>
       <div class="footer-links-col">
         <h5>Collections</h5>
         <a href="#collection">Kaftans</a>
-        <a href="#collection">Agbada</a>
-        <a href="#collection">Shoes</a>
-        <a href="#collection">Watches</a>
-        <a href="#collection">Caps</a>
+        <a href="#collection">Agbada / Kube</a>
+        <a href="#collection">Leather Shoes</a>
+        <a href="#collection">Wristwatches</a>
+        <a href="#collection">Caps &amp; Accessories</a>
+        <a href="#collection">Shadda &amp; Textiles</a>
       </div>
       <div class="footer-links-col">
         <h5>Contact</h5>
-        <a href="https://wa.me/2348068510863"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-        <a href="mailto:info@dfcollection.com"><i class="fas fa-envelope"></i> Email</a>
+        <a href="https://wa.me/2348068510863" target="_blank"><i class="fab fa-whatsapp"></i> +234 806 851 0863</a>
+        <a href="mailto:info@dfcollection.com"><i class="fas fa-envelope"></i> info@dfcollection.com</a>
         <a href="#contact"><i class="fas fa-map-marker-alt"></i> Nigeria</a>
+        <a href="#" id="footerSignupBtn"><i class="fas fa-bell"></i> Get Updates</a>
       </div>
     </div>
     <div class="footer-bottom">
       <div class="container footer-bottom-inner">
-        <p>© 2026 DFC. All rights reserved.</p>
-        <p>Built with ❤️ in Abuja</p>
+        <p>© 2026 DANFULANI COLLECTIONS LIMITED (DFC). All rights reserved.</p>
+        <p>Built with ❤️ in Abuja, Nigeria</p>
+        <span class="secure-badge"><i class="fas fa-shield-alt"></i> Secure Connection</span>
       </div>
     </div>
   </footer>
 
-  <!-- ── FLOATING WHATSAPP ── -->
-  <a href="https://wa.me/2348068510863" target="_blank" class="fab-whatsapp">
+  <!-- ── FLOATING WHATSAPP BUTTON ── -->
+  <a href="https://wa.me/2348068510863?text=Hello!%20I'm%20interested%20in%20your%20fashion%20collection." target="_blank" class="fab-whatsapp" aria-label="Chat on WhatsApp">
     <i class="fab fa-whatsapp"></i>
   </a>
 
   <!-- ── BACK TO TOP ── -->
-  <button id="backToTop" class="back-to-top"><i class="fas fa-chevron-up"></i></button>
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
 
   <!-- ── PRODUCT MODAL ── -->
-  <div id="productModal" class="modal">
+  <div id="productModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalName">
     <div class="modal-card">
-      <span class="modal-close">&times;</span>
-      <img id="modalImage" class="modal-img" alt="product" />
+      <button class="modal-close" aria-label="Close modal">&times;</button>
+      <img id="modalImage" class="modal-img" alt="Product image" />
       <h2 id="modalName"></h2>
       <p id="modalPrice" class="modal-price"></p>
       <p id="modalDetails" class="modal-details"></p>
-      <button id="whatsappModalBtn" class="btn-whatsapp full-width"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</button>
+      <button id="whatsappModalBtn" class="btn-whatsapp full-width"><i class="fab fa-whatsapp"></i> Negotiate on WhatsApp</button>
     </div>
   </div>
 
   <!-- ── SIGNUP MODAL ── -->
-  <div id="signupModal" class="modal">
+  <div id="signupModal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-card" style="max-width:450px;">
-      <span class="modal-close" id="closeSignupModal">&times;</span>
+      <button class="modal-close" id="closeSignupModal" aria-label="Close">&times;</button>
       <h3 style="font-family:'Playfair Display';color:#d4af37;">Join the House</h3>
-      <p style="margin:16px 0;color:#bcb09b;">Get exclusive updates and early access.</p>
+      <p style="margin:16px 0;color:#bcb09b;">Get exclusive updates, early access and the latest news from DFC.</p>
       <input type="email" id="signupEmail" placeholder="Your email address" style="width:100%;padding:14px;border-radius:40px;background:#1c1c1c;border:1px solid #2a2a2a;color:white;margin-bottom:16px;font-family:inherit;outline:none;" />
       <button id="confirmSignupBtn" class="btn-primary" style="width:100%;">Subscribe ✨</button>
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid #2a2a2a;text-align:center;">
+        <p style="font-size:12px;color:#555;margin-bottom:12px;">Or follow us on social media</p>
+        <div style="display:flex;justify-content:center;gap:12px;">
+          <a href="https://www.instagram.com/dee_f_collections_?igsh=MWxqcnV2c3h2cTFzdg%3D%3D&utm_source=qr" target="_blank" class="contact-social-btn ig-btn" style="width:36px;height:36px;font-size:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;text-decoration:none;"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@dee_f_collections_?_r=1&_t=ZS-97RTxhvKaJE" target="_blank" class="contact-social-btn" style="background:#010101;width:36px;height:36px;font-size:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
     </div>
   </div>
 
+  <div aria-live="polite" class="sr-only" id="liveAnnouncer"></div>
+
   <script src="script.js" type="module"></script>
   
-  <!-- ── CLIENT SIDE SCRIPTS ── -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- SECURITY & CLIENT-SIDE SCRIPTS                           -->
+  <!-- ════════════════════════════════════════════════════════════ -->
   <script>
     (function() {
       'use strict';
       
-      // ── BACK TO TOP ──
+      // ============================================================
+      //  CSRF Protection - Generate and store token
+      // ============================================================
+      function generateCSRFToken() {
+        const array = new Uint8Array(32);
+        crypto.getRandomValues(array);
+        return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+      }
+      
+      const csrfToken = generateCSRFToken();
+      const metaTag = document.querySelector('meta[name="csrf-token"]');
+      if (metaTag) metaTag.setAttribute('content', csrfToken);
+      sessionStorage.setItem('csrfToken', csrfToken);
+      
+      // Add CSRF token to all forms
+      document.querySelectorAll('form').forEach(form => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = '_csrf';
+        input.value = csrfToken;
+        form.appendChild(input);
+      });
+      
+      // ============================================================
+      //  XSS Protection - Sanitize user input
+      // ============================================================
+      window.sanitizeInput = function(input) {
+        if (!input) return '';
+        const map = {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#x27;',
+          '/': '&#x2F;',
+        };
+        return String(input).replace(/[&<>"'/]/g, function(s) {
+          return map[s];
+        });
+      };
+      
+      // ============================================================
+      //  Rate Limiting
+      // ============================================================
+      const rateLimits = {
+        comments: { count: 0, resetTime: Date.now() + 60000, max: 10 },
+        signup: { count: 0, resetTime: Date.now() + 60000, max: 5 },
+        search: { count: 0, resetTime: Date.now() + 60000, max: 30 },
+      };
+      
+      window.checkRateLimit = function(type) {
+        const limit = rateLimits[type];
+        if (!limit) return true;
+        if (Date.now() > limit.resetTime) {
+          limit.count = 0;
+          limit.resetTime = Date.now() + 60000;
+        }
+        limit.count++;
+        return limit.count <= limit.max;
+      };
+      
+      // ============================================================
+      //  Clickjacking Protection
+      // ============================================================
+      if (window.top !== window.self) {
+        window.top.location = window.self.location;
+      }
+      
+      // ============================================================
+      //  Back to Top
+      // ============================================================
       const btt = document.getElementById('backToTop');
       if (btt) {
         window.addEventListener('scroll', () => {
@@ -512,7 +543,20 @@
         });
       }
 
-      // ── HEADER SCROLL EFFECT ──
+      // ============================================================
+      //  Footer Signup
+      // ============================================================
+      const footerSignup = document.getElementById('footerSignupBtn');
+      if (footerSignup) {
+        footerSignup.addEventListener('click', (e) => {
+          e.preventDefault();
+          document.getElementById('signupModal').style.display = 'flex';
+        });
+      }
+
+      // ============================================================
+      //  Header Scroll Effect
+      // ============================================================
       const header = document.getElementById('mainHeader');
       if (header) {
         window.addEventListener('scroll', () => {
@@ -520,61 +564,54 @@
         });
       }
 
-      // ── MOBILE MENU ──
-      const hamburger = document.getElementById('hamburgerMenu');
-      const mobileNav = document.getElementById('mobileNav');
-      if (hamburger && mobileNav) {
-        hamburger.addEventListener('click', () => {
-          mobileNav.classList.toggle('open');
-          const icon = hamburger.querySelector('i');
-          if (icon) {
-            icon.className = mobileNav.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+      // ============================================================
+      //  Contact Form with Security
+      // ============================================================
+      const contactForm = document.getElementById('contactForm');
+      if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          // Check CSRF token
+          const csrfInput = this.querySelector('input[name="_csrf"]');
+          const storedToken = sessionStorage.getItem('csrfToken');
+          if (!csrfInput || csrfInput.value !== storedToken) {
+            alert('Security validation failed. Please refresh the page and try again.');
+            return;
           }
+          
+          // Check rate limit
+          if (!window.checkRateLimit('signup')) {
+            alert('Too many requests. Please wait a moment before trying again.');
+            return;
+          }
+          
+          const name = document.getElementById('contactName').value.trim();
+          const email = document.getElementById('contactEmail').value.trim();
+          const subject = document.getElementById('contactSubject').value.trim();
+          const message = document.getElementById('contactMessage').value.trim();
+          
+          if (!name || !email || !message) {
+            alert('Please fill in all required fields.');
+            return;
+          }
+          
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(email)) {
+            alert('Please enter a valid email address.');
+            return;
+          }
+          
+          // Sanitize inputs
+          const sanitizedName = window.sanitizeInput(name);
+          const sanitizedEmail = window.sanitizeInput(email);
+          const sanitizedSubject = window.sanitizeInput(subject);
+          const sanitizedMessage = window.sanitizeInput(message);
+          
+          const whatsappMsg = `Hello! My name is ${sanitizedName}. ${sanitizedSubject ? 'Subject: ' + sanitizedSubject : ''} Message: ${sanitizedMessage}`;
+          window.open(`https://wa.me/2348068510863?text=${encodeURIComponent(whatsappMsg)}`, '_blank');
+          this.reset();
         });
       }
-
-      // ── SIGNUP MODAL ──
-      document.getElementById('signupBtn')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.getElementById('signupModal').style.display = 'flex';
-      });
-
-      document.getElementById('mobileSignupBtn')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.getElementById('signupModal').style.display = 'flex';
-      });
-
-      // ── CLOSE MODALS ──
-      document.querySelectorAll('.modal-close').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const modal = btn.closest('.modal');
-          if (modal) modal.style.display = 'none';
-        });
-      });
-
-      document.querySelectorAll('.modal').forEach(modal => {
-        modal.addEventListener('click', (e) => {
-          if (e.target === modal) modal.style.display = 'none';
-        });
-      });
-
-      // ── CONTACT FORM ──
-      document.getElementById('contactForm')?.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const name = document.getElementById('contactName').value.trim();
-        const email = document.getElementById('contactEmail').value.trim();
-        const subject = document.getElementById('contactSubject').value.trim();
-        const message = document.getElementById('contactMessage').value.trim();
-
-        if (name && email && message) {
-          const msg = `Hello! My name is ${name}. ${subject ? 'Subject: ' + subject : ''} Message: ${message}`;
-          window.open(`https://wa.me/2348068510863?text=${encodeURIComponent(msg)}`, '_blank');
-          this.reset();
-        } else {
-          alert('Please fill in all required fields.');
-        }
-      });
-    })();
-  </script>
-</body>
-</html>
+      
+      console.log

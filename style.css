@@ -29,7 +29,7 @@ body {
 }
 
 /* ============================================================
-   HEADER - Mobile First
+   HEADER - LOGO STYLES (CIRCULAR)
    ============================================================ */
 .luxe-header {
   background: rgba(0, 0, 0, 0.95);
@@ -58,53 +58,68 @@ body {
 .brand-area {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   text-decoration: none;
   flex-shrink: 0;
 }
 
-/* ── LOGO IMAGE - NO BORDER, CLEAN ── */
-#brandLogoImg {
-  width: 44px;
-  height: 44px;
+/* ── LOGO WRAPPER ── */
+.logo-wrapper {
+  position: relative;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  transition: all 0.3s ease;
+}
+
+.logo-wrapper:hover {
+  transform: scale(1.05);
+  border-color: #d4af37;
+}
+
+/* ── LOGO IMAGE - CIRCULAR ── */
+#brandLogoImg {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   display: none;
-  background: transparent;
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  box-shadow: none;
 }
 
 #brandLogoImg.visible {
   display: block;
 }
 
-#brandLogoImg:hover {
-  transform: scale(1.05);
-  transition: transform 0.3s ease;
-}
-
-/* ── TEXT LOGO (Fallback) ── */
+/* ── FALLBACK TEXT LOGO ── */
 .logo-text {
   font-family: 'Playfair Display', serif;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 800;
-  letter-spacing: 2px;
-  color: #ffffff;
+  color: #d4af37;
+  letter-spacing: 1px;
   line-height: 1;
+  text-align: center;
+  display: block;
 }
 
-.logo-text .gold {
-  color: #d4af37;
-}
-
+/* ── BRAND NAME TEXT ── */
 .logo-tagline {
-  font-size: 0.45rem;
-  letter-spacing: 1.5px;
-  color: #d4af37;
+  font-size: 0.55rem;
+  letter-spacing: 2px;
+  color: #ece6df;
   text-transform: uppercase;
   display: none;
+  font-weight: 500;
 }
 
 /* ── NAVIGATION ── */
@@ -1255,18 +1270,18 @@ textarea.form-input {
     padding: 0 24px;
   }
 
+  .logo-wrapper {
+    width: 52px;
+    height: 52px;
+  }
+
   .logo-text {
     font-size: 1.4rem;
   }
 
   .logo-tagline {
     display: block;
-    font-size: 0.5rem;
-  }
-
-  #brandLogoImg {
-    width: 48px;
-    height: 48px;
+    font-size: 0.6rem;
   }
 
   .search-area {
@@ -1402,9 +1417,18 @@ textarea.form-input {
     display: inline-block;
   }
 
-  #brandLogoImg {
+  .logo-wrapper {
     width: 56px;
     height: 56px;
+  }
+
+  .logo-text {
+    font-size: 1.6rem;
+  }
+
+  .logo-tagline {
+    font-size: 0.65rem;
+    letter-spacing: 3px;
   }
 
   .hero {

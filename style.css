@@ -1,5 +1,5 @@
 /* ============================================================
-   BASE RESET
+   DFC STYLE - CLEAN WORKING VERSION
    ============================================================ */
 * {
   margin: 0;
@@ -16,19 +16,15 @@ body {
   background: #0a0a0a;
   color: #ece6df;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-  width: 100%;
 }
 
 .container {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 20px;
 }
 
-/* ============================================================
-   HEADER
-   ============================================================ */
+/* ── HEADER ── */
 .luxe-header {
   background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(20px);
@@ -42,8 +38,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
-  gap: 8px;
+  padding: 12px 0;
+  gap: 10px;
   min-height: 56px;
 }
 
@@ -52,7 +48,6 @@ body {
   align-items: center;
   gap: 8px;
   text-decoration: none;
-  flex-shrink: 0;
 }
 
 .logo-text {
@@ -60,16 +55,13 @@ body {
   font-size: 1.2rem;
   font-weight: 800;
   color: #ffffff;
-  line-height: 1;
 }
 
 .logo-tagline {
-  font-size: 0.5rem;
+  font-size: 0.45rem;
   letter-spacing: 1px;
   color: #d4af37;
   text-transform: uppercase;
-  display: block;
-  font-weight: 500;
 }
 
 .main-nav {
@@ -80,7 +72,6 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
-  flex-shrink: 0;
 }
 
 .search-area {
@@ -89,23 +80,12 @@ body {
   gap: 4px;
   background: #1c1c1c;
   border-radius: 40px;
-  padding: 4px 8px;
+  padding: 4px 10px;
   border: 1px solid #2a2a2a;
-  width: 80px;
-  transition: all 0.3s ease;
+  width: 90px;
 }
 
-.search-area:focus-within {
-  border-color: #d4af37;
-  width: 110px;
-}
-
-.search-area i {
-  color: #d4af37;
-  font-size: 0.6rem;
-}
-
-#searchInput {
+.search-area input {
   background: transparent;
   border: none;
   color: white;
@@ -114,16 +94,13 @@ body {
   outline: none;
 }
 
-#searchInput::placeholder {
+.search-area input::placeholder {
   color: #555;
 }
 
-.btn-subscribe {
-  display: none;
-}
-
-.admin-link {
-  display: none;
+.search-area i {
+  color: #d4af37;
+  font-size: 0.6rem;
 }
 
 .hamburger {
@@ -133,14 +110,12 @@ body {
   color: #ece6df;
   font-size: 1rem;
   cursor: pointer;
-  padding: 4px;
 }
 
 .mobile-nav {
   display: none;
   flex-direction: column;
   background: rgba(10, 10, 10, 0.98);
-  backdrop-filter: blur(20px);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   padding: 4px 0;
 }
@@ -153,7 +128,6 @@ body {
   text-decoration: none;
   color: #ece6df;
   font-size: 0.85rem;
-  font-weight: 500;
   padding: 10px 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
   display: flex;
@@ -170,84 +144,63 @@ body {
   width: 16px;
 }
 
-/* ============================================================
-   TABLET
-   ============================================================ */
-@media (min-width: 601px) {
-  .container {
-    padding: 0 24px;
-  }
-  .header-main {
-    padding: 14px 24px;
-  }
-  .logo-text {
-    font-size: 1.4rem;
-  }
-  .logo-tagline {
-    font-size: 0.55rem;
-  }
-  .search-area {
-    width: 120px;
-    padding: 5px 10px;
-  }
-  .search-area:focus-within {
-    width: 150px;
-  }
-  #searchInput {
-    font-size: 0.7rem;
-  }
-  .hamburger {
-    font-size: 1.1rem;
-  }
+.btn-subscribe,
+.admin-link {
+  display: none;
 }
 
-/* ============================================================
-   DESKTOP
-   ============================================================ */
+/* ── DESKTOP ── */
 @media (min-width: 769px) {
   .container {
-    padding: 0 32px;
+    padding: 0 40px;
   }
+
   .header-main {
-    padding: 16px 32px;
+    padding: 16px 0;
+    min-height: 64px;
   }
+
   .logo-text {
     font-size: 1.6rem;
   }
+
   .logo-tagline {
     font-size: 0.6rem;
     letter-spacing: 2px;
   }
+
   .main-nav {
     display: flex;
     align-items: center;
     gap: 24px;
   }
+
   .main-nav a {
     text-decoration: none;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 500;
     letter-spacing: 1px;
     color: #ece6df;
     text-transform: uppercase;
-    transition: 0.2s;
   }
+
   .main-nav a:hover {
     color: #d4af37;
   }
+
   .search-area {
     width: 180px;
     padding: 7px 14px;
   }
-  .search-area:focus-within {
-    width: 220px;
+
+  .search-area input {
+    font-size: 0.8rem;
   }
+
   .search-area i {
     font-size: 0.85rem;
   }
-  #searchInput {
-    font-size: 0.82rem;
-  }
+
   .btn-subscribe {
     display: inline-block;
     font-size: 0.7rem;
@@ -258,26 +211,26 @@ body {
     text-decoration: none;
     font-weight: 600;
   }
+
   .admin-link {
     display: inline-block;
     color: #444;
     font-size: 0.8rem;
     text-decoration: none;
   }
+
   .admin-link:hover {
     color: #d4af37;
   }
+
   .hamburger {
     display: none !important;
   }
 }
 
-/* ============================================================
-   HERO
-   ============================================================ */
+/* ── HERO ── */
 .hero {
   padding: 40px 0 50px;
-  background: #0a0a0a;
 }
 
 .hero-badge {
@@ -287,7 +240,6 @@ body {
   border-radius: 40px;
   font-size: 0.6rem;
   letter-spacing: 2px;
-  text-transform: uppercase;
   color: #d4af37;
   margin-bottom: 16px;
   background: rgba(212, 175, 55, 0.05);
@@ -309,7 +261,7 @@ body {
   background-clip: text;
 }
 
-.hero-content p {
+.hero p {
   font-size: 0.9rem;
   color: #bcb09b;
   line-height: 1.7;
@@ -330,18 +282,9 @@ body {
   border-radius: 40px;
   text-decoration: none;
   font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  font-size: 0.75rem;
   border: none;
   cursor: pointer;
-  font-size: 0.75rem;
-  transition: all 0.3s ease;
-}
-
-.btn-primary:hover {
-  background: #c2a02e;
-  transform: translateY(-2px);
 }
 
 .btn-secondary-outline {
@@ -351,17 +294,8 @@ body {
   border-radius: 40px;
   text-decoration: none;
   font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
   font-size: 0.75rem;
-  transition: all 0.3s ease;
-}
-
-.btn-secondary-outline:hover {
-  border-color: #d4af37;
-  color: #d4af37;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .hero-stats {
@@ -376,7 +310,6 @@ body {
 .stat {
   text-align: center;
   flex: 1;
-  min-width: 60px;
 }
 
 .stat-number {
@@ -390,75 +323,79 @@ body {
 .stat-label {
   font-size: 0.5rem;
   color: #6a5c48;
-  letter-spacing: 0.5px;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-/* ============================================================
-   HERO - TABLET
-   ============================================================ */
+/* ── TABLET ── */
 @media (min-width: 601px) {
   .hero {
     padding: 60px 0 70px;
   }
+
   .hero h1 {
     font-size: 2.8rem;
   }
-  .hero-content p {
+
+  .hero p {
     font-size: 1rem;
     max-width: 500px;
   }
+
   .btn-primary,
   .btn-secondary-outline {
     padding: 12px 24px;
     font-size: 0.85rem;
   }
+
   .stat-number {
     font-size: 1.5rem;
   }
+
   .stat-label {
     font-size: 0.6rem;
   }
 }
 
-/* ============================================================
-   HERO - DESKTOP
-   ============================================================ */
+/* ── DESKTOP HERO ── */
 @media (min-width: 769px) {
   .hero {
     padding: 80px 0 100px;
     min-height: 90vh;
   }
+
   .hero h1 {
     font-size: clamp(3rem, 6vw, 4.5rem);
   }
-  .hero-content p {
+
+  .hero p {
     font-size: 1.1rem;
     max-width: 600px;
   }
+
   .btn-primary,
   .btn-secondary-outline {
     padding: 14px 32px;
     font-size: 0.95rem;
-    gap: 10px;
   }
+
   .hero-stats {
     gap: 48px;
     margin-top: 40px;
     padding-top: 32px;
   }
+
   .stat-number {
     font-size: 1.8rem;
   }
+
   .stat-label {
     font-size: 0.7rem;
     letter-spacing: 1px;
   }
 }
 
-/* ============================================================
-   SECTION HEADERS
-   ============================================================ */
+/* ── SECTION HEADERS ── */
 .section-header {
   text-align: center;
   margin-bottom: 28px;
@@ -486,9 +423,28 @@ body {
   font-size: 0.8rem;
 }
 
-/* ============================================================
-   SERVICES
-   ============================================================ */
+@media (min-width: 601px) {
+  .section-title {
+    font-size: 2rem;
+  }
+  .section-desc {
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .section-header {
+    margin-bottom: 48px;
+  }
+  .section-title {
+    font-size: 2.8rem;
+  }
+  .section-desc {
+    font-size: 1rem;
+  }
+}
+
+/* ── SERVICES ── */
 .services-section {
   padding: 40px 0;
   background: #0a0a0a;
@@ -592,9 +548,7 @@ body {
   }
 }
 
-/* ============================================================
-   PRODUCTS
-   ============================================================ */
+/* ── PRODUCTS ── */
 .collection-section {
   padding: 40px 0;
 }
@@ -611,7 +565,6 @@ body {
   overflow: hidden;
   border: 1px solid #2a2a2a;
   cursor: pointer;
-  transition: all 0.3s ease;
 }
 
 .product-card .product-image-wrapper {
@@ -638,38 +591,8 @@ body {
   border-radius: 20px;
 }
 
-.product-card .product-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
-  opacity: 0;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.product-card:hover .product-overlay {
-  opacity: 1;
-}
-
-.product-card .quick-view-btn {
-  padding: 4px 10px;
-  background: #d4af37;
-  border: none;
-  border-radius: 40px;
-  color: #0a0a0a;
-  font-weight: 600;
-  font-size: 0.5rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
 .product-card .product-info {
-  padding: 10px 10px 14px;
+  padding: 10px;
 }
 
 .product-card .product-name {
@@ -686,10 +609,6 @@ body {
   color: #d4af37;
 }
 
-.product-card .product-desc-short {
-  display: none;
-}
-
 @media (min-width: 601px) {
   .collection-section {
     padding: 60px 0;
@@ -697,21 +616,14 @@ body {
   .products-grid {
     gap: 16px;
   }
-  .product-card {
-    border-radius: 16px;
-  }
   .product-card .product-info {
-    padding: 14px 14px 18px;
+    padding: 14px;
   }
   .product-card .product-name {
     font-size: 0.9rem;
   }
   .product-card .product-price {
     font-size: 1rem;
-  }
-  .product-card .quick-view-btn {
-    padding: 6px 12px;
-    font-size: 0.6rem;
   }
 }
 
@@ -729,10 +641,6 @@ body {
   .product-card:hover {
     transform: translateY(-6px);
     border-color: rgba(212, 175, 55, 0.3);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  }
-  .product-card:hover .product-img {
-    transform: scale(1.05);
   }
   .product-card .product-info {
     padding: 20px 18px 24px;
@@ -743,21 +651,9 @@ body {
   .product-card .product-price {
     font-size: 1.2rem;
   }
-  .product-card .product-desc-short {
-    display: block;
-    color: #6a5c48;
-    font-size: 0.85rem;
-    margin-top: 8px;
-  }
-  .product-card .quick-view-btn {
-    padding: 10px 24px;
-    font-size: 0.8rem;
-  }
 }
 
-/* ============================================================
-   REVIEWS
-   ============================================================ */
+/* ── REVIEWS ── */
 .reviews-section {
   padding: 40px 0;
   background: #0a0a0a;
@@ -781,7 +677,6 @@ body {
   color: #bcb09b;
   line-height: 1.6;
   font-size: 0.8rem;
-  margin: 4px 0 8px;
 }
 
 .comment-card .comment-author {
@@ -823,19 +718,6 @@ body {
   border: 1px solid #2a2a2a;
 }
 
-.add-review-card h4 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1rem;
-  color: #ffffff;
-  margin-bottom: 2px;
-}
-
-.add-review-card .add-review-desc {
-  color: #6a5c48;
-  font-size: 0.7rem;
-  margin-bottom: 10px;
-}
-
 .comment-form-area {
   display: flex;
   flex-direction: column;
@@ -849,7 +731,6 @@ body {
   padding: 8px 14px;
   border-radius: 40px;
   color: #ece6df;
-  font-family: inherit;
   font-size: 0.75rem;
 }
 
@@ -868,12 +749,6 @@ body {
   cursor: pointer;
   font-size: 0.75rem;
   width: 100%;
-  transition: all 0.3s ease;
-}
-
-.btn-secondary:hover {
-  background: #d4af37;
-  color: #0a0a0a;
 }
 
 @media (min-width: 601px) {
@@ -883,12 +758,6 @@ body {
   .reviews-grid {
     grid-template-columns: 1fr 1fr;
     gap: 16px;
-  }
-  .comment-card {
-    padding: 20px;
-  }
-  .add-review-card {
-    padding: 24px;
   }
   .comment-form-area {
     flex-direction: row;
@@ -921,15 +790,9 @@ body {
     border-color: rgba(212, 175, 55, 0.3);
     transform: translateY(-4px);
   }
-  .add-review-card {
-    padding: 32px;
-    border-radius: 24px;
-  }
 }
 
-/* ============================================================
-   ABOUT
-   ============================================================ */
+/* ── ABOUT ── */
 .about-section {
   padding: 40px 0;
   background: #0a0a0a;
@@ -971,7 +834,6 @@ body {
   font-family: 'Playfair Display', serif;
   font-size: 0.85rem;
   color: #ece6df;
-  line-height: 1.5;
 }
 
 .about-quote cite {
@@ -1019,11 +881,6 @@ body {
 .value-item p {
   color: #6a5c48;
   font-size: 0.65rem;
-  line-height: 1.5;
-}
-
-.about-visual {
-  position: relative;
 }
 
 .about-image-grid {
@@ -1100,9 +957,7 @@ body {
   }
 }
 
-/* ============================================================
-   CONTACT
-   ============================================================ */
+/* ── CONTACT ── */
 .contact-section {
   padding: 40px 0;
   background: #0a0a0a;
@@ -1162,14 +1017,12 @@ body {
   justify-content: center;
   color: #d4af37;
   font-size: 0.9rem;
-  flex-shrink: 0;
 }
 
 .contact-label {
   font-size: 0.55rem;
   color: #6a5c48;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
 .contact-value {
@@ -1181,7 +1034,7 @@ body {
 .btn-whatsapp {
   background: #25D366;
   color: #0a0a0a;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
@@ -1193,11 +1046,6 @@ body {
   cursor: pointer;
   font-size: 0.75rem;
   width: 100%;
-  transition: all 0.3s ease;
-}
-
-.btn-whatsapp:hover {
-  background: #20b859;
 }
 
 .contact-social {
@@ -1217,26 +1065,6 @@ body {
   border: 1px solid #2a2a2a;
   text-decoration: none;
   font-size: 0.8rem;
-  transition: all 0.3s ease;
-}
-
-.social-btn:hover {
-  transform: translateY(-4px);
-}
-
-.social-btn.instagram:hover {
-  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-  border-color: transparent;
-}
-
-.social-btn.tiktok:hover {
-  background: #010101;
-  border-color: #d4af37;
-}
-
-.social-btn.whatsapp:hover {
-  background: #25D366;
-  border-color: transparent;
 }
 
 .contact-form-card {
@@ -1259,13 +1087,11 @@ body {
   color: #ece6df;
   font-family: 'Inter', sans-serif;
   font-size: 0.8rem;
-  transition: all 0.3s ease;
 }
 
 .form-input:focus {
   outline: none;
   border-color: #d4af37;
-  background: #1e1e1e;
 }
 
 .form-input::placeholder {
@@ -1334,11 +1160,12 @@ textarea.form-input {
     padding: 12px 28px;
     font-size: 0.9rem;
   }
+  .btn-whatsapp:hover {
+    background: #20b859;
+  }
 }
 
-/* ============================================================
-   FOOTER
-   ============================================================ */
+/* ── FOOTER ── */
 .site-footer {
   background: #050505;
   border-top: 1px solid rgba(255, 255, 255, 0.03);
@@ -1389,12 +1216,6 @@ textarea.form-input {
   justify-content: center;
   color: #555;
   text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.footer-social-icon:hover {
-  background: #d4af37;
-  color: #0a0a0a;
 }
 
 .footer-links-col h5 {
@@ -1414,11 +1235,6 @@ textarea.form-input {
   display: flex;
   align-items: center;
   gap: 6px;
-  transition: all 0.3s ease;
-}
-
-.footer-links-col a:hover {
-  color: #d4af37;
 }
 
 .footer-bottom {
@@ -1481,23 +1297,14 @@ textarea.form-input {
   .footer-social-icon:hover {
     background: #d4af37;
     color: #0a0a0a;
-    border-color: #d4af37;
-    transform: translateY(-4px);
-  }
-  .footer-links-col a:hover {
-    color: #d4af37;
-    transform: translateX(4px);
   }
   .footer-bottom-inner {
     flex-direction: row;
     justify-content: space-between;
-    text-align: left;
   }
 }
 
-/* ============================================================
-   FLOATING WHATSAPP
-   ============================================================ */
+/* ── FLOATING WHATSAPP ── */
 .fab-whatsapp {
   position: fixed;
   bottom: 16px;
@@ -1541,15 +1348,9 @@ textarea.form-input {
     bottom: 28px;
     right: 28px;
   }
-  .fab-whatsapp:hover {
-    transform: scale(1.12);
-    box-shadow: 0 10px 32px rgba(37, 211, 102, 0.6);
-  }
 }
 
-/* ============================================================
-   BACK TO TOP
-   ============================================================ */
+/* ── BACK TO TOP ── */
 .back-to-top {
   position: fixed;
   bottom: 68px;
@@ -1568,7 +1369,7 @@ textarea.form-input {
   justify-content: center;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s, transform 0.3s;
+  transition: opacity 0.3s;
 }
 
 .back-to-top.visible {
@@ -1594,16 +1395,9 @@ textarea.form-input {
     height: 42px;
     font-size: 14px;
   }
-  .back-to-top:hover {
-    background: #d4af37;
-    color: #000;
-    border-color: #d4af37;
-  }
 }
 
-/* ============================================================
-   MODAL
-   ============================================================ */
+/* ── MODAL ── */
 .modal {
   display: none;
   position: fixed;
@@ -1627,8 +1421,6 @@ textarea.form-input {
   padding: 16px;
   border: 1px solid rgba(212, 175, 55, 0.3);
   position: relative;
-  max-height: 90vh;
-  overflow-y: auto;
 }
 
 .modal-img {
@@ -1665,11 +1457,6 @@ textarea.form-input {
   background: none;
   border: none;
   padding: 4px;
-  transition: all 0.3s ease;
-}
-
-.modal-close:hover {
-  color: #d4af37;
 }
 
 @media (min-width: 601px) {
@@ -1697,9 +1484,5 @@ textarea.form-input {
   }
   .modal-price {
     font-size: 1.5rem;
-  }
-  .modal-close:hover {
-    transform: rotate(90deg);
-    color: #d4af37;
   }
 }

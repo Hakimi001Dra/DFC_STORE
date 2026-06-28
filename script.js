@@ -8,9 +8,22 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 let supabase = null
 let isSupabaseConnected = false
+let retryCount = 0
+const MAX_RETRIES = 3
 
 try {
-  supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    auth: {
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: true
+    },
+    global: {
+      headers: {
+        'X-Client-Info': 'dfc-web-app'
+      }
+    }
+  })
   isSupabaseConnected = true
   console.log('✅ Supabase connected')
 } catch (e) {
@@ -20,6 +33,30 @@ try {
 let products = []
 let comments = []
 let currentSearchTerm = ''
+
+// ============================================================
+//  RETRY FUNCTION
+// ============================================================
+async function retryOperation(fn, maxRetries = 3, delay = 1000) {
+  let lastError = null
+  
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await fn()
+    } catch (error) {
+      lastError = error
+      console.log(`⏳ Attempt ${attempt}/${maxRetries} failed. Retrying in ${delay}ms...`)
+      
+      // Wait before retrying
+      await new Promise(resolve => setTimeout(resolve, delay))
+      
+      // Increase delay for next attempt (exponential backoff)
+      delay *= 1.5
+    }
+  }
+  
+  throw lastError
+}
 
 // ============================================================
 //  LOAD LOGO
@@ -47,6 +84,11 @@ async function loadLogo() {
         img.src = data.value
         img.style.display = 'block'
         img.classList.add('visible')
+        img.onerror = function() {
+          console.log('⚠️ Logo image failed to load, showing text logo')
+          this.style.display = 'none'
+          if (txt) txt.style.display = 'block'
+        }
       }
       
       if (txt) txt.style.display = 'none'
@@ -76,26 +118,32 @@ async function loadProducts() {
     grid.innerHTML = `
       <div style="grid-column:1/-1;text-align:center;padding:40px;color:#ff8888;">
         <p>⚠️ Database not connected.</p>
+        <p style="font-size:0.8rem;color:#888;margin-top:8px;">Please check your internet connection.</p>
+        <button onclick="location.reload()" style="margin-top:12px;padding:8px 20px;background:#d4af37;color:#000;border:none;border-radius:40px;cursor:pointer;font-weight:600;">Retry</button>
       </div>
     `
     return
   }
 
   try {
-    const { data, error } = await supabase
-      .from('products')
-      .select('*')
-      .order('created_at', { ascending: false })
+    const result = await retryOperation(async () => {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: false })
+      
+      if (error) throw error
+      return data
+    }, MAX_RETRIES)
 
-    if (error) throw error
-
-    products = data || []
+    products = result || []
     console.log(`✅ Loaded ${products.length} products`)
     
     if (products.length === 0) {
       grid.innerHTML = `
         <div style="grid-column:1/-1;text-align:center;padding:40px;color:#6a5c48;">
           <p>No products available yet.</p>
+          <p style="font-size:0.8rem;margin-top:4px;">Check back soon!</p>
         </div>
       `
       return
@@ -107,6 +155,8 @@ async function loadProducts() {
     grid.innerHTML = `
       <div style="grid-column:1/-1;text-align:center;padding:40px;color:#ff8888;">
         <p>⚠️ Failed to load products.</p>
+        <p style="font-size:0.8rem;color:#888;margin-top:8px;">${err.message || 'Network error. Please check your connection.'}</p>
+        <button onclick="location.reload()" style="margin-top:12px;padding:8px 20px;background:#d4af37;color:#000;border:none;border-radius:40px;cursor:pointer;font-weight:600;">Retry</button>
       </div>
     `
   }
@@ -135,15 +185,18 @@ async function loadComments() {
   }
 
   try {
-    const { data, error } = await supabase
-      .from('comments')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(20)
+    const result = await retryOperation(async () => {
+      const { data, error } = await supabase
+        .from('comments')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(20)
+      
+      if (error) throw error
+      return data
+    }, MAX_RETRIES)
 
-    if (error) throw error
-
-    comments = data || []
+    comments = result || []
     console.log(`✅ Loaded ${comments.length} comments`)
     renderComments()
   } catch (err) {
@@ -151,6 +204,7 @@ async function loadComments() {
     container.innerHTML = `
       <div style="grid-column:1/-1;text-align:center;padding:20px;color:#ff8888;">
         <p>⚠️ Failed to load reviews.</p>
+        <p style="font-size:0.8rem;color:#888;margin-top:4px;">${err.message || 'Network error'}</p>
       </div>
     `
   }
@@ -243,35 +297,88 @@ function renderComments() {
 }
 
 // ============================================================
-//  ADD COMMENT
+//  ADD COMMENT - WITH RETRY AND BETTER ERROR HANDLING
 // ============================================================
 async function addComment(name, text) {
-  if (!name.trim() || !text.trim()) {
+  const nameTrimmed = name.trim()
+  const textTrimmed = text.trim()
+  
+  if (!nameTrimmed || !textTrimmed) {
     alert('Please enter your name and comment.')
     return
   }
 
-  if (!supabase || !isSupabaseConnected) {
-    alert('Database not connected.')
+  if (nameTrimmed.length > 50) {
+    alert('Name must be 50 characters or less.')
     return
   }
 
+  if (textTrimmed.length > 500) {
+    alert('Comment must be 500 characters or less.')
+    return
+  }
+
+  if (!supabase || !isSupabaseConnected) {
+    alert('Database not connected. Please check your internet connection.')
+    return
+  }
+
+  // Show loading state on button
+  const submitBtn = document.getElementById('submitCommentBtn')
+  const originalText = submitBtn ? submitBtn.textContent : 'Post Comment'
+  if (submitBtn) {
+    submitBtn.textContent = '⏳ Posting...'
+    submitBtn.disabled = true
+  }
+
   try {
-    const { error } = await supabase.from('comments').insert([{
-      name: name.trim(),
-      text: text.trim(),
-      date: new Date().toLocaleDateString(),
-      created_at: new Date().toISOString()
-    }])
+    const result = await retryOperation(async () => {
+      const { data, error } = await supabase
+        .from('comments')
+        .insert([{
+          name: nameTrimmed,
+          text: textTrimmed,
+          date: new Date().toLocaleDateString(),
+          created_at: new Date().toISOString()
+        }])
+        .select()
+      
+      if (error) throw error
+      return data
+    }, MAX_RETRIES, 1500)
 
-    if (error) throw error
-
+    // Success
+    console.log('✅ Comment posted successfully')
     await loadComments()
+    
+    // Clear form
     document.getElementById('commentName').value = ''
     document.getElementById('commentMsg').value = ''
+    
+    alert('✅ Thank you for your feedback!')
+    
   } catch (err) {
-    console.error('Error adding comment:', err)
-    alert('Could not post comment.')
+    console.error('❌ Error adding comment:', err)
+    
+    // User-friendly error messages
+    let errorMessage = 'Could not post comment. '
+    if (err.message && err.message.includes('network')) {
+      errorMessage += 'Please check your internet connection.'
+    } else if (err.message && err.message.includes('timeout')) {
+      errorMessage += 'The request timed out. Please try again.'
+    } else if (err.code === '23505') {
+      errorMessage = 'You have already posted a comment. Thank you!'
+    } else {
+      errorMessage += 'Please try again later.'
+    }
+    
+    alert('❌ ' + errorMessage)
+  } finally {
+    // Restore button
+    if (submitBtn) {
+      submitBtn.textContent = originalText
+      submitBtn.disabled = false
+    }
   }
 }
 
@@ -283,38 +390,60 @@ async function confirmSignup() {
   const email = emailInput ? emailInput.value.trim() : ''
 
   if (!email || !email.includes('@')) {
-    alert('Please enter a valid email.')
+    alert('Please enter a valid email address.')
     return
   }
 
   if (!supabase || !isSupabaseConnected) {
-    alert('Database not connected.')
+    alert('Database not connected. Please check your internet connection.')
     return
   }
 
+  const submitBtn = document.getElementById('confirmSignupBtn')
+  const originalText = submitBtn ? submitBtn.textContent : 'Subscribe ✨'
+  if (submitBtn) {
+    submitBtn.textContent = '⏳ Subscribing...'
+    submitBtn.disabled = true
+  }
+
   try {
-    const { error } = await supabase
-      .from('subscribers')
-      .insert([{ 
-        email: email.trim(), 
-        created_at: new Date().toISOString() 
-      }])
+    const result = await retryOperation(async () => {
+      const { data, error } = await supabase
+        .from('subscribers')
+        .insert([{ 
+          email: email.trim(), 
+          created_at: new Date().toISOString() 
+        }])
+        .select()
+      
+      if (error) throw error
+      return data
+    }, MAX_RETRIES, 1500)
 
-    if (error) {
-      if (error.code === '23505') {
-        alert('Already subscribed! ✨')
-      } else {
-        throw error
-      }
-    } else {
-      alert('Thank you for subscribing! ✨')
-    }
-
+    alert('Thank you for subscribing! ✨')
     document.getElementById('signupModal').style.display = 'none'
     if (emailInput) emailInput.value = ''
+    
   } catch (err) {
-    console.error('Error subscribing:', err)
-    alert('Subscription failed.')
+    console.error('❌ Error subscribing:', err)
+    
+    if (err.code === '23505') {
+      alert('You are already subscribed! ✨')
+      document.getElementById('signupModal').style.display = 'none'
+    } else {
+      let errorMessage = 'Subscription failed. '
+      if (err.message && err.message.includes('network')) {
+        errorMessage += 'Please check your internet connection.'
+      } else {
+        errorMessage += 'Please try again later.'
+      }
+      alert('❌ ' + errorMessage)
+    }
+  } finally {
+    if (submitBtn) {
+      submitBtn.textContent = originalText
+      submitBtn.disabled = false
+    }
   }
 }
 
@@ -360,9 +489,13 @@ function sendWhatsApp() {
 function setupSearch() {
   const input = document.getElementById('searchInput')
   if (input) {
+    let searchTimeout
     input.addEventListener('input', e => {
-      currentSearchTerm = e.target.value
-      renderProducts()
+      clearTimeout(searchTimeout)
+      searchTimeout = setTimeout(() => {
+        currentSearchTerm = e.target.value
+        renderProducts()
+      }, 300) // Debounce search
     })
   }
 }
@@ -398,6 +531,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     addComment(name, msg)
   })
 
+  // Allow Enter key for comment
+  document.getElementById('commentMsg')?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      const name = document.getElementById('commentName')?.value || ''
+      const msg = document.getElementById('commentMsg')?.value || ''
+      addComment(name, msg)
+    }
+  })
+
   // Load logo FIRST
   await loadLogo()
   
@@ -406,4 +549,38 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadComments()
 
   console.log('✅ DFC Website Ready')
+})
+
+// ============================================================
+//  NETWORK STATUS - Show alerts when offline
+// ============================================================
+window.addEventListener('online', () => {
+  console.log('🔄 Network reconnected. Refreshing data...')
+  loadProducts()
+  loadComments()
+})
+
+window.addEventListener('offline', () => {
+  console.log('⚠️ Network disconnected.')
+  document.querySelector('.offline-notice')?.remove()
+  
+  const notice = document.createElement('div')
+  notice.className = 'offline-notice'
+  notice.style.cssText = `
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #330000;
+    color: #ff8888;
+    padding: 12px 24px;
+    border-radius: 40px;
+    border: 1px solid #550000;
+    z-index: 999;
+    font-size: 0.85rem;
+    text-align: center;
+    max-width: 90%;
+  `
+  notice.textContent = '⚠️ You are offline. Please check your internet connection.'
+  document.body.appendChild(notice)
 })

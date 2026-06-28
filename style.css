@@ -1740,118 +1740,131 @@ textarea.form-input {
     color: #d4af37;
   }
 }
+
 /* ============================================================
-   SERVICES SECTION - COMPLETE FIX
+   ABOUT SERVICES GRID - FIX
    ============================================================ */
-.services-section {
-  padding: 60px 0;
-  background: #0a0a0a;
-}
-
-.services-grid {
+.about-services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 16px 0 24px;
 }
 
-.service-card {
-  background: #111111;
-  border-radius: 16px;
-  padding: 24px 20px;
-  border: 1px solid #2a2a2a;
+.about-service-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 8px;
+  background: rgba(212, 175, 55, 0.06);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  border-radius: 10px;
   text-align: center;
   transition: all 0.3s ease;
+  cursor: default;
 }
 
-.service-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(212, 175, 55, 0.3);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+.about-service-item:hover {
+  background: rgba(212, 175, 55, 0.12);
+  border-color: rgba(212, 175, 55, 0.35);
+  transform: translateY(-2px);
 }
 
-.service-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: rgba(212, 175, 55, 0.1);
+.about-service-item i {
+  color: #d4af37;
+  font-size: 1.1rem;
+}
+
+.about-service-item span {
+  color: #ece6df;
+  font-size: 0.65rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+/* ── SOCIAL FOLLOW STRIP ── */
+.social-follow-strip {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin: 0 auto 12px;
-  font-size: 1.3rem;
-  color: #d4af37;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 8px;
+}
+
+.social-follow-label {
+  font-size: 0.6rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #555;
+  font-weight: 600;
+}
+
+.social-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 40px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-decoration: none;
   transition: all 0.3s ease;
 }
 
-.service-card:hover .service-icon {
-  background: rgba(212, 175, 55, 0.2);
-  transform: scale(1.1);
+.social-pill:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
 }
 
-.service-card h4 {
-  font-family: 'Playfair Display', serif;
-  font-size: 0.95rem;
-  color: #ffffff;
-  margin-bottom: 8px;
+.social-pill.instagram {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: #fff;
 }
 
-.service-card p {
-  color: #bcb09b;
-  font-size: 0.78rem;
-  line-height: 1.6;
+.social-pill.tiktok {
+  background: #010101;
+  color: #fff;
+  border: 1px solid #333;
 }
 
-/* ── MOBILE SERVICES ── */
+/* ── RESPONSIVE ABOUT SERVICES ── */
 @media (max-width: 768px) {
-  .services-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+  .about-services-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
   }
   
-  .service-card {
-    padding: 16px 12px;
-    border-radius: 12px;
+  .about-service-item {
+    padding: 8px 4px;
+    border-radius: 8px;
   }
   
-  .service-icon {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
-    margin: 0 auto 8px;
+  .about-service-item i {
+    font-size: 0.85rem;
   }
   
-  .service-card h4 {
-    font-size: 0.75rem;
-  }
-  
-  .service-card p {
-    font-size: 0.6rem;
+  .about-service-item span {
+    font-size: 0.5rem;
   }
 }
 
 @media (max-width: 480px) {
-  .services-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
+  .about-services-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
   }
   
-  .service-card {
-    padding: 12px 8px;
-    border-radius: 10px;
+  .about-service-item {
+    padding: 6px 4px;
+    border-radius: 6px;
   }
   
-  .service-icon {
-    width: 32px;
-    height: 32px;
+  .about-service-item i {
     font-size: 0.75rem;
-    margin: 0 auto 6px;
   }
   
-  .service-card h4 {
-    font-size: 0.65rem;
-  }
-  
-  .service-card p {
-    font-size: 0.5rem;
+  .about-service-item span {
+    font-size: 0.45rem;
   }
 }

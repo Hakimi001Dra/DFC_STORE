@@ -466,43 +466,73 @@ body {
 }
 
 /* ============================================================
-   RESPONSIVE HERO - WITH PADDING FIX
+   RESPONSIVE HERO - REAL FIX
    ============================================================ */
 @media (max-width: 768px) {
   .hero {
     min-height: auto;
-    padding: 80px 0 60px;
+    padding: 60px 0;
   }
+  
   .hero-content {
-    padding: 0 20px !important;  /* ← FIX: Added padding */
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
+  
   .hero h1 {
-    font-size: 2.2rem;
+    font-size: 2rem !important;
   }
+  
   .hero-content p {
-    font-size: 1rem;
+    font-size: 0.9rem !important;
+    padding-right: 10px !important;
   }
+  
+  .hero-actions {
+    gap: 10px !important;
+  }
+  
+  .btn-primary,
+  .btn-secondary-outline {
+    padding: 10px 18px !important;
+    font-size: 0.75rem !important;
+  }
+  
   .hero-stats {
-    gap: 24px;
-    flex-wrap: wrap;
+    gap: 16px !important;
   }
+  
   .stat-number {
-    font-size: 1.4rem;
+    font-size: 1.2rem !important;
+  }
+  
+  .stat-label {
+    font-size: 0.55rem !important;
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 480px) {
   .hero-content {
-    padding: 0 16px !important;  /* ← FIX: Smaller padding */
+    padding-left: 14px !important;
+    padding-right: 14px !important;
   }
+  
   .hero h1 {
-    font-size: 1.8rem;
+    font-size: 1.6rem !important;
   }
-  .hero-stats {
-    gap: 16px;
+  
+  .hero-content p {
+    font-size: 0.8rem !important;
   }
+  
+  .btn-primary,
+  .btn-secondary-outline {
+    padding: 8px 14px !important;
+    font-size: 0.65rem !important;
+  }
+  
   .stat-number {
-    font-size: 1.2rem;
+    font-size: 1rem !important;
   }
 }
 
@@ -1588,15 +1618,6 @@ textarea.form-input {
   .products-grid {
     grid-template-columns: 1fr 1fr;
     gap: 12px;
-  }
-  .hero h1 {
-    font-size: 2.2rem;
-  }
-  .hero-stats {
-    gap: 16px;
-  }
-  .stat-number {
-    font-size: 1.2rem;
   }
   .services-grid {
     grid-template-columns: 1fr;

@@ -46,6 +46,7 @@ async function loadLogo() {
       if (img) {
         img.src = data.value
         img.style.display = 'block'
+        img.classList.add('visible')
       }
       
       if (txt) txt.style.display = 'none'

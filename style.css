@@ -1740,3 +1740,118 @@ textarea.form-input {
     color: #d4af37;
   }
 }
+/* ============================================================
+   SERVICES SECTION - COMPLETE FIX
+   ============================================================ */
+.services-section {
+  padding: 60px 0;
+  background: #0a0a0a;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.service-card {
+  background: #111111;
+  border-radius: 16px;
+  padding: 24px 20px;
+  border: 1px solid #2a2a2a;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(212, 175, 55, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.service-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  font-size: 1.3rem;
+  color: #d4af37;
+  transition: all 0.3s ease;
+}
+
+.service-card:hover .service-icon {
+  background: rgba(212, 175, 55, 0.2);
+  transform: scale(1.1);
+}
+
+.service-card h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.service-card p {
+  color: #bcb09b;
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+/* ── MOBILE SERVICES ── */
+@media (max-width: 768px) {
+  .services-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  
+  .service-card {
+    padding: 16px 12px;
+    border-radius: 12px;
+  }
+  
+  .service-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+    margin: 0 auto 8px;
+  }
+  
+  .service-card h4 {
+    font-size: 0.75rem;
+  }
+  
+  .service-card p {
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .services-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  
+  .service-card {
+    padding: 12px 8px;
+    border-radius: 10px;
+  }
+  
+  .service-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 0.75rem;
+    margin: 0 auto 6px;
+  }
+  
+  .service-card h4 {
+    font-size: 0.65rem;
+  }
+  
+  .service-card p {
+    font-size: 0.5rem;
+  }
+}

@@ -1,5 +1,5 @@
 /* ============================================================
-   BASE RESET & TYPOGRAPHY
+   BASE RESET
    ============================================================ */
 * {
   margin: 0;
@@ -92,6 +92,7 @@ body {
   padding: 4px 8px;
   border: 1px solid #2a2a2a;
   width: 80px;
+  transition: all 0.3s ease;
 }
 
 .search-area:focus-within {
@@ -176,32 +177,25 @@ body {
   .container {
     padding: 0 24px;
   }
-
   .header-main {
     padding: 14px 24px;
   }
-
   .logo-text {
     font-size: 1.4rem;
   }
-
   .logo-tagline {
     font-size: 0.55rem;
   }
-
   .search-area {
     width: 120px;
     padding: 5px 10px;
   }
-
   .search-area:focus-within {
     width: 150px;
   }
-
   #searchInput {
     font-size: 0.7rem;
   }
-
   .hamburger {
     font-size: 1.1rem;
   }
@@ -211,25 +205,24 @@ body {
    DESKTOP
    ============================================================ */
 @media (min-width: 769px) {
+  .container {
+    padding: 0 32px;
+  }
   .header-main {
     padding: 16px 32px;
   }
-
   .logo-text {
     font-size: 1.6rem;
   }
-
   .logo-tagline {
     font-size: 0.6rem;
     letter-spacing: 2px;
   }
-
   .main-nav {
     display: flex;
     align-items: center;
     gap: 24px;
   }
-
   .main-nav a {
     text-decoration: none;
     font-size: 0.75rem;
@@ -237,29 +230,24 @@ body {
     letter-spacing: 1px;
     color: #ece6df;
     text-transform: uppercase;
+    transition: 0.2s;
   }
-
   .main-nav a:hover {
     color: #d4af37;
   }
-
   .search-area {
     width: 180px;
     padding: 7px 14px;
   }
-
   .search-area:focus-within {
     width: 220px;
   }
-
   .search-area i {
     font-size: 0.85rem;
   }
-
   #searchInput {
     font-size: 0.82rem;
   }
-
   .btn-subscribe {
     display: inline-block;
     font-size: 0.7rem;
@@ -270,14 +258,15 @@ body {
     text-decoration: none;
     font-weight: 600;
   }
-
   .admin-link {
     display: inline-block;
     color: #444;
     font-size: 0.8rem;
     text-decoration: none;
   }
-
+  .admin-link:hover {
+    color: #d4af37;
+  }
   .hamburger {
     display: none !important;
   }
@@ -347,6 +336,12 @@ body {
   border: none;
   cursor: pointer;
   font-size: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: #c2a02e;
+  transform: translateY(-2px);
 }
 
 .btn-secondary-outline {
@@ -361,6 +356,12 @@ body {
   gap: 6px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   font-size: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary-outline:hover {
+  border-color: #d4af37;
+  color: #d4af37;
 }
 
 .hero-stats {
@@ -400,26 +401,21 @@ body {
   .hero {
     padding: 60px 0 70px;
   }
-
   .hero h1 {
     font-size: 2.8rem;
   }
-
   .hero-content p {
     font-size: 1rem;
     max-width: 500px;
   }
-
   .btn-primary,
   .btn-secondary-outline {
     padding: 12px 24px;
     font-size: 0.85rem;
   }
-
   .stat-number {
     font-size: 1.5rem;
   }
-
   .stat-label {
     font-size: 0.6rem;
   }
@@ -433,33 +429,27 @@ body {
     padding: 80px 0 100px;
     min-height: 90vh;
   }
-
   .hero h1 {
     font-size: clamp(3rem, 6vw, 4.5rem);
   }
-
   .hero-content p {
     font-size: 1.1rem;
     max-width: 600px;
   }
-
   .btn-primary,
   .btn-secondary-outline {
     padding: 14px 32px;
     font-size: 0.95rem;
     gap: 10px;
   }
-
   .hero-stats {
     gap: 48px;
     margin-top: 40px;
     padding-top: 32px;
   }
-
   .stat-number {
     font-size: 1.8rem;
   }
-
   .stat-label {
     font-size: 0.7rem;
     letter-spacing: 1px;
@@ -580,10 +570,19 @@ body {
     padding: 32px 24px;
     border-radius: 20px;
   }
+  .service-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(212, 175, 55, 0.3);
+  }
+  .service-card:hover .service-icon {
+    background: rgba(212, 175, 55, 0.2);
+    transform: scale(1.1);
+  }
   .service-icon {
     width: 64px;
     height: 64px;
     font-size: 1.5rem;
+    margin: 0 auto 16px;
   }
   .service-card h4 {
     font-size: 1.1rem;
@@ -612,6 +611,7 @@ body {
   overflow: hidden;
   border: 1px solid #2a2a2a;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .product-card .product-image-wrapper {
@@ -638,6 +638,36 @@ body {
   border-radius: 20px;
 }
 
+.product-card .product-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-card:hover .product-overlay {
+  opacity: 1;
+}
+
+.product-card .quick-view-btn {
+  padding: 4px 10px;
+  background: #d4af37;
+  border: none;
+  border-radius: 40px;
+  color: #0a0a0a;
+  font-weight: 600;
+  font-size: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .product-card .product-info {
   padding: 10px 10px 14px;
 }
@@ -654,6 +684,10 @@ body {
   font-size: 0.8rem;
   font-weight: 700;
   color: #d4af37;
+}
+
+.product-card .product-desc-short {
+  display: none;
 }
 
 @media (min-width: 601px) {
@@ -675,6 +709,10 @@ body {
   .product-card .product-price {
     font-size: 1rem;
   }
+  .product-card .quick-view-btn {
+    padding: 6px 12px;
+    font-size: 0.6rem;
+  }
 }
 
 @media (min-width: 769px) {
@@ -687,6 +725,14 @@ body {
   }
   .product-card {
     border-radius: 20px;
+  }
+  .product-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(212, 175, 55, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+  .product-card:hover .product-img {
+    transform: scale(1.05);
   }
   .product-card .product-info {
     padding: 20px 18px 24px;
@@ -702,6 +748,10 @@ body {
     color: #6a5c48;
     font-size: 0.85rem;
     margin-top: 8px;
+  }
+  .product-card .quick-view-btn {
+    padding: 10px 24px;
+    font-size: 0.8rem;
   }
 }
 
@@ -731,6 +781,7 @@ body {
   color: #bcb09b;
   line-height: 1.6;
   font-size: 0.8rem;
+  margin: 4px 0 8px;
 }
 
 .comment-card .comment-author {
@@ -776,6 +827,7 @@ body {
   font-family: 'Playfair Display', serif;
   font-size: 1rem;
   color: #ffffff;
+  margin-bottom: 2px;
 }
 
 .add-review-card .add-review-desc {
@@ -816,6 +868,12 @@ body {
   cursor: pointer;
   font-size: 0.75rem;
   width: 100%;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: #d4af37;
+  color: #0a0a0a;
 }
 
 @media (min-width: 601px) {
@@ -858,6 +916,10 @@ body {
   .comment-card {
     padding: 28px;
     border-radius: 20px;
+  }
+  .comment-card:hover {
+    border-color: rgba(212, 175, 55, 0.3);
+    transform: translateY(-4px);
   }
   .add-review-card {
     padding: 32px;
@@ -1033,6 +1095,9 @@ body {
   .about-content p {
     font-size: 0.95rem;
   }
+  .about-quote blockquote {
+    font-size: 1.1rem;
+  }
 }
 
 /* ============================================================
@@ -1128,6 +1193,11 @@ body {
   cursor: pointer;
   font-size: 0.75rem;
   width: 100%;
+  transition: all 0.3s ease;
+}
+
+.btn-whatsapp:hover {
+  background: #20b859;
 }
 
 .contact-social {
@@ -1147,6 +1217,26 @@ body {
   border: 1px solid #2a2a2a;
   text-decoration: none;
   font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+  transform: translateY(-4px);
+}
+
+.social-btn.instagram:hover {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  border-color: transparent;
+}
+
+.social-btn.tiktok:hover {
+  background: #010101;
+  border-color: #d4af37;
+}
+
+.social-btn.whatsapp:hover {
+  background: #25D366;
+  border-color: transparent;
 }
 
 .contact-form-card {
@@ -1169,11 +1259,13 @@ body {
   color: #ece6df;
   font-family: 'Inter', sans-serif;
   font-size: 0.8rem;
+  transition: all 0.3s ease;
 }
 
 .form-input:focus {
   outline: none;
   border-color: #d4af37;
+  background: #1e1e1e;
 }
 
 .form-input::placeholder {
@@ -1199,12 +1291,18 @@ textarea.form-input {
   }
   .contact-info-card {
     padding: 28px;
+    border-radius: 18px;
   }
   .contact-form-card {
     padding: 28px;
+    border-radius: 18px;
   }
   .contact-info-card h3 {
     font-size: 1.5rem;
+  }
+  .btn-whatsapp {
+    padding: 10px 20px;
+    font-size: 0.8rem;
   }
 }
 
@@ -1231,6 +1329,10 @@ textarea.form-input {
     width: 48px;
     height: 48px;
     font-size: 1.2rem;
+  }
+  .btn-whatsapp {
+    padding: 12px 28px;
+    font-size: 0.9rem;
   }
 }
 
@@ -1287,6 +1389,12 @@ textarea.form-input {
   justify-content: center;
   color: #555;
   text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.footer-social-icon:hover {
+  background: #d4af37;
+  color: #0a0a0a;
 }
 
 .footer-links-col h5 {
@@ -1306,6 +1414,11 @@ textarea.form-input {
   display: flex;
   align-items: center;
   gap: 6px;
+  transition: all 0.3s ease;
+}
+
+.footer-links-col a:hover {
+  color: #d4af37;
 }
 
 .footer-bottom {
@@ -1365,9 +1478,20 @@ textarea.form-input {
     width: 40px;
     height: 40px;
   }
+  .footer-social-icon:hover {
+    background: #d4af37;
+    color: #0a0a0a;
+    border-color: #d4af37;
+    transform: translateY(-4px);
+  }
+  .footer-links-col a:hover {
+    color: #d4af37;
+    transform: translateX(4px);
+  }
   .footer-bottom-inner {
     flex-direction: row;
     justify-content: space-between;
+    text-align: left;
   }
 }
 
@@ -1390,6 +1514,13 @@ textarea.form-input {
   text-decoration: none;
   box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
   z-index: 999;
+  animation: pulse-wa 2.5s infinite;
+}
+
+@keyframes pulse-wa {
+  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
 }
 
 @media (min-width: 601px) {
@@ -1409,6 +1540,10 @@ textarea.form-input {
     font-size: 26px;
     bottom: 28px;
     right: 28px;
+  }
+  .fab-whatsapp:hover {
+    transform: scale(1.12);
+    box-shadow: 0 10px 32px rgba(37, 211, 102, 0.6);
   }
 }
 
@@ -1433,7 +1568,7 @@ textarea.form-input {
   justify-content: center;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s, transform 0.3s;
 }
 
 .back-to-top.visible {
@@ -1458,6 +1593,11 @@ textarea.form-input {
     width: 42px;
     height: 42px;
     font-size: 14px;
+  }
+  .back-to-top:hover {
+    background: #d4af37;
+    color: #000;
+    border-color: #d4af37;
   }
 }
 
@@ -1487,6 +1627,8 @@ textarea.form-input {
   padding: 16px;
   border: 1px solid rgba(212, 175, 55, 0.3);
   position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .modal-img {
@@ -1523,6 +1665,11 @@ textarea.form-input {
   background: none;
   border: none;
   padding: 4px;
+  transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+  color: #d4af37;
 }
 
 @media (min-width: 601px) {
@@ -1550,5 +1697,9 @@ textarea.form-input {
   }
   .modal-price {
     font-size: 1.5rem;
+  }
+  .modal-close:hover {
+    transform: rotate(90deg);
+    color: #d4af37;
   }
 }

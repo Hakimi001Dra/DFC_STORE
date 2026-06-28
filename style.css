@@ -9,7 +9,6 @@
 
 html {
   font-size: 16px;
-  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -37,12 +36,6 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  transition: all 0.3s ease;
-}
-
-.luxe-header.scrolled {
-  background: rgba(0, 0, 0, 0.98);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
 .header-main {
@@ -54,7 +47,6 @@ body {
   min-height: 56px;
 }
 
-/* ── LOGO ── */
 .brand-area {
   display: flex;
   align-items: center;
@@ -63,28 +55,12 @@ body {
   flex-shrink: 0;
 }
 
-#brandLogoImg {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  object-fit: cover;
-  display: none;
-}
-
-#brandLogoImg.visible {
-  display: block;
-}
-
 .logo-text {
   font-family: 'Playfair Display', serif;
   font-size: 1.2rem;
   font-weight: 800;
   color: #ffffff;
   line-height: 1;
-}
-
-.logo-text .gold {
-  color: #d4af37;
 }
 
 .logo-tagline {
@@ -96,7 +72,6 @@ body {
   font-weight: 500;
 }
 
-/* ── NAV ── */
 .main-nav {
   display: none;
 }
@@ -117,7 +92,6 @@ body {
   padding: 4px 8px;
   border: 1px solid #2a2a2a;
   width: 80px;
-  transition: all 0.3s ease;
 }
 
 .search-area:focus-within {
@@ -141,7 +115,6 @@ body {
 
 #searchInput::placeholder {
   color: #555;
-  font-size: 0.5rem;
 }
 
 .btn-subscribe {
@@ -162,7 +135,6 @@ body {
   padding: 4px;
 }
 
-/* ── MOBILE NAV ── */
 .mobile-nav {
   display: none;
   flex-direction: column;
@@ -209,11 +181,6 @@ body {
     padding: 14px 24px;
   }
 
-  #brandLogoImg {
-    width: 40px;
-    height: 40px;
-  }
-
   .logo-text {
     font-size: 1.4rem;
   }
@@ -244,18 +211,8 @@ body {
    DESKTOP
    ============================================================ */
 @media (min-width: 769px) {
-  .container {
-    padding: 0 32px;
-  }
-
   .header-main {
     padding: 16px 32px;
-    min-height: 64px;
-  }
-
-  #brandLogoImg {
-    width: 48px;
-    height: 48px;
   }
 
   .logo-text {
@@ -280,7 +237,6 @@ body {
     letter-spacing: 1px;
     color: #ece6df;
     text-transform: uppercase;
-    transition: 0.2s;
   }
 
   .main-nav a:hover {
@@ -304,10 +260,6 @@ body {
     font-size: 0.82rem;
   }
 
-  #searchInput::placeholder {
-    font-size: 0.7rem;
-  }
-
   .btn-subscribe {
     display: inline-block;
     font-size: 0.7rem;
@@ -326,10 +278,6 @@ body {
     text-decoration: none;
   }
 
-  .admin-link:hover {
-    color: #d4af37;
-  }
-
   .hamburger {
     display: none !important;
   }
@@ -341,7 +289,6 @@ body {
 .hero {
   padding: 40px 0 50px;
   background: #0a0a0a;
-  min-height: auto;
 }
 
 .hero-badge {
@@ -378,7 +325,6 @@ body {
   color: #bcb09b;
   line-height: 1.7;
   margin-bottom: 20px;
-  max-width: 100%;
 }
 
 .hero-actions {
@@ -447,7 +393,9 @@ body {
   text-transform: uppercase;
 }
 
-/* HERO - TABLET */
+/* ============================================================
+   HERO - TABLET
+   ============================================================ */
 @media (min-width: 601px) {
   .hero {
     padding: 60px 0 70px;
@@ -477,7 +425,9 @@ body {
   }
 }
 
-/* HERO - DESKTOP */
+/* ============================================================
+   HERO - DESKTOP
+   ============================================================ */
 @media (min-width: 769px) {
   .hero {
     padding: 80px 0 100px;
@@ -544,40 +494,6 @@ body {
 .section-desc {
   color: #6a5c48;
   font-size: 0.8rem;
-  max-width: 100%;
-  margin: 0 auto;
-}
-
-@media (min-width: 601px) {
-  .section-header {
-    margin-bottom: 32px;
-  }
-  .section-subtitle {
-    font-size: 0.65rem;
-  }
-  .section-title {
-    font-size: 2rem;
-  }
-  .section-desc {
-    font-size: 0.9rem;
-    max-width: 500px;
-  }
-}
-
-@media (min-width: 769px) {
-  .section-header {
-    margin-bottom: 48px;
-  }
-  .section-subtitle {
-    font-size: 0.75rem;
-  }
-  .section-title {
-    font-size: 2.8rem;
-  }
-  .section-desc {
-    font-size: 1rem;
-    max-width: 600px;
-  }
 }
 
 /* ============================================================
@@ -643,7 +559,6 @@ body {
     width: 44px;
     height: 44px;
     font-size: 1.1rem;
-    margin: 0 auto 10px;
   }
   .service-card h4 {
     font-size: 0.85rem;
@@ -665,19 +580,10 @@ body {
     padding: 32px 24px;
     border-radius: 20px;
   }
-  .service-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(212, 175, 55, 0.3);
-  }
-  .service-card:hover .service-icon {
-    background: rgba(212, 175, 55, 0.2);
-    transform: scale(1.1);
-  }
   .service-icon {
     width: 64px;
     height: 64px;
     font-size: 1.5rem;
-    margin: 0 auto 16px;
   }
   .service-card h4 {
     font-size: 1.1rem;
@@ -750,10 +656,6 @@ body {
   color: #d4af37;
 }
 
-.product-card .product-desc-short {
-  display: none;
-}
-
 @media (min-width: 601px) {
   .collection-section {
     padding: 60px 0;
@@ -786,10 +688,6 @@ body {
   .product-card {
     border-radius: 20px;
   }
-  .product-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(212, 175, 55, 0.3);
-  }
   .product-card .product-info {
     padding: 20px 18px 24px;
   }
@@ -803,7 +701,6 @@ body {
     display: block;
     color: #6a5c48;
     font-size: 0.85rem;
-    line-height: 1.5;
     margin-top: 8px;
   }
 }
@@ -834,7 +731,6 @@ body {
   color: #bcb09b;
   line-height: 1.6;
   font-size: 0.8rem;
-  margin: 4px 0 8px;
 }
 
 .comment-card .comment-author {
@@ -880,7 +776,6 @@ body {
   font-family: 'Playfair Display', serif;
   font-size: 1rem;
   color: #ffffff;
-  margin-bottom: 2px;
 }
 
 .add-review-card .add-review-desc {
@@ -930,22 +825,18 @@ body {
   .reviews-grid {
     grid-template-columns: 1fr 1fr;
     gap: 16px;
-    margin-bottom: 32px;
   }
   .comment-card {
     padding: 20px;
-    border-radius: 16px;
   }
   .add-review-card {
     padding: 24px;
-    border-radius: 16px;
   }
   .comment-form-area {
     flex-direction: row;
   }
   .comment-form-area input {
     flex: 2;
-    padding: 10px 16px;
   }
   .comment-form-area input:last-of-type {
     flex: 5;
@@ -963,23 +854,14 @@ body {
   .reviews-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
-    margin-bottom: 48px;
   }
   .comment-card {
     padding: 28px;
     border-radius: 20px;
   }
-  .comment-card:hover {
-    border-color: rgba(212, 175, 55, 0.3);
-    transform: translateY(-4px);
-  }
   .add-review-card {
     padding: 32px;
     border-radius: 24px;
-  }
-  .btn-secondary:hover {
-    background: #d4af37;
-    color: #0a0a0a;
   }
 }
 
@@ -1135,9 +1017,6 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
     gap: 16px;
   }
-  .about-image-grid {
-    gap: 10px;
-  }
 }
 
 @media (min-width: 769px) {
@@ -1153,21 +1032,6 @@ body {
   }
   .about-content p {
     font-size: 0.95rem;
-  }
-  .about-quote blockquote {
-    font-size: 1.1rem;
-  }
-  .about-image-grid {
-    gap: 16px;
-  }
-  .image-main {
-    border-radius: 20px;
-  }
-  .image-small {
-    border-radius: 20px;
-  }
-  .image-placeholder {
-    font-size: 1.5rem;
   }
 }
 
@@ -1285,12 +1149,6 @@ body {
   font-size: 0.8rem;
 }
 
-.hint {
-  font-size: 0.6rem;
-  color: #6a5c48;
-  margin-top: 6px;
-}
-
 .contact-form-card {
   padding: 20px;
   background: #111111;
@@ -1316,7 +1174,6 @@ body {
 .form-input:focus {
   outline: none;
   border-color: #d4af37;
-  background: #1e1e1e;
 }
 
 .form-input::placeholder {
@@ -1342,18 +1199,12 @@ textarea.form-input {
   }
   .contact-info-card {
     padding: 28px;
-    border-radius: 18px;
   }
   .contact-form-card {
     padding: 28px;
-    border-radius: 18px;
   }
   .contact-info-card h3 {
     font-size: 1.5rem;
-  }
-  .btn-whatsapp {
-    padding: 10px 20px;
-    font-size: 0.8rem;
   }
 }
 
@@ -1380,13 +1231,6 @@ textarea.form-input {
     width: 48px;
     height: 48px;
     font-size: 1.2rem;
-  }
-  .btn-whatsapp {
-    padding: 12px 28px;
-    font-size: 0.9rem;
-  }
-  .btn-whatsapp:hover {
-    background: #20b859;
   }
 }
 
@@ -1521,18 +1365,9 @@ textarea.form-input {
     width: 40px;
     height: 40px;
   }
-  .footer-social-icon:hover {
-    background: #d4af37;
-    color: #0a0a0a;
-    border-color: #d4af37;
-  }
-  .footer-links-col a:hover {
-    color: #d4af37;
-  }
   .footer-bottom-inner {
     flex-direction: row;
     justify-content: space-between;
-    text-align: left;
   }
 }
 
@@ -1555,13 +1390,6 @@ textarea.form-input {
   text-decoration: none;
   box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
   z-index: 999;
-  animation: pulse-wa 2.5s infinite;
-}
-
-@keyframes pulse-wa {
-  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
-  70% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
 }
 
 @media (min-width: 601px) {
@@ -1581,9 +1409,6 @@ textarea.form-input {
     font-size: 26px;
     bottom: 28px;
     right: 28px;
-  }
-  .fab-whatsapp:hover {
-    transform: scale(1.12);
   }
 }
 
@@ -1608,7 +1433,7 @@ textarea.form-input {
   justify-content: center;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s, transform 0.3s;
+  transition: opacity 0.3s;
 }
 
 .back-to-top.visible {
@@ -1633,11 +1458,6 @@ textarea.form-input {
     width: 42px;
     height: 42px;
     font-size: 14px;
-  }
-  .back-to-top:hover {
-    background: #d4af37;
-    color: #000;
-    border-color: #d4af37;
   }
 }
 
@@ -1730,8 +1550,5 @@ textarea.form-input {
   }
   .modal-price {
     font-size: 1.5rem;
-  }
-  .modal-close:hover {
-    color: #d4af37;
   }
 }

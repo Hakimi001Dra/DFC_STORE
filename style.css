@@ -1,5 +1,5 @@
 /* ============================================================
-   DFC STYLE - COMPLETE WORKING VERSION
+   DFC STYLE - COMPLETE WORKING VERSION (CENTERED HERO)
    ============================================================ */
 * {
   margin: 0;
@@ -301,10 +301,11 @@ body {
 }
 
 /* ============================================================
-   HERO
+   HERO - CENTERED
    ============================================================ */
 .hero {
   padding: 40px 0 50px;
+  text-align: center;
 }
 
 .hero-badge {
@@ -339,13 +340,15 @@ body {
   font-size: 0.9rem;
   color: #bcb09b;
   line-height: 1.7;
-  margin-bottom: 20px;
+  margin: 0 auto 20px;
+  max-width: 600px;
 }
 
 .hero-actions {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
@@ -391,11 +394,14 @@ body {
   padding-top: 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .stat {
   text-align: center;
   flex: 1;
+  min-width: 80px;
+  max-width: 150px;
 }
 
 .stat-number {

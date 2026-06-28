@@ -1,5 +1,5 @@
 /* ============================================================
-   BASE RESET & TYPOGRAPHY - MOBILE FIRST
+   BASE RESET
    ============================================================ */
 * {
   margin: 0;
@@ -34,7 +34,7 @@ body {
 }
 
 /* ============================================================
-   HEADER - MOBILE FIRST
+   HEADER - COMPLETE FIX
    ============================================================ */
 .luxe-header {
   background: rgba(0, 0, 0, 0.95);
@@ -58,10 +58,12 @@ body {
   justify-content: space-between;
   padding: 8px 0;
   gap: 6px;
-  min-height: 50px;
+  min-height: 48px;
 }
 
-/* LOGO - MOBILE FIRST */
+/* ════════════════════════════════════════
+   LOGO - FIXED SIZE ON MOBILE
+   ════════════════════════════════════════ */
 .brand-area {
   display: flex;
   align-items: center;
@@ -69,24 +71,29 @@ body {
   text-decoration: none;
   flex-shrink: 1;
   min-width: 0;
+  max-width: 60%;
 }
 
+/* LOGO IMAGE - SMALL ON MOBILE */
 #brandLogoImg {
-  width: 32px;
-  height: 32px;
+  width: 28px !important;
+  height: 28px !important;
   border-radius: 50%;
   object-fit: cover;
   display: none;
   flex-shrink: 0;
+  border: none;
+  outline: none;
 }
 
 #brandLogoImg.visible {
   display: block;
 }
 
+/* LOGO TEXT - DFC */
 .logo-text {
   font-family: 'Playfair Display', serif;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 800;
   letter-spacing: 0.5px;
   color: #ffffff;
@@ -99,8 +106,9 @@ body {
   color: #d4af37;
 }
 
+/* BRAND NAME - ALWAYS VISIBLE */
 .logo-tagline {
-  font-size: 0.35rem;
+  font-size: 0.3rem;
   letter-spacing: 0.5px;
   color: #d4af37;
   text-transform: uppercase;
@@ -110,7 +118,9 @@ body {
   line-height: 1.1;
 }
 
-/* HEADER ACTIONS - MOBILE FIRST */
+/* ════════════════════════════════════════
+   HEADER ACTIONS
+   ════════════════════════════════════════ */
 .header-actions {
   display: flex;
   align-items: center;
@@ -126,18 +136,18 @@ body {
   border-radius: 40px;
   padding: 4px 8px;
   border: 1px solid #2a2a2a;
-  width: 80px;
+  width: 70px;
   transition: all 0.3s ease;
 }
 
 .search-area:focus-within {
   border-color: #d4af37;
-  width: 110px;
+  width: 100px;
 }
 
 .search-area i {
   color: #d4af37;
-  font-size: 0.6rem;
+  font-size: 0.5rem;
 }
 
 #searchInput {
@@ -145,13 +155,13 @@ body {
   border: none;
   color: white;
   width: 100%;
-  font-size: 0.6rem;
+  font-size: 0.5rem;
   outline: none;
 }
 
 #searchInput::placeholder {
   color: #555;
-  font-size: 0.55rem;
+  font-size: 0.45rem;
 }
 
 .btn-subscribe {
@@ -159,9 +169,6 @@ body {
 }
 
 .admin-link {
-  color: #444;
-  font-size: 0.6rem;
-  text-decoration: none;
   display: none;
 }
 
@@ -170,7 +177,7 @@ body {
   background: none;
   border: none;
   color: #ece6df;
-  font-size: 1rem;
+  font-size: 0.9rem;
   cursor: pointer;
   padding: 2px;
 }
@@ -196,36 +203,24 @@ body {
 }
 
 @keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .mobile-nav a {
   text-decoration: none;
   color: #ece6df;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 500;
-  padding: 12px 16px;
+  padding: 10px 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.mobile-nav a:last-child {
-  border-bottom: none;
-}
-
-.mobile-nav a i {
-  color: #d4af37;
-  width: 16px;
-}
+.mobile-nav a:last-child { border-bottom: none; }
+.mobile-nav a i { color: #d4af37; width: 16px; }
 
 /* ============================================================
    TABLET - 601px+
@@ -234,38 +229,44 @@ body {
   .header-main {
     padding: 10px 0;
     min-height: 56px;
+    gap: 12px;
+  }
+
+  .brand-area {
+    gap: 10px;
+    max-width: 70%;
   }
 
   #brandLogoImg {
-    width: 40px;
-    height: 40px;
+    width: 36px !important;
+    height: 36px !important;
   }
 
   .logo-text {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     letter-spacing: 1px;
   }
 
   .logo-tagline {
-    font-size: 0.45rem;
-    letter-spacing: 1.5px;
+    font-size: 0.4rem;
+    letter-spacing: 1px;
   }
 
   .search-area {
-    width: 120px;
+    width: 100px;
     padding: 5px 10px;
   }
 
   .search-area:focus-within {
-    width: 150px;
+    width: 130px;
   }
 
   #searchInput {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
   }
 
   .hamburger {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .container {
@@ -280,11 +281,17 @@ body {
   .header-main {
     padding: 14px 0;
     gap: 16px;
+    min-height: 64px;
+  }
+
+  .brand-area {
+    gap: 12px;
+    max-width: 100%;
   }
 
   #brandLogoImg {
-    width: 44px;
-    height: 44px;
+    width: 44px !important;
+    height: 44px !important;
   }
 
   .logo-text {
@@ -383,7 +390,7 @@ body {
   align-items: center;
   background: #0a0a0a;
   overflow: hidden;
-  padding: 40px 0 50px;
+  padding: 30px 0 40px;
   min-height: auto;
 }
 
@@ -399,28 +406,28 @@ body {
 .hero-content {
   position: relative;
   z-index: 2;
-  padding: 10px 0;
+  padding: 0;
 }
 
 .hero-badge {
   display: inline-block;
-  padding: 4px 10px;
+  padding: 3px 10px;
   border: 1px solid rgba(212, 175, 55, 0.3);
   border-radius: 40px;
-  font-size: 0.5rem;
-  letter-spacing: 2px;
+  font-size: 0.45rem;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   color: #d4af37;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   background: rgba(212, 175, 55, 0.05);
 }
 
 .hero h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 800;
   line-height: 1.1;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   color: #ffffff;
 }
 
@@ -432,60 +439,60 @@ body {
 }
 
 .hero-content p {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   max-width: 100%;
   color: #bcb09b;
   line-height: 1.6;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .hero-actions {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .btn-primary {
   background: #d4af37;
   color: #0a0a0a;
-  padding: 8px 16px;
+  padding: 7px 14px;
   border-radius: 40px;
   text-decoration: none;
   font-weight: 600;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   border: none;
   cursor: pointer;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   transition: all 0.3s ease;
 }
 
 .btn-secondary-outline {
   background: transparent;
   color: #ece6df;
-  padding: 8px 16px;
+  padding: 7px 14px;
   border-radius: 40px;
   text-decoration: none;
   font-weight: 600;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   transition: all 0.3s ease;
 }
 
 .hero-social {
   display: flex;
-  gap: 8px;
-  margin: 8px 0;
+  gap: 6px;
+  margin: 6px 0;
 }
 
 .hero-social-link {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid #2a2a2a;
@@ -493,16 +500,16 @@ body {
   align-items: center;
   justify-content: center;
   color: #ece6df;
-  font-size: 12px;
+  font-size: 10px;
   text-decoration: none;
   transition: 0.25s;
 }
 
 .hero-stats {
   display: flex;
-  gap: 16px;
-  margin-top: 16px;
-  padding-top: 16px;
+  gap: 12px;
+  margin-top: 14px;
+  padding-top: 14px;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   flex-wrap: wrap;
 }
@@ -510,19 +517,19 @@ body {
 .stat {
   text-align: center;
   flex: 1;
-  min-width: 60px;
+  min-width: 50px;
 }
 
 .stat-number {
   display: block;
   font-family: 'Playfair Display', serif;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #d4af37;
 }
 
 .stat-label {
-  font-size: 0.5rem;
+  font-size: 0.45rem;
   color: #6a5c48;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -531,31 +538,30 @@ body {
 /* HERO - TABLET */
 @media (min-width: 601px) {
   .hero {
-    padding: 60px 0 70px;
-    min-height: auto;
+    padding: 50px 0 60px;
   }
 
   .hero h1 {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
   }
 
   .hero-content p {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     max-width: 500px;
   }
 
   .btn-primary,
   .btn-secondary-outline {
-    padding: 10px 24px;
-    font-size: 0.8rem;
+    padding: 9px 20px;
+    font-size: 0.75rem;
   }
 
   .stat-number {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 
   .stat-label {
-    font-size: 0.6rem;
+    font-size: 0.55rem;
   }
 }
 
@@ -600,25 +606,25 @@ body {
 }
 
 /* ============================================================
-   SECTION HEADERS - MOBILE FIRST
+   SECTION HEADERS
    ============================================================ */
 .section-header {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .section-subtitle {
-  font-size: 0.55rem;
-  letter-spacing: 2px;
+  font-size: 0.5rem;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   color: #d4af37;
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .section-title {
   font-family: 'Playfair Display', serif;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 4px;
@@ -626,7 +632,7 @@ body {
 
 .section-desc {
   color: #6a5c48;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   max-width: 100%;
   margin: 0 auto;
   padding: 0 10px;
@@ -634,16 +640,16 @@ body {
 
 @media (min-width: 601px) {
   .section-header {
-    margin-bottom: 32px;
+    margin-bottom: 28px;
   }
   .section-subtitle {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
   }
   .section-title {
     font-size: 1.8rem;
   }
   .section-desc {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     max-width: 500px;
   }
 }
@@ -668,49 +674,49 @@ body {
    SERVICES - MOBILE FIRST
    ============================================================ */
 .services-section {
-  padding: 40px 0;
+  padding: 30px 0;
   background: #0a0a0a;
 }
 
 .services-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 8px;
 }
 
 .service-card {
   background: #111111;
-  border-radius: 14px;
-  padding: 14px 10px;
+  border-radius: 12px;
+  padding: 12px 8px;
   border: 1px solid #2a2a2a;
   text-align: center;
   transition: all 0.3s ease;
 }
 
 .service-icon {
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: rgba(212, 175, 55, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 8px;
-  font-size: 0.9rem;
+  margin: 0 auto 6px;
+  font-size: 0.75rem;
   color: #d4af37;
 }
 
 .service-card h4 {
   font-family: 'Playfair Display', serif;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   color: #ffffff;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 
 .service-card p {
   color: #bcb09b;
-  font-size: 0.55rem;
-  line-height: 1.4;
+  font-size: 0.5rem;
+  line-height: 1.3;
 }
 
 @media (min-width: 601px) {
@@ -721,20 +727,20 @@ body {
     gap: 16px;
   }
   .service-card {
-    padding: 20px 16px;
+    padding: 18px 14px;
     border-radius: 16px;
   }
   .service-icon {
-    width: 44px;
-    height: 44px;
-    font-size: 1.1rem;
-    margin: 0 auto 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+    margin: 0 auto 8px;
   }
   .service-card h4 {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
   }
   .service-card p {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
   }
 }
 
@@ -777,18 +783,18 @@ body {
    PRODUCTS - MOBILE FIRST
    ============================================================ */
 .collection-section {
-  padding: 40px 0;
+  padding: 30px 0;
 }
 
 .products-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 8px;
 }
 
 .product-card {
   background: #111111;
-  border-radius: 14px;
+  border-radius: 12px;
   overflow: hidden;
   border: 1px solid #2a2a2a;
   cursor: pointer;
@@ -809,12 +815,12 @@ body {
 
 .product-card .product-badge {
   position: absolute;
-  top: 8px;
-  left: 8px;
-  padding: 2px 8px;
+  top: 6px;
+  left: 6px;
+  padding: 2px 6px;
   background: #d4af37;
   color: #0a0a0a;
-  font-size: 0.45rem;
+  font-size: 0.4rem;
   font-weight: 600;
   letter-spacing: 0.5px;
   border-radius: 20px;
@@ -838,33 +844,33 @@ body {
 }
 
 .product-card .quick-view-btn {
-  padding: 4px 10px;
+  padding: 3px 8px;
   background: #d4af37;
   border: none;
   border-radius: 40px;
   color: #0a0a0a;
   font-weight: 600;
-  font-size: 0.5rem;
+  font-size: 0.45rem;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
 }
 
 .product-card .product-info {
-  padding: 10px 10px 14px;
+  padding: 8px 8px 12px;
 }
 
 .product-card .product-name {
   font-family: 'Playfair Display', serif;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   font-weight: 600;
   color: #ffffff;
   margin-bottom: 2px;
 }
 
 .product-card .product-price {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 700;
   color: #d4af37;
 }
@@ -884,21 +890,21 @@ body {
     border-radius: 16px;
   }
   .product-card .product-info {
-    padding: 14px 14px 18px;
+    padding: 12px 12px 16px;
   }
   .product-card .product-name {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
   .product-card .product-price {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
   .product-card .product-badge {
-    font-size: 0.55rem;
-    padding: 3px 10px;
+    font-size: 0.5rem;
+    padding: 3px 8px;
   }
   .product-card .quick-view-btn {
-    padding: 6px 14px;
-    font-size: 0.6rem;
+    padding: 5px 12px;
+    font-size: 0.55rem;
   }
 }
 
@@ -956,41 +962,41 @@ body {
    REVIEWS - MOBILE FIRST
    ============================================================ */
 .reviews-section {
-  padding: 40px 0;
+  padding: 30px 0;
   background: #0a0a0a;
 }
 
 .reviews-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .comment-card {
   background: #111111;
-  border-radius: 14px;
-  padding: 16px;
+  border-radius: 12px;
+  padding: 14px;
   border: 1px solid #2a2a2a;
 }
 
 .comment-card .comment-text {
   color: #bcb09b;
-  line-height: 1.6;
-  font-size: 0.8rem;
-  margin: 4px 0 8px;
+  line-height: 1.5;
+  font-size: 0.7rem;
+  margin: 4px 0 6px;
 }
 
 .comment-card .comment-author {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 8px;
+  gap: 8px;
+  margin-top: 6px;
 }
 
 .comment-card .comment-initials {
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   background: rgba(212, 175, 55, 0.1);
   border: 1px solid rgba(212, 175, 55, 0.2);
@@ -999,55 +1005,55 @@ body {
   justify-content: center;
   font-weight: 600;
   color: #d4af37;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
 }
 
 .comment-card .comment-name {
   font-weight: 600;
   color: #ffffff;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 }
 
 .comment-card .comment-date {
-  font-size: 0.55rem;
+  font-size: 0.5rem;
   color: #6a5c48;
 }
 
 .add-review-card {
   background: #111111;
-  border-radius: 14px;
-  padding: 16px;
+  border-radius: 12px;
+  padding: 14px;
   border: 1px solid #2a2a2a;
 }
 
 .add-review-card h4 {
   font-family: 'Playfair Display', serif;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #ffffff;
   margin-bottom: 2px;
 }
 
 .add-review-card .add-review-desc {
   color: #6a5c48;
-  font-size: 0.7rem;
-  margin-bottom: 10px;
+  font-size: 0.65rem;
+  margin-bottom: 8px;
 }
 
 .comment-form-area {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .comment-form-area input {
   width: 100%;
   background: #1c1c1c;
   border: 1px solid #2a2a2a;
-  padding: 8px 14px;
+  padding: 7px 12px;
   border-radius: 40px;
   color: #ece6df;
   font-family: inherit;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
 }
 
 .comment-form-area input:focus {
@@ -1059,11 +1065,11 @@ body {
   background: transparent;
   border: 1px solid #d4af37;
   color: #d4af37;
-  padding: 8px 16px;
+  padding: 7px 14px;
   border-radius: 40px;
   font-weight: 600;
   cursor: pointer;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   width: 100%;
   transition: all 0.3s ease;
 }
@@ -1078,11 +1084,11 @@ body {
     margin-bottom: 32px;
   }
   .comment-card {
-    padding: 20px;
+    padding: 18px;
     border-radius: 16px;
   }
   .add-review-card {
-    padding: 24px;
+    padding: 20px;
     border-radius: 16px;
   }
   .comment-form-area {
@@ -1090,14 +1096,14 @@ body {
   }
   .comment-form-area input {
     flex: 2;
-    padding: 10px 16px;
+    padding: 8px 14px;
   }
   .comment-form-area input:last-of-type {
     flex: 5;
   }
   .btn-secondary {
     width: auto;
-    padding: 10px 24px;
+    padding: 8px 20px;
   }
 }
 
@@ -1122,30 +1128,26 @@ body {
     padding: 32px;
     border-radius: 24px;
   }
-  .btn-secondary:hover {
-    background: #d4af37;
-    color: #0a0a0a;
-  }
 }
 
 /* ============================================================
    ABOUT - MOBILE FIRST
    ============================================================ */
 .about-section {
-  padding: 40px 0;
+  padding: 30px 0;
   background: #0a0a0a;
 }
 
 .about-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 20px;
 }
 
 .about-content .about-lead {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: #d4af37;
-  margin: 10px 0 14px;
+  margin: 8px 0 10px;
   font-weight: 500;
 }
 
@@ -1155,30 +1157,30 @@ body {
 
 .about-content p {
   color: #bcb09b;
-  line-height: 1.7;
-  margin-bottom: 10px;
-  font-size: 0.8rem;
+  line-height: 1.6;
+  margin-bottom: 8px;
+  font-size: 0.7rem;
 }
 
 .about-quote {
-  margin: 16px 0;
-  padding: 14px 16px;
+  margin: 12px 0;
+  padding: 12px 14px;
   background: rgba(212, 175, 55, 0.05);
   border-left: 3px solid #d4af37;
-  border-radius: 0 12px 12px 0;
+  border-radius: 0 10px 10px 0;
 }
 
 .about-quote blockquote {
   font-family: 'Playfair Display', serif;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: #ece6df;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 .about-quote cite {
   display: block;
-  margin-top: 6px;
-  font-size: 0.65rem;
+  margin-top: 4px;
+  font-size: 0.55rem;
   color: #6a5c48;
   font-style: normal;
 }
@@ -1186,84 +1188,84 @@ body {
 .values-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 10px;
-  margin: 16px 0;
+  gap: 8px;
+  margin: 12px 0;
 }
 
 .value-item {
   text-align: center;
-  padding: 14px;
+  padding: 12px;
   background: rgba(255, 255, 255, 0.03);
-  border-radius: 12px;
+  border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .value-icon {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: rgba(212, 175, 55, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 8px;
+  margin: 0 auto 6px;
   color: #d4af37;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 .value-item h4 {
   color: #ffffff;
-  font-size: 0.75rem;
-  margin-bottom: 4px;
+  font-size: 0.65rem;
+  margin-bottom: 3px;
 }
 
 .value-item p {
   color: #6a5c48;
-  font-size: 0.65rem;
-  line-height: 1.5;
+  font-size: 0.55rem;
+  line-height: 1.4;
 }
 
 .about-services-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
-  margin: 16px 0;
+  gap: 5px;
+  margin: 12px 0;
 }
 
 .about-service-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
-  padding: 8px 4px;
+  gap: 2px;
+  padding: 6px 4px;
   background: rgba(212, 175, 55, 0.06);
   border: 1px solid rgba(212, 175, 55, 0.15);
-  border-radius: 8px;
-  font-size: 0.45rem;
+  border-radius: 6px;
+  font-size: 0.4rem;
   color: #ece6df;
   text-align: center;
 }
 
 .about-service-item i {
   color: #d4af37;
-  font-size: 0.8rem;
+  font-size: 0.65rem;
 }
 
 .about-service-item span {
-  font-size: 0.45rem;
+  font-size: 0.4rem;
 }
 
 .social-follow-strip {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 6px;
-  margin: 16px 0;
+  gap: 5px;
+  margin: 12px 0;
 }
 
 .social-follow-label {
-  font-size: 0.55rem;
-  letter-spacing: 1.5px;
+  font-size: 0.5rem;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: #555;
 }
@@ -1271,10 +1273,10 @@ body {
 .social-pill {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px 10px;
+  gap: 3px;
+  padding: 3px 8px;
   border-radius: 40px;
-  font-size: 0.6rem;
+  font-size: 0.5rem;
   font-weight: 600;
   text-decoration: none;
   transition: 0.25s;
@@ -1298,13 +1300,13 @@ body {
 .about-image-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: 6px;
 }
 
 .image-main {
   grid-row: span 2;
   aspect-ratio: 3/4;
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
 }
 
@@ -1317,7 +1319,7 @@ body {
 
 .image-small {
   aspect-ratio: 1;
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
 }
 
@@ -1331,10 +1333,10 @@ body {
   justify-content: center;
   border: 1px solid rgba(212, 175, 55, 0.2);
   font-family: 'Playfair Display', serif;
-  font-size: 0.8rem;
+  font-size: 0.6rem;
   color: #d4af37;
   text-align: center;
-  padding: 8px;
+  padding: 6px;
 }
 
 @media (min-width: 601px) {
@@ -1346,29 +1348,20 @@ body {
   }
   .values-grid {
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 16px;
+    gap: 12px;
   }
   .about-services-grid {
-    gap: 8px;
+    gap: 6px;
   }
   .about-service-item {
-    padding: 10px 8px;
-    font-size: 0.55rem;
+    padding: 8px 6px;
+    border-radius: 8px;
   }
   .about-service-item i {
-    font-size: 1rem;
+    font-size: 0.85rem;
   }
   .about-service-item span {
-    font-size: 0.55rem;
-  }
-  .about-image-grid {
-    gap: 10px;
-  }
-  .image-main {
-    border-radius: 14px;
-  }
-  .image-small {
-    border-radius: 14px;
+    font-size: 0.5rem;
   }
 }
 
@@ -1382,7 +1375,6 @@ body {
   }
   .about-content .about-lead {
     font-size: 1.1rem;
-    margin: 16px 0 20px;
   }
   .about-content p {
     font-size: 0.95rem;
@@ -1405,15 +1397,6 @@ body {
   .about-service-item span {
     font-size: 0.7rem;
   }
-  .about-image-grid {
-    gap: 16px;
-  }
-  .image-main {
-    border-radius: 20px;
-  }
-  .image-small {
-    border-radius: 20px;
-  }
   .image-placeholder {
     font-size: 1.5rem;
   }
@@ -1423,27 +1406,27 @@ body {
    CONTACT - MOBILE FIRST
    ============================================================ */
 .contact-section {
-  padding: 40px 0;
+  padding: 30px 0;
   background: #0a0a0a;
 }
 
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
+  gap: 16px;
 }
 
 .contact-info-card {
-  padding: 20px;
+  padding: 16px;
   background: #111111;
-  border-radius: 16px;
+  border-radius: 14px;
   border: 1px solid #2a2a2a;
 }
 
 .contact-info-card h3 {
   font-family: 'Playfair Display', serif;
-  font-size: 1.2rem;
-  margin: 8px 0 12px;
+  font-size: 1.1rem;
+  margin: 6px 0 10px;
   color: #ffffff;
 }
 
@@ -1453,39 +1436,39 @@ body {
 
 .contact-info-card>p {
   color: #bcb09b;
-  line-height: 1.6;
-  font-size: 0.8rem;
-  margin-bottom: 16px;
+  line-height: 1.5;
+  font-size: 0.7rem;
+  margin-bottom: 12px;
 }
 
 .contact-details {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: 10px;
+  margin-bottom: 12px;
 }
 
 .contact-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .contact-icon {
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: rgba(212, 175, 55, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #d4af37;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   flex-shrink: 0;
 }
 
 .contact-label {
-  font-size: 0.55rem;
+  font-size: 0.5rem;
   color: #6a5c48;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -1494,7 +1477,7 @@ body {
 .contact-value {
   font-weight: 500;
   color: #ece6df;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 }
 
 .btn-whatsapp {
@@ -1503,27 +1486,27 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 8px 16px;
+  gap: 5px;
+  padding: 7px 14px;
   border-radius: 40px;
   text-decoration: none;
   font-weight: 600;
   border: none;
   cursor: pointer;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   width: 100%;
   transition: all 0.3s ease;
 }
 
 .contact-social {
   display: flex;
-  gap: 8px;
-  margin: 12px 0 8px;
+  gap: 6px;
+  margin: 10px 0 6px;
 }
 
 .social-btn {
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1531,36 +1514,36 @@ body {
   color: #ece6df;
   border: 1px solid #2a2a2a;
   text-decoration: none;
-  font-size: 0.8rem;
+  font-size: 0.65rem;
   transition: all 0.3s ease;
 }
 
 .hint {
-  font-size: 0.6rem;
+  font-size: 0.5rem;
   color: #6a5c48;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 .contact-form-card {
-  padding: 20px;
+  padding: 16px;
   background: #111111;
-  border-radius: 16px;
+  border-radius: 14px;
   border: 1px solid #2a2a2a;
 }
 
 .form-group {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .form-input {
   width: 100%;
-  padding: 10px 14px;
+  padding: 8px 12px;
   background: #1a1a1a;
   border: 1px solid #2a2a2a;
-  border-radius: 10px;
+  border-radius: 8px;
   color: #ece6df;
   font-family: 'Inter', sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   transition: all 0.3s ease;
 }
 
@@ -1576,7 +1559,7 @@ body {
 
 textarea.form-input {
   resize: vertical;
-  min-height: 80px;
+  min-height: 70px;
 }
 
 .btn-full {
@@ -1589,27 +1572,22 @@ textarea.form-input {
     padding: 50px 0;
   }
   .contact-grid {
-    gap: 30px;
+    gap: 24px;
   }
   .contact-info-card {
-    padding: 28px;
+    padding: 24px;
     border-radius: 18px;
   }
   .contact-form-card {
-    padding: 28px;
+    padding: 24px;
     border-radius: 18px;
   }
   .contact-info-card h3 {
-    font-size: 1.5rem;
-  }
-  .contact-icon {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
+    font-size: 1.4rem;
   }
   .btn-whatsapp {
-    padding: 10px 20px;
-    font-size: 0.8rem;
+    padding: 9px 18px;
+    font-size: 0.75rem;
   }
 }
 
@@ -1637,9 +1615,6 @@ textarea.form-input {
     height: 48px;
     font-size: 1.2rem;
   }
-  .contact-value {
-    font-size: 0.95rem;
-  }
   .btn-whatsapp {
     padding: 12px 28px;
     font-size: 0.9rem;
@@ -1656,20 +1631,20 @@ textarea.form-input {
 .site-footer {
   background: #050505;
   border-top: 1px solid rgba(255, 255, 255, 0.03);
-  padding: 30px 0 0;
+  padding: 24px 0 0;
 }
 
 .footer-inner {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
-  padding-bottom: 20px;
+  gap: 16px;
+  padding-bottom: 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .footer-brand .footer-logo {
   font-family: 'Playfair Display', serif;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: #d4af37;
   letter-spacing: 2px;
@@ -1677,27 +1652,27 @@ textarea.form-input {
 
 .footer-brand .footer-tagline {
   color: #6a5c48;
-  font-size: 0.6rem;
-  letter-spacing: 1.5px;
-  margin: 4px 0 10px;
+  font-size: 0.5rem;
+  letter-spacing: 1px;
+  margin: 3px 0 8px;
 }
 
 .footer-brand .footer-desc {
   color: #555;
-  font-size: 0.75rem;
-  line-height: 1.6;
+  font-size: 0.65rem;
+  line-height: 1.5;
   max-width: 100%;
 }
 
 .footer-social {
   display: flex;
-  gap: 8px;
-  margin-top: 10px;
+  gap: 6px;
+  margin-top: 8px;
 }
 
 .footer-social-icon {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.06);
   display: flex;
@@ -1710,58 +1685,52 @@ textarea.form-input {
 
 .footer-links-col h5 {
   color: #d4af37;
-  font-size: 0.65rem;
-  letter-spacing: 1.5px;
+  font-size: 0.55rem;
+  letter-spacing: 1px;
   text-transform: uppercase;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .footer-links-col a {
   display: block;
   color: #555;
   text-decoration: none;
-  font-size: 0.75rem;
-  margin-bottom: 6px;
+  font-size: 0.65rem;
+  margin-bottom: 4px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   transition: all 0.3s ease;
 }
 
 .footer-bottom {
-  padding: 12px 0;
+  padding: 10px 0;
 }
 
 .footer-bottom-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   text-align: center;
 }
 
 .footer-bottom p {
-  font-size: 0.55rem;
+  font-size: 0.5rem;
   color: #333;
 }
 
 @media (min-width: 601px) {
   .footer-inner {
     grid-template-columns: 1fr 1fr;
-    gap: 28px;
-    padding-bottom: 28px;
+    gap: 24px;
+    padding-bottom: 24px;
   }
   .footer-brand {
     grid-column: 1 / -1;
   }
   .footer-brand .footer-desc {
     max-width: 300px;
-  }
-  .footer-links-col h5 {
-    font-size: 0.7rem;
-  }
-  .footer-links-col a {
-    font-size: 0.8rem;
   }
 }
 
@@ -1777,14 +1746,15 @@ textarea.form-input {
   .footer-brand {
     grid-column: auto;
   }
-  .footer-brand .footer-desc {
-    max-width: 350px;
-  }
   .footer-brand .footer-logo {
     font-size: 2rem;
   }
   .footer-brand .footer-tagline {
     font-size: 0.8rem;
+  }
+  .footer-brand .footer-desc {
+    font-size: 0.9rem;
+    max-width: 350px;
   }
   .footer-social-icon {
     width: 40px;
@@ -1812,42 +1782,36 @@ textarea.form-input {
    ============================================================ */
 .fab-whatsapp {
   position: fixed;
-  bottom: 16px;
-  right: 12px;
-  width: 44px;
-  height: 44px;
+  bottom: 14px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
   background: #25D366;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-size: 18px;
+  font-size: 16px;
   text-decoration: none;
-  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
   z-index: 999;
   animation: pulse-wa 2.5s infinite;
 }
 
 @keyframes pulse-wa {
-  0% {
-    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
-  }
-  70% {
-    box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-  }
+  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
 }
 
 @media (min-width: 601px) {
   .fab-whatsapp {
-    width: 50px;
-    height: 50px;
-    font-size: 22px;
-    bottom: 20px;
-    right: 16px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+    bottom: 18px;
+    right: 14px;
   }
 }
 
@@ -1870,15 +1834,15 @@ textarea.form-input {
    ============================================================ */
 .back-to-top {
   position: fixed;
-  bottom: 68px;
-  right: 14px;
-  width: 32px;
-  height: 32px;
+  bottom: 62px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
   background: #1c1c1c;
   border: 1px solid #2a2a2a;
   border-radius: 50%;
   color: #d4af37;
-  font-size: 11px;
+  font-size: 10px;
   cursor: pointer;
   z-index: 998;
   display: flex;
@@ -1898,10 +1862,10 @@ textarea.form-input {
 
 @media (min-width: 601px) {
   .back-to-top {
-    bottom: 78px;
-    right: 18px;
-    width: 36px;
-    height: 36px;
+    bottom: 76px;
+    right: 16px;
+    width: 34px;
+    height: 34px;
     font-size: 12px;
   }
 }
@@ -1937,16 +1901,16 @@ textarea.form-input {
   justify-content: center;
   align-items: center;
   z-index: 2000;
-  padding: 12px;
+  padding: 10px;
 }
 
 .modal-card {
   background: #111111;
   max-width: 100%;
   width: 100%;
-  max-width: 400px;
-  border-radius: 24px;
-  padding: 16px;
+  max-width: 380px;
+  border-radius: 20px;
+  padding: 14px;
   border: 1px solid rgba(212, 175, 55, 0.3);
   max-height: 90vh;
   overflow-y: auto;
@@ -1955,33 +1919,33 @@ textarea.form-input {
 
 .modal-img {
   width: 100%;
-  height: 180px;
+  height: 160px;
   object-fit: contain;
-  border-radius: 16px;
+  border-radius: 14px;
   background: #0a0a0a;
   display: block;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .modal-price {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #d4af37;
-  margin: 6px 0;
+  margin: 4px 0;
 }
 
 .modal-details {
   color: #bcb09b;
-  line-height: 1.5;
-  font-size: 0.8rem;
-  margin: 10px 0 12px;
+  line-height: 1.4;
+  font-size: 0.7rem;
+  margin: 8px 0 10px;
 }
 
 .modal-close {
   position: absolute;
-  top: 12px;
-  right: 16px;
-  font-size: 22px;
+  top: 10px;
+  right: 12px;
+  font-size: 18px;
   cursor: pointer;
   color: #9a8a6f;
   background: none;
@@ -1993,20 +1957,15 @@ textarea.form-input {
 
 @media (min-width: 601px) {
   .modal-card {
-    padding: 24px;
-    max-width: 480px;
-    border-radius: 32px;
+    padding: 20px;
+    max-width: 460px;
+    border-radius: 28px;
   }
   .modal-img {
-    height: 220px;
+    height: 200px;
   }
   .modal-price {
-    font-size: 1.3rem;
-  }
-  .modal-close {
-    font-size: 26px;
-    top: 16px;
-    right: 20px;
+    font-size: 1.2rem;
   }
 }
 

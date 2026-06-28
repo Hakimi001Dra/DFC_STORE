@@ -34,6 +34,7 @@ body {
 .luxe-header {
   background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   position: sticky;
   top: 0;
@@ -55,6 +56,9 @@ body {
   min-height: 56px;
 }
 
+/* ============================================================
+   LOGO - FIXED (Danfulani Collections shows on all devices)
+   ============================================================ */
 .brand-area {
   display: flex;
   align-items: center;
@@ -63,33 +67,48 @@ body {
   flex-shrink: 0;
 }
 
-/* LOGO */
+/* ── LOGO IMAGE ── */
 #brandLogoImg {
   width: 44px;
   height: 44px;
   border-radius: 50%;
   object-fit: cover;
   display: none;
+  flex-shrink: 0;
 }
 
+#brandLogoImg.visible {
+  display: block;
+}
+
+/* ── LOGO TEXT (DFC) ── */
 .logo-text {
   font-family: 'Playfair Display', serif;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: #ffffff;
   letter-spacing: 2px;
   line-height: 1;
+  display: block;
 }
 
+.logo-text .gold {
+  color: #d4af37;
+}
+
+/* ── BRAND NAME (Danfulani Collections) - FIXED: ALWAYS VISIBLE ── */
 .logo-tagline {
   font-size: 0.5rem;
   letter-spacing: 2px;
   color: #d4af37;
   text-transform: uppercase;
-  display: none;
+  display: block !important;  /* FORCE VISIBLE ON ALL DEVICES */
+  font-weight: 500;
+  white-space: nowrap;
+  line-height: 1.2;
 }
 
-/* NAV */
+/* ── NAVIGATION ── */
 .main-nav {
   display: none;
 }
@@ -151,7 +170,12 @@ body {
   display: none;
 }
 
-
+.admin-link {
+  color: #444;
+  font-size: 0.7rem;
+  text-decoration: none;
+  display: none;
+}
 
 /* ── HAMBURGER ── */
 .hamburger {
@@ -1159,6 +1183,7 @@ textarea.form-input {
   height: 100%;
   background: rgba(0, 0, 0, 0.92);
   backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   justify-content: center;
   align-items: center;
   z-index: 2000;
@@ -1235,8 +1260,13 @@ textarea.form-input {
   }
 
   .logo-tagline {
-    display: block;
     font-size: 0.55rem;
+    letter-spacing: 2.5px;
+  }
+
+  #brandLogoImg {
+    width: 48px;
+    height: 48px;
   }
 
   .search-area {
@@ -1311,11 +1341,12 @@ textarea.form-input {
 }
 
 /* ============================================================
-   DESKTOP (769px+) - HIDE HAMBURGER, SHOW FULL NAV
+   DESKTOP (769px+) - HIDE HAMBURGER
    ============================================================ */
 @media (min-width: 769px) {
+  /* ── SHOW FULL NAV ── */
   .main-nav {
-    display: flex;
+    display: flex !important;
     align-items: center;
     gap: 24px;
   }
@@ -1350,19 +1381,20 @@ textarea.form-input {
     color: #d4af37;
   }
 
-  /* ── HIDE HAMBURGER ON DESKTOP ── */
+  /* ── HIDE HAMBURGER ── */
   .hamburger {
     display: none !important;
   }
 
+  /* ── SHOW OTHER ELEMENTS ── */
   .btn-subscribe {
-    display: inline-block;
+    display: inline-block !important;
     font-size: 0.7rem;
     padding: 7px 16px;
   }
 
   .admin-link {
-    display: inline-block;
+    display: inline-block !important;
   }
 
   .search-area {
@@ -1373,12 +1405,22 @@ textarea.form-input {
     width: 220px;
   }
 
+  .logo-text {
+    font-size: 1.6rem;
+    letter-spacing: 3px;
+  }
+
   .logo-tagline {
-    display: block;
     font-size: 0.6rem;
     letter-spacing: 3px;
   }
 
+  #brandLogoImg {
+    width: 52px;
+    height: 52px;
+  }
+
+  /* ── HERO ── */
   .hero {
     padding: 60px 0 80px;
     min-height: 80vh;
@@ -1404,6 +1446,7 @@ textarea.form-input {
     font-size: 0.7rem;
   }
 
+  /* ── SERVICES ── */
   .services-grid {
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
@@ -1419,6 +1462,7 @@ textarea.form-input {
     transform: scale(1.1);
   }
 
+  /* ── PRODUCTS ── */
   .products-grid {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 24px;
@@ -1437,6 +1481,7 @@ textarea.form-input {
     display: block;
   }
 
+  /* ── REVIEWS ── */
   .reviews-grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -1457,6 +1502,7 @@ textarea.form-input {
     width: auto;
   }
 
+  /* ── ABOUT ── */
   .about-grid {
     grid-template-columns: 1fr 1fr;
     gap: 50px;
@@ -1470,6 +1516,7 @@ textarea.form-input {
     font-size: 1.1rem;
   }
 
+  /* ── CONTACT ── */
   .contact-grid {
     grid-template-columns: 1fr 1.2fr;
     gap: 50px;
@@ -1483,6 +1530,7 @@ textarea.form-input {
     padding: 32px;
   }
 
+  /* ── FOOTER ── */
   .footer-inner {
     grid-template-columns: 1.5fr 1fr 1fr 1fr;
     gap: 40px;
@@ -1502,6 +1550,7 @@ textarea.form-input {
     text-align: left;
   }
 
+  /* ── FLOATING BUTTONS ── */
   .fab-whatsapp {
     width: 58px;
     height: 58px;
@@ -1517,6 +1566,7 @@ textarea.form-input {
     height: 42px;
   }
 
+  /* ── MODAL ── */
   .modal-card {
     max-width: 550px;
     padding: 32px;

@@ -294,7 +294,7 @@ body {
 }
 
 /* ============================================================
-   HERO
+   HERO - FIXED: Added padding for mobile
    ============================================================ */
 .hero {
   position: relative;
@@ -318,7 +318,7 @@ body {
 .hero-content {
   position: relative;
   z-index: 2;
-  padding: 40px 0;
+  padding: 40px 16px;  /* ← FIXED: Added left/right padding */
 }
 
 .hero-badge {
@@ -466,12 +466,21 @@ body {
 }
 
 /* ============================================================
-   RESPONSIVE HERO
+   RESPONSIVE HERO - FIXED
    ============================================================ */
 @media (max-width: 768px) {
   .hero {
     min-height: auto;
-    padding: 80px 0 60px;
+    padding: 60px 0;
+  }
+  .hero-content {
+    padding: 0 20px;  /* ← FIXED: Proper padding on mobile */
+  }
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+  .hero-content p {
+    font-size: 1rem;
   }
   .hero-stats {
     gap: 24px;
@@ -480,8 +489,49 @@ body {
   .stat-number {
     font-size: 1.4rem;
   }
+  .stat-label {
+    font-size: 0.6rem;
+  }
+  .btn-primary,
+  .btn-secondary-outline {
+    padding: 10px 20px;
+    font-size: 0.8rem;
+  }
+  .hero-actions {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 40px 0;
+  }
+  .hero-content {
+    padding: 0 16px;  /* ← FIXED: Smaller padding on very small screens */
+  }
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+  .hero-badge {
+    font-size: 0.5rem;
+    padding: 4px 12px;
+  }
   .hero-content p {
-    font-size: 1rem;
+    font-size: 0.85rem;
+  }
+  .hero-stats {
+    gap: 12px;
+  }
+  .stat-number {
+    font-size: 1.2rem;
+  }
+  .stat-label {
+    font-size: 0.5rem;
+  }
+  .btn-primary,
+  .btn-secondary-outline {
+    padding: 8px 16px;
+    font-size: 0.7rem;
   }
 }
 

@@ -1,5 +1,5 @@
 /* ============================================================
-   DFC STYLE - CLEAN WORKING VERSION
+   DFC STYLE - COMPLETE WORKING VERSION
    ============================================================ */
 * {
   margin: 0;
@@ -24,7 +24,9 @@ body {
   padding: 0 20px;
 }
 
-/* ── HEADER ── */
+/* ============================================================
+   HEADER
+   ============================================================ */
 .luxe-header {
   background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(20px);
@@ -48,6 +50,18 @@ body {
   align-items: center;
   gap: 8px;
   text-decoration: none;
+}
+
+#brandLogoImg {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: none;
+}
+
+#brandLogoImg.visible {
+  display: block;
 }
 
 .logo-text {
@@ -83,6 +97,12 @@ body {
   padding: 4px 10px;
   border: 1px solid #2a2a2a;
   width: 90px;
+  transition: all 0.3s ease;
+}
+
+.search-area:focus-within {
+  border-color: #d4af37;
+  width: 130px;
 }
 
 .search-area input {
@@ -103,6 +123,14 @@ body {
   font-size: 0.6rem;
 }
 
+.btn-subscribe {
+  display: none;
+}
+
+.admin-link {
+  display: none;
+}
+
 .hamburger {
   display: block;
   background: none;
@@ -116,6 +144,7 @@ body {
   display: none;
   flex-direction: column;
   background: rgba(10, 10, 10, 0.98);
+  backdrop-filter: blur(20px);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   padding: 4px 0;
 }
@@ -144,12 +173,44 @@ body {
   width: 16px;
 }
 
-.btn-subscribe,
-.admin-link {
-  display: none;
+/* ============================================================
+   TABLET
+   ============================================================ */
+@media (min-width: 601px) {
+  .container {
+    padding: 0 30px;
+  }
+
+  .header-main {
+    padding: 14px 0;
+  }
+
+  #brandLogoImg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .logo-text {
+    font-size: 1.4rem;
+  }
+
+  .logo-tagline {
+    font-size: 0.5rem;
+  }
+
+  .search-area {
+    width: 120px;
+    padding: 5px 12px;
+  }
+
+  .search-area input {
+    font-size: 0.7rem;
+  }
 }
 
-/* ── DESKTOP ── */
+/* ============================================================
+   DESKTOP
+   ============================================================ */
 @media (min-width: 769px) {
   .container {
     padding: 0 40px;
@@ -158,6 +219,11 @@ body {
   .header-main {
     padding: 16px 0;
     min-height: 64px;
+  }
+
+  #brandLogoImg {
+    width: 44px;
+    height: 44px;
   }
 
   .logo-text {
@@ -182,6 +248,7 @@ body {
     letter-spacing: 1px;
     color: #ece6df;
     text-transform: uppercase;
+    transition: 0.2s;
   }
 
   .main-nav a:hover {
@@ -191,6 +258,10 @@ body {
   .search-area {
     width: 180px;
     padding: 7px 14px;
+  }
+
+  .search-area:focus-within {
+    width: 220px;
   }
 
   .search-area input {
@@ -217,6 +288,7 @@ body {
     color: #444;
     font-size: 0.8rem;
     text-decoration: none;
+    transition: 0.2s;
   }
 
   .admin-link:hover {
@@ -228,7 +300,9 @@ body {
   }
 }
 
-/* ── HERO ── */
+/* ============================================================
+   HERO
+   ============================================================ */
 .hero {
   padding: 40px 0 50px;
 }
@@ -285,6 +359,12 @@ body {
   font-size: 0.75rem;
   border: none;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: #c2a02e;
+  transform: translateY(-2px);
 }
 
 .btn-secondary-outline {
@@ -296,6 +376,12 @@ body {
   font-weight: 600;
   font-size: 0.75rem;
   border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease;
+}
+
+.btn-secondary-outline:hover {
+  border-color: #d4af37;
+  color: #d4af37;
 }
 
 .hero-stats {
@@ -327,7 +413,9 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* ── TABLET ── */
+/* ============================================================
+   TABLET HERO
+   ============================================================ */
 @media (min-width: 601px) {
   .hero {
     padding: 60px 0 70px;
@@ -357,7 +445,9 @@ body {
   }
 }
 
-/* ── DESKTOP HERO ── */
+/* ============================================================
+   DESKTOP HERO
+   ============================================================ */
 @media (min-width: 769px) {
   .hero {
     padding: 80px 0 100px;
@@ -395,7 +485,9 @@ body {
   }
 }
 
-/* ── SECTION HEADERS ── */
+/* ============================================================
+   SECTION HEADERS
+   ============================================================ */
 .section-header {
   text-align: center;
   margin-bottom: 28px;
@@ -444,7 +536,9 @@ body {
   }
 }
 
-/* ── SERVICES ── */
+/* ============================================================
+   SERVICES
+   ============================================================ */
 .services-section {
   padding: 40px 0;
   background: #0a0a0a;
@@ -529,6 +623,7 @@ body {
   .service-card:hover {
     transform: translateY(-6px);
     border-color: rgba(212, 175, 55, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   }
   .service-card:hover .service-icon {
     background: rgba(212, 175, 55, 0.2);
@@ -548,7 +643,9 @@ body {
   }
 }
 
-/* ── PRODUCTS ── */
+/* ============================================================
+   PRODUCTS
+   ============================================================ */
 .collection-section {
   padding: 40px 0;
 }
@@ -565,6 +662,7 @@ body {
   overflow: hidden;
   border: 1px solid #2a2a2a;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .product-card .product-image-wrapper {
@@ -641,6 +739,10 @@ body {
   .product-card:hover {
     transform: translateY(-6px);
     border-color: rgba(212, 175, 55, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+  .product-card:hover .product-img {
+    transform: scale(1.05);
   }
   .product-card .product-info {
     padding: 20px 18px 24px;
@@ -651,9 +753,17 @@ body {
   .product-card .product-price {
     font-size: 1.2rem;
   }
+  .product-card .product-desc-short {
+    display: block;
+    color: #6a5c48;
+    font-size: 0.85rem;
+    margin-top: 8px;
+  }
 }
 
-/* ── REVIEWS ── */
+/* ============================================================
+   REVIEWS
+   ============================================================ */
 .reviews-section {
   padding: 40px 0;
   background: #0a0a0a;
@@ -718,6 +828,19 @@ body {
   border: 1px solid #2a2a2a;
 }
 
+.add-review-card h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: #ffffff;
+  margin-bottom: 2px;
+}
+
+.add-review-card .add-review-desc {
+  color: #6a5c48;
+  font-size: 0.7rem;
+  margin-bottom: 10px;
+}
+
 .comment-form-area {
   display: flex;
   flex-direction: column;
@@ -749,6 +872,12 @@ body {
   cursor: pointer;
   font-size: 0.75rem;
   width: 100%;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: #d4af37;
+  color: #0a0a0a;
 }
 
 @media (min-width: 601px) {
@@ -758,6 +887,14 @@ body {
   .reviews-grid {
     grid-template-columns: 1fr 1fr;
     gap: 16px;
+  }
+  .comment-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+  .add-review-card {
+    padding: 24px;
+    border-radius: 16px;
   }
   .comment-form-area {
     flex-direction: row;
@@ -790,9 +927,15 @@ body {
     border-color: rgba(212, 175, 55, 0.3);
     transform: translateY(-4px);
   }
+  .add-review-card {
+    padding: 32px;
+    border-radius: 24px;
+  }
 }
 
-/* ── ABOUT ── */
+/* ============================================================
+   ABOUT
+   ============================================================ */
 .about-section {
   padding: 40px 0;
   background: #0a0a0a;
@@ -883,6 +1026,10 @@ body {
   font-size: 0.65rem;
 }
 
+.about-visual {
+  position: relative;
+}
+
 .about-image-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -936,6 +1083,9 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
     gap: 16px;
   }
+  .about-image-grid {
+    gap: 10px;
+  }
 }
 
 @media (min-width: 769px) {
@@ -955,9 +1105,23 @@ body {
   .about-quote blockquote {
     font-size: 1.1rem;
   }
+  .about-image-grid {
+    gap: 16px;
+  }
+  .image-main {
+    border-radius: 20px;
+  }
+  .image-small {
+    border-radius: 20px;
+  }
+  .image-placeholder {
+    font-size: 1.5rem;
+  }
 }
 
-/* ── CONTACT ── */
+/* ============================================================
+   CONTACT
+   ============================================================ */
 .contact-section {
   padding: 40px 0;
   background: #0a0a0a;
@@ -1046,6 +1210,11 @@ body {
   cursor: pointer;
   font-size: 0.75rem;
   width: 100%;
+  transition: all 0.3s ease;
+}
+
+.btn-whatsapp:hover {
+  background: #20b859;
 }
 
 .contact-social {
@@ -1065,6 +1234,26 @@ body {
   border: 1px solid #2a2a2a;
   text-decoration: none;
   font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+  transform: translateY(-4px);
+}
+
+.social-btn.instagram:hover {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  border-color: transparent;
+}
+
+.social-btn.tiktok:hover {
+  background: #010101;
+  border-color: #d4af37;
+}
+
+.social-btn.whatsapp:hover {
+  background: #25D366;
+  border-color: transparent;
 }
 
 .contact-form-card {
@@ -1087,11 +1276,13 @@ body {
   color: #ece6df;
   font-family: 'Inter', sans-serif;
   font-size: 0.8rem;
+  transition: all 0.3s ease;
 }
 
 .form-input:focus {
   outline: none;
   border-color: #d4af37;
+  background: #1e1e1e;
 }
 
 .form-input::placeholder {
@@ -1130,6 +1321,11 @@ textarea.form-input {
     padding: 10px 20px;
     font-size: 0.8rem;
   }
+  .social-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 0.9rem;
+  }
 }
 
 @media (min-width: 769px) {
@@ -1160,12 +1356,16 @@ textarea.form-input {
     padding: 12px 28px;
     font-size: 0.9rem;
   }
-  .btn-whatsapp:hover {
-    background: #20b859;
+  .social-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 1rem;
   }
 }
 
-/* ── FOOTER ── */
+/* ============================================================
+   FOOTER
+   ============================================================ */
 .site-footer {
   background: #050505;
   border-top: 1px solid rgba(255, 255, 255, 0.03);
@@ -1216,6 +1416,12 @@ textarea.form-input {
   justify-content: center;
   color: #555;
   text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.footer-social-icon:hover {
+  background: #d4af37;
+  color: #0a0a0a;
 }
 
 .footer-links-col h5 {
@@ -1235,6 +1441,11 @@ textarea.form-input {
   display: flex;
   align-items: center;
   gap: 6px;
+  transition: all 0.3s ease;
+}
+
+.footer-links-col a:hover {
+  color: #d4af37;
 }
 
 .footer-bottom {
@@ -1265,6 +1476,10 @@ textarea.form-input {
   }
   .footer-brand .footer-desc {
     max-width: 300px;
+  }
+  .footer-social-icon {
+    width: 36px;
+    height: 36px;
   }
 }
 
@@ -1297,14 +1512,23 @@ textarea.form-input {
   .footer-social-icon:hover {
     background: #d4af37;
     color: #0a0a0a;
+    border-color: #d4af37;
+    transform: translateY(-4px);
+  }
+  .footer-links-col a:hover {
+    color: #d4af37;
+    transform: translateX(4px);
   }
   .footer-bottom-inner {
     flex-direction: row;
     justify-content: space-between;
+    text-align: left;
   }
 }
 
-/* ── FLOATING WHATSAPP ── */
+/* ============================================================
+   FLOATING WHATSAPP
+   ============================================================ */
 .fab-whatsapp {
   position: fixed;
   bottom: 16px;
@@ -1348,9 +1572,15 @@ textarea.form-input {
     bottom: 28px;
     right: 28px;
   }
+  .fab-whatsapp:hover {
+    transform: scale(1.12);
+    box-shadow: 0 10px 32px rgba(37, 211, 102, 0.6);
+  }
 }
 
-/* ── BACK TO TOP ── */
+/* ============================================================
+   BACK TO TOP
+   ============================================================ */
 .back-to-top {
   position: fixed;
   bottom: 68px;
@@ -1369,7 +1599,7 @@ textarea.form-input {
   justify-content: center;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s, transform 0.3s;
 }
 
 .back-to-top.visible {
@@ -1395,9 +1625,16 @@ textarea.form-input {
     height: 42px;
     font-size: 14px;
   }
+  .back-to-top:hover {
+    background: #d4af37;
+    color: #000;
+    border-color: #d4af37;
+  }
 }
 
-/* ── MODAL ── */
+/* ============================================================
+   MODAL
+   ============================================================ */
 .modal {
   display: none;
   position: fixed;
@@ -1421,6 +1658,8 @@ textarea.form-input {
   padding: 16px;
   border: 1px solid rgba(212, 175, 55, 0.3);
   position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .modal-img {
@@ -1457,6 +1696,11 @@ textarea.form-input {
   background: none;
   border: none;
   padding: 4px;
+  transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+  color: #d4af37;
 }
 
 @media (min-width: 601px) {
@@ -1484,5 +1728,9 @@ textarea.form-input {
   }
   .modal-price {
     font-size: 1.5rem;
+  }
+  .modal-close:hover {
+    transform: rotate(90deg);
+    color: #d4af37;
   }
 }
